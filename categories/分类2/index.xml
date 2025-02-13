@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>分类2 on Merthon</title><link>http://localhost:1313/categories/%E5%88%86%E7%B1%BB2/</link><description>Recent content in 分类2 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 02 Jun 2023 23:44:26 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/%E5%88%86%E7%B1%BB2/index.xml" rel="self" type="application/rss+xml"/><item><title>Js对象</title><link>http://localhost:1313/posts/js%E5%AF%B9%E8%B1%A1/</link><pubDate>Fri, 02 Jun 2023 23:44:26 +0800</pubDate><guid>http://localhost:1313/posts/js%E5%AF%B9%E8%B1%A1/</guid><description>&lt;h1 id="对象">对象&lt;/h1>
+&lt;p>JavaScript 中有八种数据类型。有七种原始类型，因为它们的值只包含一种东西（字符串，数字或者其他）。相反，对象则用来存储键值对和更复杂的实体。
+通过使用带有可选 &lt;strong>属性列表&lt;/strong> 的花括号 &lt;code>{…}&lt;/code> 来创建对象。一个属性就是一个键值对（“key: value”），其中键（&lt;code>key&lt;/code>）是一个字符串（也叫做属性名），值（&lt;code>value&lt;/code>）可以是任何值。
+用下面两种语法中的任一种来创建一个空的对象（“空柜子”）：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let user = new Object(); // “构造函数” 的语法
+let user = {}; // “字面量” 的语法
+&lt;/code>&lt;/pre>&lt;p>通常，我们用花括号。这种方式我们叫做 &lt;strong>字面量&lt;/strong>。&lt;/p>
+&lt;h2 id="文本和属性">文本和属性&lt;/h2>
+&lt;p>在创建对象的时候，立即将一些属性以键值对的形式放到 &lt;code>{...}&lt;/code> 中。&lt;/p>
+&lt;pre tabindex="0">&lt;code>let user = { // 一个对象 
+name: &amp;#34;John&amp;#34;, // 键 &amp;#34;name&amp;#34;，值 &amp;#34;John&amp;#34; 
+age: 30 // 键 &amp;#34;age&amp;#34;，值 30 };
+&lt;/code>&lt;/pre>&lt;p>属性有键（或者也可以叫做“名字”或“标识符”），位于冒号 &lt;code>&amp;quot;:&amp;quot;&lt;/code> 的前面，值在冒号的右边。
+在 &lt;code>user&lt;/code> 对象中，有两个属性：&lt;/p>
+&lt;ol>
+&lt;li>第一个的键是 &lt;code>&amp;quot;name&amp;quot;&lt;/code>，值是 &lt;code>&amp;quot;John&amp;quot;&lt;/code>。&lt;/li>
+&lt;li>第二个的键是 &lt;code>&amp;quot;age&amp;quot;&lt;/code>，值是 &lt;code>30&lt;/code>。
+我们可以随时添加、删除和读取文件。&lt;/li>
+&lt;li>使用点符号访问属性值&lt;/li>
+&lt;li>可以用 &lt;code>delete&lt;/code> 操作符移除属性&lt;/li>
+&lt;li>可以用多字词语来作为属性名，但必须给它们加上引号&lt;/li>
+&lt;/ol>
+&lt;h3 id="属性值简写">属性值简写&lt;/h3>
+&lt;p>在实际开发中，我们通常用已存在的变量当做属性名。&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-&lt;script>" data-lang="&lt;script>">&amp;#34;use strict&amp;#34;;
+function makeUser(name, age) {
+  return {
+    name: name,
+    age: age,
+    // ……其他的属性
+  };
+} 
+let user = makeUser(&amp;#34;John&amp;#34;, 30);
+alert(user.name); // John
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>面的例子中，属性名跟变量名一样。这种通过变量生成属性的应用场景很常见，在这有一种特殊的 &lt;strong>属性值缩写&lt;/strong> 方法，使属性名变得更短。
+可以用 &lt;code>name&lt;/code> 来代替 &lt;code>name:name&lt;/code>&lt;/p></description></item></channel></rss>

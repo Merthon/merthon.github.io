@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>JavaScript on Merthon</title><link>http://localhost:1313/categories/javascript/</link><description>Recent content in JavaScript on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 30 May 2023 00:25:58 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/javascript/index.xml" rel="self" type="application/rss+xml"/><item><title>JavaScript01</title><link>http://localhost:1313/posts/javascript01/</link><pubDate>Tue, 30 May 2023 00:25:58 +0800</pubDate><guid>http://localhost:1313/posts/javascript01/</guid><description>&lt;h1 id="javascript基础">JavaScript基础&lt;/h1>
+&lt;h2 id="变量">变量&lt;/h2>
+&lt;h3 id="变量-1">变量&lt;/h3>
+&lt;p>一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &amp;ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。&lt;/p>
+&lt;h3 id="声明变量">声明变量&lt;/h3>
+&lt;p>使用变量，你需要做的第一步就是创建它 &amp;ndash; 更准确的说，是声明一个变量。声明一个变量的语法是在 &lt;code>var&lt;/code> 或 &lt;code>let&lt;/code> 关键字之后加上这个变量的名字：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName;
+let myAge;
+&lt;/code>&lt;/pre>&lt;h3 id="初始化">初始化&lt;/h3>
+&lt;p>你定义了一个变量，你就能够初始化它。方法如下，在变量名之后跟上一个“=”，然后是数值：&lt;/p>
+&lt;pre tabindex="0">&lt;code>myName = &amp;#39;Chris&amp;#39;;
+myAge = 37;
+&lt;/code>&lt;/pre>&lt;p>也可以像这样在声明变量的时候给变量初始化：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+&lt;/code>&lt;/pre>&lt;h3 id="var和let的区别">var和let的区别&lt;/h3>
+&lt;p>当你使用 &lt;code>var&lt;/code> 时，可以根据需要多次声明相同名称的变量，但是 &lt;code>let&lt;/code> 不能。&lt;/p>
+&lt;pre tabindex="0">&lt;code>var myName = &amp;#39;Chris&amp;#39;;
+var myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>但是以下内容会在第二行引发错误：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+let myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>可以这样&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>没有理由重新声明变量&lt;/p>
+&lt;h3 id="变量类型">变量类型&lt;/h3>
+&lt;h4 id="number">Number&lt;/h4>
+&lt;p>在变量中存储数字，不论这些数字是像 30（也叫整数）这样，或者像 2.456 这样的小数（也叫做浮点数）。与其他编程语言不同，在 JavaScript 中你不需要声明一个变量的类型。当你给一个变量数字赋值时，不需要用引号括起来。&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myAge = 17;
+&lt;/code>&lt;/pre>&lt;h5 id="数字类型">数字类型&lt;/h5>
+&lt;p>在编程中，即使是人人熟知的最普遍的十进制数，也比你想象的要复杂的多。我们使用不同的术语来描述不同类型的十进制数，例如：&lt;/p></description></item></channel></rss>

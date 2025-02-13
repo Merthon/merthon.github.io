@@ -1,0 +1,452 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>Java高级：反射（Reflect）笔记</title>
+<meta name=description content="Java 高级：反射(reflect)笔记 1. 反射的概述 是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法； 对于任意一个对象，都能够调用它的任意属性和方法； 这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。
+一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运 …"><meta name=keywords content='blog,hugo,Java高级,java,笔记'><meta property="og:url" content="https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/"><meta property="og:type" content="website"><meta property="og:title" content="Java高级：反射（Reflect）笔记"><meta property="og:description" content="Java 高级：反射(reflect)笔记 1. 反射的概述 是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法； 对于任意一个对象，都能够调用它的任意属性和方法； 这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。
+一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Java高级：反射（Reflect）笔记"><meta name=twitter:description content="Java 高级：反射(reflect)笔记 1. 反射的概述 是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法； 对于任意一个对象，都能够调用它的任意属性和方法； 这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。
+一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/"><meta property="twitter:url" content="https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>Java高级：反射（Reflect）笔记</h1><small role=doc-subtitle></small><p class=post-date>July 8, 2022</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/java%E9%AB%98%E7%BA%A7>Java高级</a></li><li class=post-tag><a href=https://merthon.github.io/tags/java>java</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0>笔记</a></li></ul></div><div class=post-content><h2 id=java-高级反射reflect笔记>Java 高级：反射(reflect)笔记</h2><h3 id=1-反射的概述>1. 反射的概述</h3><p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意属性和方法；
+这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。</p><p><strong>一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。</strong></p><h3 id=2-为什么要使用反射>2. 为什么要使用反射</h3><ul><li>获取任意类的名称、package 信息、所有属性、方法、注解、类型、类加载器等</li><li>获取任意对象的属性，并且能改变对象的属性</li><li>调用任意对象的方法</li><li>判断任意一个对象所属的类</li><li>实例化任意一个类的对象</li><li>通过反射我们可以实现动态装配，降低代码的耦合度,动态代理等。</li></ul><h3 id=3-获取-class-对象的三种方式>3. 获取 Class 对象的三种方式</h3><ul><li>类名.class 属性</li><li>对象名.getClass()方法</li><li>Class.forName(全类名)方法</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*获取Class类的对象*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//第一种方法，forName(全类名)</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo1.Student&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(aClass);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//第二种,通过Class属性来获取</span>
+</span></span><span style=display:flex><span>        Class aClass2 <span style=color:#f92672>=</span> Student.<span style=color:#a6e22e>class</span>;
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(aClass2);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//第三种，利用对象的getclass</span>
+</span></span><span style=display:flex><span>        Student student <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Student();
+</span></span><span style=display:flex><span>        Class<span style=color:#f92672>&lt;?</span> <span style=color:#66d9ef>extends</span> Student<span style=color:#f92672>&gt;</span> aClass3 <span style=color:#f92672>=</span> student.<span style=color:#a6e22e>getClass</span>();
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(aClass3);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Student</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String name;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> age;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>() {
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>(String name, <span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getName</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setName</span>(String name) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getAge</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setAge</span>(<span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Studt</span>(){
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;学生上课&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Student{&#34;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;name=&#39;&#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, age=&#34;</span> <span style=color:#f92672>+</span> age <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#39;}&#39;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=4-反射获取构造方法>4. 反射获取构造方法</h3><h4 id=41-class-类获取构造方法对象的方法>4.1 Class 类获取构造方法对象的方法</h4><ul><li>getConstructors() 返回所有公共构造方法的数组</li><li>getConstructor(参数和构造方法参数一致)返回单个公共构造方法</li><li>getDeclaredConstructors() 返回所有构造方法的数组</li><li>getDeclaredConstructor(参数和构造方法参数一致)返回单个私有构造方法的数组</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method4</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException {
+</span></span><span style=display:flex><span>    Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>    Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredConstructor</span>(String.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>    System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(constructor);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method3</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>    Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>    Constructor<span style=color:#f92672>[]</span> constructors <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredConstructors</span>();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (Constructor constructor : constructors) {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(constructor);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method2</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException {
+</span></span><span style=display:flex><span>    Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>    Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getConstructor</span>(String.<span style=color:#a6e22e>class</span>, <span style=color:#66d9ef>int</span>.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>    System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(constructor);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method1</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>    Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>    Constructor<span style=color:#f92672>[]</span> constructors1 <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getConstructors</span>();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (Constructor constructor : constructors1) {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(constructor);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=42-constructor-类用于创建对象的方法>4.2 Constructor 类用于创建对象的方法</h4><table><thead><tr><th>方法名</th><th>说明</th></tr></thead><tbody><tr><td>T newInstance(Object&mldr;initargs)</td><td>根据指定的构造方法创建对象</td></tr><tr><td>setAccessible(boolean flag)</td><td>设置为 true,表示取消访问检查</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo2</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*Constructor用于创建对象的方法*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//T newInstance（参数）</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method1();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//metho2();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//metho3();</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>metho3</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取Class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2获取Constructor构造方法对象 （演示返回单个公共构造方法）空参</span>
+</span></span><span style=display:flex><span>        Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getConstructor</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.newInstance来创建对象</span>
+</span></span><span style=display:flex><span>        Student zhangsan <span style=color:#f92672>=</span> (Student) constructor.<span style=color:#a6e22e>newInstance</span>();
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(zhangsan);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>metho2</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取Class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2获取Constructor构造方法对象 （演示返回单个私有构造方法）</span>
+</span></span><span style=display:flex><span>        Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredConstructor</span>(String.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//私有的注意点</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.被private修饰的不能直接使用，需要临时取消访问检查</span>
+</span></span><span style=display:flex><span>        constructor.<span style=color:#a6e22e>setAccessible</span>(<span style=color:#66d9ef>true</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//4.newInstance来创建对象</span>
+</span></span><span style=display:flex><span>        Student zhangsan <span style=color:#f92672>=</span> (Student) constructor.<span style=color:#a6e22e>newInstance</span>(<span style=color:#e6db74>&#34;zhangsan&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(zhangsan);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method1</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取Class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo2.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2获取Constructor构造方法对象 （演示返回单个公共构造方法）</span>
+</span></span><span style=display:flex><span>        Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getConstructor</span>(String.<span style=color:#a6e22e>class</span>, <span style=color:#66d9ef>int</span>.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.newInstance来创建对象</span>
+</span></span><span style=display:flex><span>        Student zhangsan <span style=color:#f92672>=</span> (Student) constructor.<span style=color:#a6e22e>newInstance</span>(<span style=color:#e6db74>&#34;zhangsan&#34;</span>, 15);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(zhangsan);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Student</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String name;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> age;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/*--------------------------------------*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//私有的有参构造方法</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>Student</span>(String name) {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;name的值为&#34;</span> <span style=color:#f92672>+</span> name);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;私有的有参构造方法&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//公有的无参构造方法</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>() {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;公有无参构造方法&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//共有的有参构造</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>(String name, <span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;name的值为&#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;int的值为&#34;</span> <span style=color:#f92672>+</span> age);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;公有的有参构造方法&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=5反射获取成员变量>5.反射获取成员变量</h3><h4 id=51-class-类获取成员变量对象的方法>5.1 Class 类获取成员变量对象的方法</h4><p>方法分类</p><table><thead><tr><th>方法名</th><th>说明</th></tr></thead><tbody><tr><td>Field[] getFields()</td><td>返回所有公共成员变量对象的数组</td></tr><tr><td>Field[] getDeclaredFields()</td><td>返回所有成员变量对象的数组</td></tr><tr><td>Field getField(String name)</td><td>返回单个公共成员变量对象</td></tr><tr><td>Field getDeclaredField(String name)</td><td>返回单个成员变量对象</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo1</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchFieldException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*获取Field对象*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getFields()返回所有公共成员变量的对象数组</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method1();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getDeclaredFields()返回所有成员变量的对象数组</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method2();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getField(&#34;name&#34;)返回单个公共成员变量的对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method3();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getDeclaredField(&#34;&#34;)返回单个成员变量的对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method4();</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method4</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchFieldException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        Field money <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredField</span>(<span style=color:#e6db74>&#34;money&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(money);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method3</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchFieldException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//想要获得的单个成员变量必须是真实存在的</span>
+</span></span><span style=display:flex><span>        Field name <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getField</span>(<span style=color:#e6db74>&#34;name&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(name);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method2</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        Field<span style=color:#f92672>[]</span> declaredFields <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredFields</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.遍历</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Field declaredField : declaredFields) {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(declaredField);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method1</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        Field<span style=color:#f92672>[]</span> fields <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getFields</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.遍历</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Field field : fields) {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(field);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Student</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String name;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> age;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String gender;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> money <span style=color:#f92672>=</span> 100;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Student{&#34;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;name=&#39;&#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, age=&#34;</span> <span style=color:#f92672>+</span> age <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, gender=&#39;&#34;</span> <span style=color:#f92672>+</span> gender <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, money=&#34;</span> <span style=color:#f92672>+</span> money <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#39;}&#39;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=52-field-类用于给成员变量赋值的方法>5.2 Field 类用于给成员变量赋值的方法</h4><ul><li>赋值 void set(Object obj, Object value)指定对象的成员变量赋值</li><li>获取值 void get(Object obj) 返回指定对象的 Field 值</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo2</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> IllegalAccessException, InstantiationException, NoSuchFieldException, ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*赋值或者获取值*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//赋值void set(Student,&#34;lisi&#34;)指定对象的成员变量赋值</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method1();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//赋值void get() 返回指定对象的Field值</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method2();</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method2</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        Field money <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredField</span>(<span style=color:#e6db74>&#34;money&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.因为是私有变量需要取消访问检查</span>
+</span></span><span style=display:flex><span>        money.<span style=color:#a6e22e>setAccessible</span>(<span style=color:#66d9ef>true</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//4.创建对象</span>
+</span></span><span style=display:flex><span>        Student Student <span style=color:#f92672>=</span> (com.<span style=color:#a6e22e>chen</span>.<span style=color:#a6e22e>reflectdemo3</span>.<span style=color:#a6e22e>Student</span>) aClass.<span style=color:#a6e22e>newInstance</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//5.获取值</span>
+</span></span><span style=display:flex><span>        Object s <span style=color:#f92672>=</span> money.<span style=color:#a6e22e>get</span>(Student);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(s);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method1</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchFieldException, InstantiationException, IllegalAccessException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo3.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获取Field对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//想要获得的单个成员变量必须是真实存在的</span>
+</span></span><span style=display:flex><span>        Field name <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getField</span>(<span style=color:#e6db74>&#34;name&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.创建对象来进行赋值</span>
+</span></span><span style=display:flex><span>        Student Student <span style=color:#f92672>=</span> (com.<span style=color:#a6e22e>chen</span>.<span style=color:#a6e22e>reflectdemo3</span>.<span style=color:#a6e22e>Student</span>) aClass.<span style=color:#a6e22e>newInstance</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//4.赋值</span>
+</span></span><span style=display:flex><span>        name.<span style=color:#a6e22e>set</span>(Student,<span style=color:#e6db74>&#34;lisi&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(Student);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=6反射获取成员方法>6.反射获取成员方法</h3><h4 id=61-class-类获取成员方法对象的方法>6.1 Class 类获取成员方法对象的方法</h4><table><thead><tr><th>方法名</th><th>说明</th></tr></thead><tbody><tr><td>Method[] getMethods()</td><td>返回所有公共成员方法对象的数组，包括继承的</td></tr><tr><td>Method[] getDeclaredMethods()</td><td>返回所有成员方法对象的数组，不包括继承的</td></tr><tr><td>Method getMethod(String name, Class&mldr; parameterTypes)</td><td>返回单个公共成员方法对象</td></tr><tr><td>Method getDeclaredMethod(String name, Class&mldr; parameterTypes)</td><td>返回单个成员方法对象</td></tr></tbody></table><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo1</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*获得Method对象*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getMethods()返回所有公共成员方法对象，包括继承的（父类）</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method1();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getDeclaredMethods()返回所有成员方法对象，不包括继承的（父类）</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method2();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getMethod(方法名，带参方法里面的参数)返回单个公共成员方法对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method3();</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//getDeclaredMethod(&#34;show&#34;)返回单个成员方法对象</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//method4();</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method4</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo4.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获得Method对象</span>
+</span></span><span style=display:flex><span>        Method show <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredMethod</span>(<span style=color:#e6db74>&#34;show&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(show);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method3</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException, NoSuchMethodException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo4.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获得Method对象</span>
+</span></span><span style=display:flex><span>        Method function1 <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getMethod</span>(<span style=color:#e6db74>&#34;function1&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(function1);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method2</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo4.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获得Method对象</span>
+</span></span><span style=display:flex><span>        Method<span style=color:#f92672>[]</span> methods <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getDeclaredMethods</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Method method : methods) {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(method);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>method1</span>() <span style=color:#66d9ef>throws</span> ClassNotFoundException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo4.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获得Method对象</span>
+</span></span><span style=display:flex><span>        Method<span style=color:#f92672>[]</span> methods <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getMethods</span>();
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (Method method : methods) {
+</span></span><span style=display:flex><span>            System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(method);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=62-method-类用于执行方法的方法>6.2 Method 类用于执行方法的方法</h4><p>方法介绍</p><table><thead><tr><th>方法名</th><th>说明</th></tr></thead><tbody><tr><td>Object invoke(Object obj, Object&mldr; args)</td><td>运行方法</td></tr></tbody></table><p>参数一: 用 obj 对象调用该方法</p><p>参数二: 调用方法的传递的参数(如果没有就不写)</p><p>返回值: 方法的返回值(如果没有就不写)</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo2</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>/*运行方法*/</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//invoke(参数1，参数2)</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//参数一：用对象调用该方法</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//参数二：调用方法传递的参数</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//返回值；方法的返回值</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取class类的对象</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(<span style=color:#e6db74>&#34;com.chen.reflectdemo4.Student&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.获得Method对象</span>
+</span></span><span style=display:flex><span>        Method method <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getMethod</span>(<span style=color:#e6db74>&#34;function4&#34;</span>, String.<span style=color:#a6e22e>class</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.创建对象</span>
+</span></span><span style=display:flex><span>        Student Student <span style=color:#f92672>=</span> (com.<span style=color:#a6e22e>chen</span>.<span style=color:#a6e22e>reflectdemo4</span>.<span style=color:#a6e22e>Student</span>) aClass.<span style=color:#a6e22e>newInstance</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//4.运行方法</span>
+</span></span><span style=display:flex><span>        Object o <span style=color:#f92672>=</span> method.<span style=color:#a6e22e>invoke</span>(Student, <span style=color:#e6db74>&#34;zhangsan&#34;</span>);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(o);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=7-反射技术整体运用练习>7. 反射技术整体运用练习</h3><p>主要代码展示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ReflectDemo1</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) <span style=color:#66d9ef>throws</span> IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取一个类加载器</span>
+</span></span><span style=display:flex><span>        ClassLoader classLoader <span style=color:#f92672>=</span> ClassLoader.<span style=color:#a6e22e>getSystemClassLoader</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.利用加载器加载某一个资源文件</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//参数就是文件路径</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//返回值是字节流</span>
+</span></span><span style=display:flex><span>        InputStream is <span style=color:#f92672>=</span> classLoader.<span style=color:#a6e22e>getResourceAsStream</span>(<span style=color:#e6db74>&#34;prop.properties&#34;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//创建properties对象</span>
+</span></span><span style=display:flex><span>        Properties prop <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Properties();
+</span></span><span style=display:flex><span>        prop.<span style=color:#a6e22e>load</span>(is);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//System.out.println(prop);</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//释放资源</span>
+</span></span><span style=display:flex><span>        is.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//利用反射创建对象并且调用方法</span>
+</span></span><span style=display:flex><span>        Class aClass <span style=color:#f92672>=</span> Class.<span style=color:#a6e22e>forName</span>(prop.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;className&#34;</span>));
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//获取构造器对象</span>
+</span></span><span style=display:flex><span>        Constructor constructor <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getConstructor</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//利用构造器创建对象</span>
+</span></span><span style=display:flex><span>        Object o <span style=color:#f92672>=</span> constructor.<span style=color:#a6e22e>newInstance</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//获取对象方法</span>
+</span></span><span style=display:flex><span>        Method method <span style=color:#f92672>=</span> aClass.<span style=color:#a6e22e>getMethod</span>(prop.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;methodName&#34;</span>));
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//运行方法</span>
+</span></span><span style=display:flex><span>        method.<span style=color:#a6e22e>invoke</span>(o);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Teacher</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String name;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String gender;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> age;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Teacher</span>() {
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Teacher</span>(String name, String gender, <span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>gender</span> <span style=color:#f92672>=</span> gender;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getName</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setName</span>(String name) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getGender</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> gender;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setGender</span>(String gender) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>gender</span> <span style=color:#f92672>=</span> gender;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getAge</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setAge</span>(<span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>teach</span>(){
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;老师在上课&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Teacher{&#34;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;name=&#39;&#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, gender=&#39;&#34;</span> <span style=color:#f92672>+</span> gender <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, age=&#34;</span> <span style=color:#f92672>+</span> age <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#39;}&#39;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Student</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String name;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> age;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> String birthday;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>() {
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#a6e22e>Student</span>(String name, <span style=color:#66d9ef>int</span> age, String birthday) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>birthday</span> <span style=color:#f92672>=</span> birthday;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getName</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setName</span>(String name) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>name</span> <span style=color:#f92672>=</span> name;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>getAge</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setAge</span>(<span style=color:#66d9ef>int</span> age) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>age</span> <span style=color:#f92672>=</span> age;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>getBirthday</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> birthday;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>setBirthday</span>(String birthday) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>birthday</span> <span style=color:#f92672>=</span> birthday;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>study</span>(){
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;学生在学习&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> String <span style=color:#a6e22e>toString</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;Student{&#34;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;name=&#39;&#34;</span> <span style=color:#f92672>+</span> name <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, age=&#34;</span> <span style=color:#f92672>+</span> age <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;, birthday=&#39;&#34;</span> <span style=color:#f92672>+</span> birthday <span style=color:#f92672>+</span> <span style=color:#e6db74>&#39;\&#39;&#39;</span> <span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#39;}&#39;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-properties data-lang=properties><span style=display:flex><span><span style=color:#a6e22e>className</span><span style=color:#f92672>=</span><span style=color:#e6db74>com.chen.reflectdemo5.Teacher</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>methodName</span><span style=color:#f92672>=</span><span style=color:#e6db74>teach</span>
+</span></span></code></pre></div></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><a href=#java-高级反射reflect笔记>Java 高级：反射(reflect)笔记</a><ul><li><a href=#1-反射的概述>1. 反射的概述</a></li><li><a href=#2-为什么要使用反射>2. 为什么要使用反射</a></li><li><a href=#3-获取-class-对象的三种方式>3. 获取 Class 对象的三种方式</a></li><li><a href=#4-反射获取构造方法>4. 反射获取构造方法</a></li><li><a href=#5反射获取成员变量>5.反射获取成员变量</a></li><li><a href=#6反射获取成员方法>6.反射获取成员方法</a></li><li><a href=#7-反射技术整体运用练习>7. 反射技术整体运用练习</a></li></ul></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2022 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

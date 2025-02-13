@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HTML on Merthon</title><link>https://merthon.github.io/tags/html/</link><description>Recent content in HTML on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 25 May 2023 08:33:48 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/html/index.xml" rel="self" type="application/rss+xml"/><item><title>HTML</title><link>https://merthon.github.io/posts/html/</link><pubDate>Thu, 25 May 2023 08:33:48 +0800</pubDate><guid>https://merthon.github.io/posts/html/</guid><description>&lt;h1 id="html">HTML&lt;/h1>
+&lt;h2 id="1什么是html">1.什么是HTML？&lt;/h2>
+&lt;p>HTML(HyperText Markup Language，超文本标记语言）是一种用来告知浏览器如何组织页面的&lt;em>&lt;strong>标记语言&lt;/strong>&lt;/em>。HTML 由一系列的组成，这些元素可以用来包围或_标记_不同部分的内容，使其以某种方式呈现或者工作。&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>注意&lt;/strong>：HTML 标签不区分大小写。也就是说，输入标签时既可以使用大写字母也可以使用小写字母。例如，标签&lt;code>&amp;lt;title&amp;gt;&lt;/code> 可以写作 &lt;code>&amp;lt;title&amp;gt;&lt;/code>、&lt;code>&amp;lt;TITLE&amp;gt;&lt;/code>、&lt;code>&amp;lt;Title&amp;gt;&lt;/code>、&lt;code>&amp;lt;TiTlE&amp;gt;&lt;/code> 等，也都可以正常工作。不过，从一致性、可读性来说，最好仅使用小写字母。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="2元素">2.元素&lt;/h2>
+&lt;h3 id="结构">结构&lt;/h3>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;My cat is very grumpy&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>主要部分有：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>开始标签&lt;/strong>（Opening tag）：包含元素的名称，被左、右角括号所包围。开头标签标志着元素开始或开始生效的地方。&lt;/li>
+&lt;li>&lt;strong>内容&lt;/strong>（Content）：元素的内容。&lt;/li>
+&lt;li>&lt;strong>结束标签&lt;/strong>（Closing tag）：与开始标签相似，只是其在元素名之前包含了一个斜杠。这标志着该元素的结束。
+整个元素即指开始标签、内容、结束标签三部分组成的整体。&lt;/li>
+&lt;/ul>
+&lt;h3 id="嵌套元素">嵌套元素&lt;/h3>
+&lt;p>你也可以把元素放到其他元素之中——这被称作&lt;em>嵌套&lt;/em>。&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;My cat is &amp;lt;strong&amp;gt;very&amp;lt;/strong&amp;gt; grumpy.&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;h3 id="块级元素和内联元素">块级元素和内联元素&lt;/h3>
+&lt;ul>
+&lt;li>块级元素在页面中以块的形式展现。一个块级元素出现在它前面的内容之后的新行上。任何跟在块级元素后面的内容也会出现在新的行上。块级元素通常是页面上的结构元素。例如，一个块级元素可能代表标题、段落、列表、导航菜单或页脚。一个块级元素不会嵌套在一个内联元素里面，但它可能嵌套在另一个块级元素里面。&lt;/li>
+&lt;li>内联元素通常出现在块级元素中并环绕文档内容的一小部分，而不是一整个段落或者一组内容。内联元素不会导致文本换行，它通常与文本一起使用。&lt;/li>
+&lt;/ul>
+&lt;h3 id="空元素">空元素&lt;/h3>
+&lt;p>不是所有元素都拥有开始标签、内容和结束标签。一些元素只有一个标签，通常用来在此元素所在位置插入/嵌入一些东西。这些元素被称为空元素。&lt;/p>
+&lt;h3 id="无语义元素">无语义元素&lt;/h3>
+&lt;p>对于一些要组织的项目或要包装的内容，现有的语义元素均不能很好对应。有时候你可能只想将一组元素作为一个单独的实体来修饰来响应单一的用 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Glossary/CSS">CSS&lt;/a> 或 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Glossary/JavaScript">JavaScript&lt;/a>。为了应对这种情况，HTML 提供了 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/div">&lt;code>&amp;lt;div&amp;gt;&lt;/code>&lt;/a> 和 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/span">&lt;code>&amp;lt;span&amp;gt;&lt;/code>&lt;/a> 元素。应配合使用 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#class">&lt;code>class&lt;/code>&lt;/a> 属性提供一些标签，使这些元素能易于查询。&lt;/p>
+&lt;h4 id="span标签">&lt;code>&amp;lt;span&amp;gt;&lt;/code>标签&lt;/h4>
+&lt;p>一个内联的（inline）无语义元素，最好只用于无法找到更好的语义元素来包含内容时，或者不想增加特定的含义时。例如：&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;国王喝得酩酊大醉，在凌晨 1 点时才回到自己的房间，踉跄地走过门口。&amp;lt;span class=&amp;#34;editor-note&amp;#34;&amp;gt;[编辑批注：此刻舞台灯光应变暗]&amp;lt;/span&amp;gt;.&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;h4 id="div标签">&lt;code>&amp;lt;div&amp;gt;&lt;/code>标签&lt;/h4>
+&lt;p>一个块级无语义元素，应仅用于找不到更好的块级元素时，或者不想增加特定的意义时。例如，一个电子商务网站页面上有一个一直显示的购物车组件。&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;div class=&amp;#34;shopping-cart&amp;#34;&amp;gt;
+ &amp;lt;h2&amp;gt;购物车&amp;lt;/h2&amp;gt;
+ &amp;lt;ul&amp;gt;
+ &amp;lt;li&amp;gt;
+ &amp;lt;p&amp;gt;&amp;lt;a href=&amp;#34;&amp;#34;&amp;gt;&amp;lt;strong&amp;gt;银耳环&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt;：$99.95.&amp;lt;/p&amp;gt;
+ &amp;lt;img src=&amp;#34;../products/3333-0985/&amp;#34; alt=&amp;#34;Silver earrings&amp;#34;&amp;gt;
+ &amp;lt;/li&amp;gt;
+ &amp;lt;li&amp;gt;
+ ...
+ &amp;lt;/li&amp;gt;
+ &amp;lt;/ul&amp;gt;
+ &amp;lt;p&amp;gt;售价：$237.89&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code>&lt;/pre>&lt;h3 id="多媒体和嵌入">多媒体和嵌入&lt;/h3>
+&lt;h4 id="图片">图片&lt;/h4>
+&lt;p>用&lt;code>&amp;lt;img&amp;gt;&lt;/code> 元素来把图片放到网页上。它是一个空元素（它不需要包含文本内容或闭合标签），最少只需要一个 &lt;code>src&lt;/code> （一般读作其全称 *source）*来使其生效。&lt;code>src&lt;/code> 属性包含了指向我们想要引入的图片的路径，可以是相对路径或绝对 URL，就像 &lt;code>&amp;lt;a&amp;gt;&lt;/code>元素的 &lt;code>href&lt;/code> 属性一样。&lt;/p></description></item></channel></rss>

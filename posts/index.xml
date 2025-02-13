@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 13 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello</title><link>https://merthon.github.io/posts/hello/</link><pubDate>Thu, 13 Feb 2025 16:51:09 +0800</pubDate><guid>https://merthon.github.io/posts/hello/</guid><description/></item><item><title>用户密码安全存储</title><link>https://merthon.github.io/posts/%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E5%AE%89%E5%85%A8%E5%AD%98%E5%82%A8/</link><pubDate>Mon, 24 Jun 2024 10:03:33 +0800</pubDate><guid>https://merthon.github.io/posts/%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E5%AE%89%E5%85%A8%E5%AD%98%E5%82%A8/</guid><description>&lt;h5 id="为什么不能明文存储密码">为什么不能明文存储密码？&lt;/h5>
+&lt;p>明文就是直接存储密码，这样有很大的风险，比如数据泄露，被人攻击等问题。所以为了避免这些问题，我们需要对密码进行加密存储。&lt;/p>
+&lt;h5 id="非明文存储密码">非明文存储密码&lt;/h5>
+&lt;h6 id="哈希算法">哈希算法&lt;/h6>
+&lt;p>密码哈希是一种将密码转换为固定长度字符串的技术，这个字符串与原始密码完全不同且不可逆。&lt;/p>
+&lt;h6 id="盐值">盐值&lt;/h6>
+&lt;p>盐值(salt)是指在进行密码哈希之前，向密码添加的一段随机数据。通常被添加到密码的开头或结尾，或者插入到密码的某个位置。其主要目的是确保即使两个用户拥有相同的密码，最终存储在数据库中的哈希值也会不同。&lt;/p>
+&lt;h6 id="代码实现">代码实现&lt;/h6>
+&lt;p>在Go中，我们可以使用&lt;code>golang.org/x/crypto/bcrypt&lt;/code>库来处理密码的哈希和验证并且它内置了盐值的生成和管理。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> ( &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#e6db74">&amp;#34;golang.org/x/crypto/bcrypt&amp;#34;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// HashPassword 将密码进行哈希处理 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">HashPassword&lt;/span>(&lt;span style="color:#a6e22e">password&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>){ 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 使用bcrypt生成密码的哈希值 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">hashedPassword&lt;/span>,&lt;span style="color:#a6e22e">err&lt;/span>&lt;span style="color:#f92672">:=&lt;/span>&lt;span style="color:#a6e22e">bcrypt&lt;/span>.&lt;span style="color:#a6e22e">GenerateFromPassword&lt;/span>([]byte(&lt;span style="color:#a6e22e">password&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">bcrypt&lt;/span>.&lt;span style="color:#a6e22e">DefaultCost&lt;/span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> { 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> string(&lt;span style="color:#a6e22e">hashedPassword&lt;/span>), &lt;span style="color:#66d9ef">nil&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// CheckPasswordHash 验证输入的密码是否正确 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">CheckPasswordHash&lt;/span>(&lt;span style="color:#a6e22e">password&lt;/span>, &lt;span style="color:#a6e22e">hashedPassword&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> { 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 使用bcrypt比较密码和哈希值 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">bcrypt&lt;/span>.&lt;span style="color:#a6e22e">CompareHashAndPassword&lt;/span>([]byte(&lt;span style="color:#a6e22e">hashedPassword&lt;/span>), []byte(&lt;span style="color:#a6e22e">password&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() { 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 假设这是用户输入的密码
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">password&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;cxcxcxpassword&amp;#34;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 哈希密码 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">hashedPassword&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">HashPassword&lt;/span>(&lt;span style="color:#a6e22e">password&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> { 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;错误: %v&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;原始密码: %s\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">password&lt;/span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;哈希后的密码: %s\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">hashedPassword&lt;/span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 验证密码 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">isValid&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">CheckPasswordHash&lt;/span>(&lt;span style="color:#a6e22e">password&lt;/span>, &lt;span style="color:#a6e22e">hashedPassword&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;密码验证结果: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">isValid&lt;/span>) 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>过程：&lt;/p>
+&lt;ol>
+&lt;li>引入包：我们使用&lt;code>golang.org/x/crypto/bcrypt&lt;/code>包来处理密码的哈希和验证。&lt;/li>
+&lt;li>HashPassword函数：该函数使用bcrypt库生成密码的哈希值。bcrypt在内部自动生成一个盐值，并将其添加到密码中进行哈希处理。生成的哈希值包含了盐值，因此在验证密码时不需要单独存储盐值。&lt;/li>
+&lt;li>CheckPasswordHash函数：该函数使用bcrypt库比较输入的密码和存储的哈希值。bcrypt库会从哈希值中提取盐值，并使用它来验证密码。&lt;/li>
+&lt;/ol>
+&lt;h5 id="结尾">结尾&lt;/h5>
+&lt;p>这就是用户密码的非明文存储，密码哈希算法可以有效地保护用户密码的安全，有效防止密码泄露，保护用户数据安全。&lt;/p></description></item><item><title>JavaScript02</title><link>https://merthon.github.io/posts/javascript02/</link><pubDate>Thu, 01 Jun 2023 21:44:23 +0800</pubDate><guid>https://merthon.github.io/posts/javascript02/</guid><description>&lt;p>JavaScript02&lt;/p>
+&lt;h2 id="函数补漏">函数（补漏）&lt;/h2>
+&lt;h3 id="回调函数">回调函数&lt;/h3>
+&lt;p>函数作为值来传递以及如何使用函数表达式
+写一个包含三个参数的函数 &lt;code>ask(question, yes, no)&lt;/code>：
+&lt;code>question&lt;/code>
+关于问题的文本
+&lt;code>yes&lt;/code>
+当回答为 “Yes” 时，要运行的脚本
+&lt;code>no&lt;/code>
+当回答为 “No” 时，要运行的脚本
+函数需要提出 &lt;code>question&lt;/code>（问题），并根据用户的回答，调用 &lt;code>yes()&lt;/code> 或 &lt;code>no()&lt;/code>：&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;script&amp;gt;
+&amp;#34;use strict&amp;#34;;
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+function showOk() {
+  alert( &amp;#34;You agreed.&amp;#34; );
+}
+function showCancel() {
+  alert( &amp;#34;You canceled the execution.&amp;#34; );
+}
+// 用法：函数 showOk 和 showCancel 被作为参数传入到 ask
+ask(&amp;#34;Do you agree?&amp;#34;, showOk, showCancel);
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>&lt;code>ask&lt;/code> 的两个参数值 &lt;code>showOk&lt;/code> 和 &lt;code>showCancel&lt;/code> 可以被称为 &lt;strong>回调函数&lt;/strong> 或简称 &lt;strong>回调&lt;/strong>。
+主要思想是我们传递一个函数，并期望在稍后必要时将其“回调”。
+使用函数表达式来编写一个等价的、更简洁的函数：&lt;/p></description></item><item><title>JavaScript01</title><link>https://merthon.github.io/posts/javascript01/</link><pubDate>Tue, 30 May 2023 00:25:58 +0800</pubDate><guid>https://merthon.github.io/posts/javascript01/</guid><description>&lt;p>JavaScript基础&lt;/p>
+&lt;h2 id="变量">变量&lt;/h2>
+&lt;h3 id="变量-1">变量&lt;/h3>
+&lt;p>一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &amp;ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。&lt;/p>
+&lt;h3 id="声明变量">声明变量&lt;/h3>
+&lt;p>使用变量，你需要做的第一步就是创建它 &amp;ndash; 更准确的说，是声明一个变量。声明一个变量的语法是在 &lt;code>var&lt;/code> 或 &lt;code>let&lt;/code> 关键字之后加上这个变量的名字：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName;
+let myAge;
+&lt;/code>&lt;/pre>&lt;h3 id="初始化">初始化&lt;/h3>
+&lt;p>你定义了一个变量，你就能够初始化它。方法如下，在变量名之后跟上一个“=”，然后是数值：&lt;/p>
+&lt;pre tabindex="0">&lt;code>myName = &amp;#39;Chris&amp;#39;;
+myAge = 37;
+&lt;/code>&lt;/pre>&lt;p>也可以像这样在声明变量的时候给变量初始化：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+&lt;/code>&lt;/pre>&lt;h3 id="var和let的区别">var和let的区别&lt;/h3>
+&lt;p>当你使用 &lt;code>var&lt;/code> 时，可以根据需要多次声明相同名称的变量，但是 &lt;code>let&lt;/code> 不能。&lt;/p>
+&lt;pre tabindex="0">&lt;code>var myName = &amp;#39;Chris&amp;#39;;
+var myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>但是以下内容会在第二行引发错误：&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+let myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>可以这样&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myName = &amp;#39;Chris&amp;#39;;
+myName = &amp;#39;Bob&amp;#39;;
+&lt;/code>&lt;/pre>&lt;p>没有理由重新声明变量&lt;/p>
+&lt;h3 id="变量类型">变量类型&lt;/h3>
+&lt;h4 id="number">Number&lt;/h4>
+&lt;p>在变量中存储数字，不论这些数字是像 30（也叫整数）这样，或者像 2.456 这样的小数（也叫做浮点数）。与其他编程语言不同，在 JavaScript 中你不需要声明一个变量的类型。当你给一个变量数字赋值时，不需要用引号括起来。&lt;/p>
+&lt;pre tabindex="0">&lt;code>let myAge = 17;
+&lt;/code>&lt;/pre>&lt;h5 id="数字类型">数字类型&lt;/h5>
+&lt;p>在编程中，即使是人人熟知的最普遍的十进制数，也比你想象的要复杂的多。我们使用不同的术语来描述不同类型的十进制数，例如：&lt;/p></description></item><item><title>CSS</title><link>https://merthon.github.io/posts/css/</link><pubDate>Fri, 26 May 2023 08:44:06 +0800</pubDate><guid>https://merthon.github.io/posts/css/</guid><description>&lt;p>CSS学习笔记
+层叠样式表 (Cascading Style Sheets)&lt;/p>
+&lt;h2 id="语法">语法&lt;/h2>
+&lt;p>每个声明分号结尾&lt;/p>
+&lt;pre tabindex="0">&lt;code>选择器 {
+ 声明1;
+ 声明2;
+ ……
+}
+&lt;/code>&lt;/pre>&lt;h2 id="css导入方式">CSS导入方式&lt;/h2>
+&lt;p>建议从外部引入css&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>内部样式：style标签内写css的代码&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;style&amp;gt;
+ h1{
+ color: red;
+ }
+&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>外部样式&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>链接式（常用）&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;css/style.css&amp;#34;&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>导入式（CSS2.1特有的，现在不常用，了解就行，不建议使用）&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;style&amp;gt;
+ @import &amp;#34;css/style.css&amp;#34;;
+&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>行内样式 标签的style属性&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>优先级：就近原则，行内最近，其它的看位置&lt;/p>
+&lt;h2 id="选择器">选择器&lt;/h2>
+&lt;p>选中页面中的某个或某类元素&lt;/p>
+&lt;h3 id="基本选择器">基本选择器&lt;/h3>
+&lt;p>优先级是id选择器 &amp;gt; 类选择器 &amp;gt; 标签选择器&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>标签选择器：直接用标签名就可选到所有这种标签&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;style&amp;gt;
+ h1 {
+ color: red;
+ }
+&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>类选择器 calss：点加类名&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;style&amp;gt;
+ .class_name {
+ color: red;
+ }
+&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>id 选择器：&lt;code>#&lt;/code>号加id（id必须唯一）&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;style&amp;gt;
+ #id_name {
+ color: red;
+ }
+&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;p>总结一下：点加类名，#加id&lt;/p>
+&lt;h3 id="关系选择器">关系选择器&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>后代选择器：某个元素的所有子孙节点，例如body中的所有p标签&lt;/p></description></item><item><title>HTML</title><link>https://merthon.github.io/posts/html/</link><pubDate>Thu, 25 May 2023 08:33:48 +0800</pubDate><guid>https://merthon.github.io/posts/html/</guid><description>&lt;h1 id="html">HTML&lt;/h1>
+&lt;h2 id="1什么是html">1.什么是HTML？&lt;/h2>
+&lt;p>HTML(HyperText Markup Language，超文本标记语言）是一种用来告知浏览器如何组织页面的&lt;em>&lt;strong>标记语言&lt;/strong>&lt;/em>。HTML 由一系列的组成，这些元素可以用来包围或_标记_不同部分的内容，使其以某种方式呈现或者工作。&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>注意&lt;/strong>：HTML 标签不区分大小写。也就是说，输入标签时既可以使用大写字母也可以使用小写字母。例如，标签&lt;code>&amp;lt;title&amp;gt;&lt;/code> 可以写作 &lt;code>&amp;lt;title&amp;gt;&lt;/code>、&lt;code>&amp;lt;TITLE&amp;gt;&lt;/code>、&lt;code>&amp;lt;Title&amp;gt;&lt;/code>、&lt;code>&amp;lt;TiTlE&amp;gt;&lt;/code> 等，也都可以正常工作。不过，从一致性、可读性来说，最好仅使用小写字母。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="2元素">2.元素&lt;/h2>
+&lt;h3 id="结构">结构&lt;/h3>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;My cat is very grumpy&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>主要部分有：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>开始标签&lt;/strong>（Opening tag）：包含元素的名称，被左、右角括号所包围。开头标签标志着元素开始或开始生效的地方。&lt;/li>
+&lt;li>&lt;strong>内容&lt;/strong>（Content）：元素的内容。&lt;/li>
+&lt;li>&lt;strong>结束标签&lt;/strong>（Closing tag）：与开始标签相似，只是其在元素名之前包含了一个斜杠。这标志着该元素的结束。
+整个元素即指开始标签、内容、结束标签三部分组成的整体。&lt;/li>
+&lt;/ul>
+&lt;h3 id="嵌套元素">嵌套元素&lt;/h3>
+&lt;p>你也可以把元素放到其他元素之中——这被称作&lt;em>嵌套&lt;/em>。&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;My cat is &amp;lt;strong&amp;gt;very&amp;lt;/strong&amp;gt; grumpy.&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;h3 id="块级元素和内联元素">块级元素和内联元素&lt;/h3>
+&lt;ul>
+&lt;li>块级元素在页面中以块的形式展现。一个块级元素出现在它前面的内容之后的新行上。任何跟在块级元素后面的内容也会出现在新的行上。块级元素通常是页面上的结构元素。例如，一个块级元素可能代表标题、段落、列表、导航菜单或页脚。一个块级元素不会嵌套在一个内联元素里面，但它可能嵌套在另一个块级元素里面。&lt;/li>
+&lt;li>内联元素通常出现在块级元素中并环绕文档内容的一小部分，而不是一整个段落或者一组内容。内联元素不会导致文本换行，它通常与文本一起使用。&lt;/li>
+&lt;/ul>
+&lt;h3 id="空元素">空元素&lt;/h3>
+&lt;p>不是所有元素都拥有开始标签、内容和结束标签。一些元素只有一个标签，通常用来在此元素所在位置插入/嵌入一些东西。这些元素被称为空元素。&lt;/p>
+&lt;h3 id="无语义元素">无语义元素&lt;/h3>
+&lt;p>对于一些要组织的项目或要包装的内容，现有的语义元素均不能很好对应。有时候你可能只想将一组元素作为一个单独的实体来修饰来响应单一的用 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Glossary/CSS">CSS&lt;/a> 或 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Glossary/JavaScript">JavaScript&lt;/a>。为了应对这种情况，HTML 提供了 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/div">&lt;code>&amp;lt;div&amp;gt;&lt;/code>&lt;/a> 和 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/span">&lt;code>&amp;lt;span&amp;gt;&lt;/code>&lt;/a> 元素。应配合使用 &lt;a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#class">&lt;code>class&lt;/code>&lt;/a> 属性提供一些标签，使这些元素能易于查询。&lt;/p>
+&lt;h4 id="span标签">&lt;code>&amp;lt;span&amp;gt;&lt;/code>标签&lt;/h4>
+&lt;p>一个内联的（inline）无语义元素，最好只用于无法找到更好的语义元素来包含内容时，或者不想增加特定的含义时。例如：&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;p&amp;gt;国王喝得酩酊大醉，在凌晨 1 点时才回到自己的房间，踉跄地走过门口。&amp;lt;span class=&amp;#34;editor-note&amp;#34;&amp;gt;[编辑批注：此刻舞台灯光应变暗]&amp;lt;/span&amp;gt;.&amp;lt;/p&amp;gt;
+&lt;/code>&lt;/pre>&lt;h4 id="div标签">&lt;code>&amp;lt;div&amp;gt;&lt;/code>标签&lt;/h4>
+&lt;p>一个块级无语义元素，应仅用于找不到更好的块级元素时，或者不想增加特定的意义时。例如，一个电子商务网站页面上有一个一直显示的购物车组件。&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;div class=&amp;#34;shopping-cart&amp;#34;&amp;gt;
+ &amp;lt;h2&amp;gt;购物车&amp;lt;/h2&amp;gt;
+ &amp;lt;ul&amp;gt;
+ &amp;lt;li&amp;gt;
+ &amp;lt;p&amp;gt;&amp;lt;a href=&amp;#34;&amp;#34;&amp;gt;&amp;lt;strong&amp;gt;银耳环&amp;lt;/strong&amp;gt;&amp;lt;/a&amp;gt;：$99.95.&amp;lt;/p&amp;gt;
+ &amp;lt;img src=&amp;#34;../products/3333-0985/&amp;#34; alt=&amp;#34;Silver earrings&amp;#34;&amp;gt;
+ &amp;lt;/li&amp;gt;
+ &amp;lt;li&amp;gt;
+ ...
+ &amp;lt;/li&amp;gt;
+ &amp;lt;/ul&amp;gt;
+ &amp;lt;p&amp;gt;售价：$237.89&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code>&lt;/pre>&lt;h3 id="多媒体和嵌入">多媒体和嵌入&lt;/h3>
+&lt;h4 id="图片">图片&lt;/h4>
+&lt;p>用&lt;code>&amp;lt;img&amp;gt;&lt;/code> 元素来把图片放到网页上。它是一个空元素（它不需要包含文本内容或闭合标签），最少只需要一个 &lt;code>src&lt;/code> （一般读作其全称 *source）*来使其生效。&lt;code>src&lt;/code> 属性包含了指向我们想要引入的图片的路径，可以是相对路径或绝对 URL，就像 &lt;code>&amp;lt;a&amp;gt;&lt;/code>元素的 &lt;code>href&lt;/code> 属性一样。&lt;/p></description></item><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+&lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
+&lt;p>在 src 下创建 config.properties 文件&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">url&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">jdbc:mysql://localhost:3306/db1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">username&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">root&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">password&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">数据库密码&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="12-工具类的抽取">1.2 工具类的抽取&lt;/h5>
+&lt;p>对于 JDBC 工具类的抽取实现步骤有以下几步&lt;/p>
+&lt;ul>
+&lt;li>1.私有构造方法&lt;/li>
+&lt;li>2.声明配置信息变量&lt;/li>
+&lt;li>3.提供静态代码块，读取配置文件信息为变量赋值，注册驱动&lt;/li>
+&lt;li>4.提供获取数据库连接的方法&lt;/li>
+&lt;li>5.提供释放资源的方法&lt;/li>
+&lt;/ul>
+&lt;h5 id="13-代码实现">1.3 代码实现&lt;/h5>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> com.xxxxxchen.JDBC02.utils;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> java.io.InputStream;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> java.sql.*;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> java.util.Properties;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * JDBC工具类
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * @author KevinWilliams*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">JDBCUtils&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**1.私有化构造方法*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#a6e22e">JDBCUtils&lt;/span>(){}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**2.声明所需要的配置变量*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> String url;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> String username;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> String password;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> Connection con;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*3.提供静态代码块，读取配置文件信息为变量赋值，注册驱动*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//读取配置文件信息为变量赋值&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> InputStream is &lt;span style="color:#f92672">=&lt;/span> JDBCUtils.&lt;span style="color:#a6e22e">class&lt;/span>.&lt;span style="color:#a6e22e">getClassLoader&lt;/span>().&lt;span style="color:#a6e22e">getResourceAsStream&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;config.properties&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Properties prop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Properties();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> prop.&lt;span style="color:#a6e22e">load&lt;/span>(is);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//driverClass = prop.getProperty(&amp;#34;driverClass&amp;#34;);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> url &lt;span style="color:#f92672">=&lt;/span> prop.&lt;span style="color:#a6e22e">getProperty&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;url&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> username &lt;span style="color:#f92672">=&lt;/span> prop.&lt;span style="color:#a6e22e">getProperty&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;username&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> password &lt;span style="color:#f92672">=&lt;/span> prop.&lt;span style="color:#a6e22e">getProperty&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;password&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//注册驱动&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Class.forName(driverClass);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (Exception e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**4.提供获取数据库连接的方法*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> Connection &lt;span style="color:#a6e22e">getConnection&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> con &lt;span style="color:#f92672">=&lt;/span> DriverManager.&lt;span style="color:#a6e22e">getConnection&lt;/span>(url,username,password);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> con;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/**5.提供释放资源的方法*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">close&lt;/span>(Connection con, Statement stat, ResultSet sr){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(con&lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> con.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(stat&lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stat.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(sr&lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sr.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">close&lt;/span>(Connection con, Statement stat){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(con&lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> con.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(stat&lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stat.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException e) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> e.&lt;span style="color:#a6e22e">printStackTrace&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-sql-注入攻击">2. SQL 注入攻击&lt;/h4>
+&lt;h5 id="21-什么是-sql-注入攻击">2.1 什么是 sql 注入攻击&lt;/h5>
+&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>https://merthon.github.io/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
+&lt;h4 id="1-概念和本质">1. 概念和本质&lt;/h4>
+&lt;p>JDBC（Java DataBase Connectivity）java 数据库连接，是一种用于执行 SQL 语句的 Java API，可以为多种关系型数据库提供统一访问，由一组用 Java 语言编写的类和接口组成的。本质上是 java 官方提供的一套规范（接口），用于快速实现不同关系型的数据库的连接。&lt;/p>
+&lt;h4 id="2-功能类详解">2. 功能类详解&lt;/h4>
+&lt;h5 id="21-drivermanager">2.1 DriverManager&lt;/h5>
+&lt;p>DriverManager：驱动管理对象&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>注册驱动(告诉程序该使用哪一个数据库驱动)&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>static void registerDriver(Driver driver)：注册与给定的驱动程序 DriverManager&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>写代码使用：Class.forName(&amp;ldquo;com.mysql.jdbc.Driver&amp;rdquo;);&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.mysql.jdbc.Driver&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>通过查看源码发现：在 com.mysql.jdbc.Driver 类中存在静态代码块&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">static&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> { java.&lt;span style="color:#a6e22e">sql&lt;/span>.&lt;span style="color:#a6e22e">DriverManager&lt;/span>.&lt;span style="color:#a6e22e">registerDriver&lt;/span>(&lt;span style="color:#66d9ef">new&lt;/span> Driver());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (SQLException E) { &lt;span style="color:#66d9ef">throw&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> RuntimeException(&lt;span style="color:#e6db74">&amp;#34;Can&amp;#39;t register driver!&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>(&lt;strong>注意：mysql5 之后的驱动 jar 包可以省略注册驱动的步骤。在 jar 包中，存在一个 java.sql.Driver 配置文件，文件中指定了 com.mysql.jdbc.Driver&lt;/strong>)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>获取数据库连接(获取到数据库的连接并返回连接对象)&lt;/p>
+&lt;ul>
+&lt;li>static Connection getConnection(String url, String user, String password);
+&lt;ul>
+&lt;li>返回值：Connection 数据库连接对象&lt;/li>
+&lt;li>参数
+&lt;ul>
+&lt;li>url：指定连接的路径。语法：jdbc:mysql://ip 地址(域名):端口号/数据库名称&lt;/li>
+&lt;li>user：用户名&lt;/li>
+&lt;li>password：密码&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Connection con &lt;span style="color:#f92672">=&lt;/span> DriverManager.&lt;span style="color:#a6e22e">getConnection&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;jdbc:mysql://localhost:3306/db2&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="22-connection">2.2 Connection&lt;/h5>
+&lt;p>Connection：数据库连接对象&lt;/p></description></item><item><title>Java高级：反射（Reflect）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
+&lt;h3 id="1-反射的概述">1. 反射的概述&lt;/h3>
+&lt;p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意属性和方法；
+这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。&lt;/p>
+&lt;p>&lt;strong>一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。&lt;/strong>&lt;/p>
+&lt;h3 id="2-为什么要使用反射">2. 为什么要使用反射&lt;/h3>
+&lt;ul>
+&lt;li>获取任意类的名称、package 信息、所有属性、方法、注解、类型、类加载器等&lt;/li>
+&lt;li>获取任意对象的属性，并且能改变对象的属性&lt;/li>
+&lt;li>调用任意对象的方法&lt;/li>
+&lt;li>判断任意一个对象所属的类&lt;/li>
+&lt;li>实例化任意一个类的对象&lt;/li>
+&lt;li>通过反射我们可以实现动态装配，降低代码的耦合度,动态代理等。&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-获取-class-对象的三种方式">3. 获取 Class 对象的三种方式&lt;/h3>
+&lt;ul>
+&lt;li>类名.class 属性&lt;/li>
+&lt;li>对象名.getClass()方法&lt;/li>
+&lt;li>Class.forName(全类名)方法&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ReflectDemo&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*获取Class类的对象*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第一种方法，forName(全类名)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo1.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第二种,通过Class属性来获取&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass2 &lt;span style="color:#f92672">=&lt;/span> Student.&lt;span style="color:#a6e22e">class&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass2);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第三种，利用对象的getclass&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student student &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Student();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class&lt;span style="color:#f92672">&amp;lt;?&lt;/span> &lt;span style="color:#66d9ef">extends&lt;/span> Student&lt;span style="color:#f92672">&amp;gt;&lt;/span> aClass3 &lt;span style="color:#f92672">=&lt;/span> student.&lt;span style="color:#a6e22e">getClass&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass3);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> String name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name, &lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">age&lt;/span> &lt;span style="color:#f92672">=&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> String &lt;span style="color:#a6e22e">getName&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">setName&lt;/span>(String name) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">getAge&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">setAge&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">age&lt;/span> &lt;span style="color:#f92672">=&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Studt&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;学生上课&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> String &lt;span style="color:#a6e22e">toString&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Student{&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;name=&amp;#39;&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#39;\&amp;#39;&amp;#39;&lt;/span> &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;, age=&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> age &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;}&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-反射获取构造方法">4. 反射获取构造方法&lt;/h3>
+&lt;h4 id="41-class-类获取构造方法对象的方法">4.1 Class 类获取构造方法对象的方法&lt;/h4>
+&lt;ul>
+&lt;li>getConstructors() 返回所有公共构造方法的数组&lt;/li>
+&lt;li>getConstructor(参数和构造方法参数一致)返回单个公共构造方法&lt;/li>
+&lt;li>getDeclaredConstructors() 返回所有构造方法的数组&lt;/li>
+&lt;li>getDeclaredConstructor(参数和构造方法参数一致)返回单个私有构造方法的数组&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method4&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method3&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor&lt;span style="color:#f92672">[]&lt;/span> constructors &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructors&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (Constructor constructor : constructors) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method2&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method1&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor&lt;span style="color:#f92672">[]&lt;/span> constructors1 &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructors&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (Constructor constructor : constructors1) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="42-constructor-类用于创建对象的方法">4.2 Constructor 类用于创建对象的方法&lt;/h4>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>方法名&lt;/th>
+ &lt;th>说明&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>T newInstance(Object&amp;hellip;initargs)&lt;/td>
+ &lt;td>根据指定的构造方法创建对象&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>setAccessible(boolean flag)&lt;/td>
+ &lt;td>设置为 true,表示取消访问检查&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ReflectDemo2&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*Constructor用于创建对象的方法*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//T newInstance（参数）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//method1();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//metho2();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//metho3();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">metho3&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个公共构造方法）空参&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">metho2&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个私有构造方法）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//私有的注意点&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.被private修饰的不能直接使用，需要临时取消访问检查&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> constructor.&lt;span style="color:#a6e22e">setAccessible&lt;/span>(&lt;span style="color:#66d9ef">true&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//4.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;zhangsan&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method1&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个公共构造方法）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;zhangsan&amp;#34;&lt;/span>, 15);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> String name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*--------------------------------------*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//私有的有参构造方法&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;name的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;私有的有参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//公有的无参构造方法&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;公有无参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//共有的有参构造&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name, &lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;name的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;int的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> age);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;公有的有参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5反射获取成员变量">5.反射获取成员变量&lt;/h3>
+&lt;h4 id="51-class-类获取成员变量对象的方法">5.1 Class 类获取成员变量对象的方法&lt;/h4>
+&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
+&lt;p>类加载器就是负责将.class 文件（实际存储到硬盘上的一些理文件）加载到内存中&lt;/p>
+&lt;p>关于类加载时机，用到就加载，不用就不加载&lt;/p>
+&lt;h3 id="2类加载器的过程">2.类加载器的过程&lt;/h3>
+&lt;p>&lt;img src="https://merthon.github.io/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;h5 id="加载">加载：&lt;/h5>
+&lt;ul>
+&lt;li>通过&lt;strong>全限定名&lt;/strong>（包名+类名），获取这个类，准备用流来传输&lt;/li>
+&lt;li>将这个类加载到内存中&lt;/li>
+&lt;li>加载完毕创建一个 class 对象&lt;/li>
+&lt;/ul>
+&lt;h5 id="链接">链接&lt;/h5>
+&lt;ul>
+&lt;li>验证：看文件中信息是否虚拟机规范要求，有无安全隐患&lt;/li>
+&lt;li>准备：初始化静态变量&lt;/li>
+&lt;li>解析：类中使用了其他类，此时要找到对应的类&lt;/li>
+&lt;/ul>
+&lt;h5 id="初始化">初始化&lt;/h5>
+&lt;p>静态变量赋值以及初始化其他资源&lt;/p>
+&lt;h3 id="3类加载的分类">3.类加载的分类&lt;/h3>
+&lt;ul>
+&lt;li>启动类加载器（BootstrapClassLoader)：虚拟机内置的&lt;/li>
+&lt;li>平台类加载器（PlatformClassLoader）：负责加载 JDK 一些特殊模块&lt;/li>
+&lt;li>系统类加载器（SystemClassLoader）：负责加载用户类路径上所指定的类库&lt;/li>
+&lt;/ul>
+&lt;h3 id="4双亲委派模型">4.双亲委派模型&lt;/h3>
+&lt;p>​ ClassLoader 的双亲委派模型中，各个 ClassLoader 之间的关系是通过组合关系来复用父加载器。当一个 ClassLoader 收到来类加载的请求，首先把该请求委派该父类 ClassLoader 处理，当父类 ClassLoader 无法处理时，才由当前类 ClassLoader 来处理。对于每个 ClassLoader 这个方式，也就是父类的优先于子类处理类加载的请求，那么也就是说任何一个请求第一次处理的便是最顶层的 Bootstrap ClassLoader(启动类加载器)。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ClassLoaderDemo2&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系统类加载器getSystemClassLoader()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader systemClassLoader &lt;span style="color:#f92672">=&lt;/span> ClassLoader.&lt;span style="color:#a6e22e">getSystemClassLoader&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系统类加载器的父加载器getParent() ---平台类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader1 &lt;span style="color:#f92672">=&lt;/span> systemClassLoader.&lt;span style="color:#a6e22e">getParent&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系平台类加载器的父加载器getParent() ---启动类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader2 &lt;span style="color:#f92672">=&lt;/span> classLoader1.&lt;span style="color:#a6e22e">getParent&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(systemClassLoader);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//jdk.internal.loader.ClassLoaders$AppClassLoader@2437c6dc&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(classLoader1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//jdk.internal.loader.ClassLoaders$PlatformClassLoader@880ec60&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(classLoader2);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//null&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5类加载器常用方法">5.类加载器常用方法&lt;/h3>
+&lt;ul>
+&lt;li>static ClassLoader getSystemClassloader() 获取一个系统类加载器&lt;/li>
+&lt;li>InputStream getResourceAsStream(String name) 加载某一个资源文件&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ClassLoaderDemo1&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> IOException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//ClassLoader getSystemClassloader() 获取一个类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//InputStream getResourceAsStream(String name) 加载某一个资源文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取一个类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader &lt;span style="color:#f92672">=&lt;/span> ClassLoader.&lt;span style="color:#a6e22e">getSystemClassLoader&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2.利用加载器加载某一个资源文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//参数就是文件路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//返回值是字节流&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> InputStream is &lt;span style="color:#f92672">=&lt;/span> classLoader.&lt;span style="color:#a6e22e">getResourceAsStream&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;prop.properties&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//创建properties对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Properties prop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Properties();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> prop.&lt;span style="color:#a6e22e">load&lt;/span>(is);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(prop);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//这里打的就是prop.properties配置里面的内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//释放资源&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> is.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Linux下dpkg，apt Get，yum和rpm命令的区别</title><link>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</link><pubDate>Wed, 13 Apr 2022 09:56:02 +0800</pubDate><guid>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</guid><description>&lt;h3 id="1linux-派系">1.Linux 派系&lt;/h3>
+&lt;ul>
+&lt;li>RedHat 系列：RedHat，CentOS，Fedora 等&lt;/li>
+&lt;li>Debian 系列：Debian，Ubuntu 等&lt;/li>
+&lt;/ul>
+&lt;h3 id="2redhat-系列">2.RedHat 系列&lt;/h3>
+&lt;h4 id="rpm">rpm&lt;/h4>
+&lt;p>rpm 是由 RedHat 开发的软年包管理方式，使用 rpm 我们可以方便的进行软件的安装，查询，卸载，升级等工作。常见的安装包格式 rpm 包，安装 rpm 的命令是”rpm -参数 安装包名“。如：&lt;/p>
+&lt;pre tabindex="0">&lt;code>安装命令：
+
+sudo rpm -ivh 安装包.rpm
+
+卸载命令：
+
+sudo rpm -e 安装包.rpm
+&lt;/code>&lt;/pre>&lt;p>但是 rpm 软件包之间的依赖性问题往往会很繁琐，尤其是软件由多个 rpm 包组成时，所以 yum 的优势就体现出来了。&lt;/p>
+&lt;h4 id="yum">yum&lt;/h4>
+&lt;p>Yum（全称为 Yellow dog Updater, Modified）是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器。基於 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软体包，无须繁琐地一次次下载、安装。yum 提供了查找、安装、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。弊端是必须联网，且源不出问题，yum 的源就相对脆弱一些。&lt;/p>
+&lt;pre tabindex="0">&lt;code>yum [options] [command] [package ...]
+&lt;/code>&lt;/pre>&lt;h5 id="常用命令">常用命令：&lt;/h5>
+&lt;ul>
+&lt;li>列出所有可更新的软件清单命令：&lt;strong>yum check-update&lt;/strong>&lt;/li>
+&lt;li>更新所有软件命令：&lt;strong>yum update&lt;/strong>&lt;/li>
+&lt;li>仅安装指定的软件命令：&lt;strong>yum install &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>仅更新指定的软件命令：&lt;strong>yum update &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>列出所有可安裝的软件清单命令：&lt;strong>yum list&lt;/strong>&lt;/li>
+&lt;li>删除软件包命令：&lt;strong>yum remove &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>查找软件包命令：&lt;strong>yum search &lt;!-- raw HTML omitted -->&lt;/strong>&lt;/li>
+&lt;li>清除缓存命令:
+&lt;ul>
+&lt;li>&lt;strong>yum clean packages&lt;/strong>: 清除缓存目录下的软件包&lt;/li>
+&lt;li>&lt;strong>yum clean headers&lt;/strong>: 清除缓存目录下的 headers&lt;/li>
+&lt;li>&lt;strong>yum clean oldheaders&lt;/strong>: 清除缓存目录下旧的 headers&lt;/li>
+&lt;li>&lt;strong>yum clean, yum clean all (= yum clean packages; yum clean oldheaders)&lt;/strong> :清除缓存目录下的软件包及旧的 headers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3debian-系列">3.Debian 系列&lt;/h3>
+&lt;h4 id="dpkg">dpkg&lt;/h4>
+&lt;p>dpkg 是 Debian Package 的简写。为 Debian 专门开发的套件管理系统，方便软件的安装、更新及移除。所有源自 Debian 的 Linux 发行版都使用 dpkg，例如 Ubuntu、Knoppix 等。&lt;/p></description></item><item><title>设置Windows系统的cmd命令行终端的代理</title><link>https://merthon.github.io/posts/%E8%AE%BE%E7%BD%AEwindows%E7%B3%BB%E7%BB%9F%E7%9A%84cmd%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BB%A3%E7%90%86/</link><pubDate>Sun, 06 Feb 2022 21:06:42 +0800</pubDate><guid>https://merthon.github.io/posts/%E8%AE%BE%E7%BD%AEwindows%E7%B3%BB%E7%BB%9F%E7%9A%84cmd%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BB%A3%E7%90%86/</guid><description/></item></channel></rss>

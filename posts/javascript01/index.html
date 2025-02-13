@@ -1,0 +1,68 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>JavaScript01</title>
+<meta name=description content="JavaScript基础
+变量 变量 一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。
+声明变量 使用变量，你需要做的第一步 …"><meta name=keywords content='blog,hugo,JavaScript'><meta property="og:url" content="https://merthon.github.io/posts/javascript01/"><meta property="og:type" content="website"><meta property="og:title" content="JavaScript01"><meta property="og:description" content="JavaScript基础
+变量 变量 一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。
+声明变量 使用变量，你需要做的第一步 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="JavaScript01"><meta name=twitter:description content="JavaScript基础
+变量 变量 一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。
+声明变量 使用变量，你需要做的第一步 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/javascript01/"><meta property="twitter:url" content="https://merthon.github.io/posts/javascript01/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/javascript01/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>JavaScript01</h1><small role=doc-subtitle></small><p class=post-date>May 30, 2023</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/javascript>JavaScript</a></li></ul></div><div class=post-content><p>JavaScript基础</p><h2 id=变量>变量</h2><h3 id=变量-1>变量</h3><p>一个变量，就是一个用于存放数值的容器。这个数值可能是一个用于累加计算的数字，或者是一个句子中的字符串。变量的独特之处在于它存放的数值是可以改变的，它们能够存储任何的东西 &ndash; 不只是字符串和数字。变量可以存储更复杂的数据，甚至是函数。</p><h3 id=声明变量>声明变量</h3><p>使用变量，你需要做的第一步就是创建它 &ndash; 更准确的说，是声明一个变量。声明一个变量的语法是在 <code>var</code> 或 <code>let</code> 关键字之后加上这个变量的名字：</p><pre tabindex=0><code>let myName;
+let myAge;
+</code></pre><h3 id=初始化>初始化</h3><p>你定义了一个变量，你就能够初始化它。方法如下，在变量名之后跟上一个“=”，然后是数值：</p><pre tabindex=0><code>myName = &#39;Chris&#39;;
+myAge = 37;
+</code></pre><p>也可以像这样在声明变量的时候给变量初始化：</p><pre tabindex=0><code>let myName = &#39;Chris&#39;;
+</code></pre><h3 id=var和let的区别>var和let的区别</h3><p>当你使用 <code>var</code> 时，可以根据需要多次声明相同名称的变量，但是 <code>let</code> 不能。</p><pre tabindex=0><code>var myName = &#39;Chris&#39;;
+var myName = &#39;Bob&#39;;
+</code></pre><p>但是以下内容会在第二行引发错误：</p><pre tabindex=0><code>let myName = &#39;Chris&#39;;
+let myName = &#39;Bob&#39;;
+</code></pre><p>可以这样</p><pre tabindex=0><code>let myName = &#39;Chris&#39;;
+myName = &#39;Bob&#39;;
+</code></pre><p>没有理由重新声明变量</p><h3 id=变量类型>变量类型</h3><h4 id=number>Number</h4><p>在变量中存储数字，不论这些数字是像 30（也叫整数）这样，或者像 2.456 这样的小数（也叫做浮点数）。与其他编程语言不同，在 JavaScript 中你不需要声明一个变量的类型。当你给一个变量数字赋值时，不需要用引号括起来。</p><pre tabindex=0><code>let myAge =  17;
+</code></pre><h5 id=数字类型>数字类型</h5><p>在编程中，即使是人人熟知的最普遍的十进制数，也比你想象的要复杂的多。我们使用不同的术语来描述不同类型的十进制数，例如：</p><ul><li><strong>整数</strong> 就是整数，例如 10, 400, 或者 -5.</li><li><strong>浮点数</strong> (浮点) 有小数点或小数位，例如 12.5，和 56.7786543。</li><li><strong>双精度</strong>双精度是一种特定类型的浮点数，它们具有比标准浮点数更高的精度（这意味着它们精确到更大的小数位数）。
+不同类型的数字系统！十进制是基数 10（意味着它在每列使用 0-9），但是我们也有这样的东西：</li><li><strong>二进制</strong> — 计算机的最基础语言—— 0 和 1</li><li><strong>八进制</strong> — 基数 8，每列使用 0-7</li><li><strong>十六进制</strong> — 基数 16，每列使用 0-9，然后使用 a-f。在 CSS 中设置颜色时，可能会遇到这些数字。</li></ul><h5 id=算数运算符>算数运算符</h5><p>算术运算符是我们用来做和的基本运算符：
+<code>+加 -减 *乘 /除 %取余 **幂</code></p><h5 id=运算符优先级>运算符优先级</h5><p>一些运算符将在计算算式（在编程中称为表达式）的结果时先于其他运算符被执行。JavaScript 中的运算符优先级与学校的数学课程相同 - 乘法和除法总是先完成，然后是加法和减法（总是从左到右进行计算）。</p><h5 id=自增自减>自增自减</h5><p>反复把一个变量加 1 或减 1。这可以方便地使用增量（<code>++</code>）和递减（ <code>--</code> ）运算符来完成。</p><h5 id=赋值运算符>赋值运算符</h5><p>赋值运算符是向变量分配值的运算符。我们已经使用了最基本的一个很多次了：<code>=</code>，它只是将右边的值赋给左边的变量，即：</p><pre tabindex=0><code>let x = 3; // x 的值是 3
+let y = 4; // y 的值是 4
+x = y; // x 和 y 有相同的值，4
+</code></pre><p>但是还有一些更复杂的类型，它们提供了有用的快捷方式，可以使您的代码更加清洁和高效。最常见的如下：</p><pre tabindex=0><code>+= 加法赋值 右边的数值加上左边的变量，然后再返回新的变量。
+-= 减法赋值 左边的变量减去右边的数值，然后再返回新的变量。
+*= 乘法赋值 左边的变量乘以右边的数值，然后再返回新的变量。
+/= 除法赋值 左边的变量除以右边的数值，然后再返回新的变量。
+</code></pre><h5 id=比较运算符>比较运算符</h5><p>有时，我们将要运行真/假测试，然后根据该测试的结果进行相应的操作 - 为此，我们使用比较运算符。</p><table><thead><tr><th>运算符</th><th>名称</th><th>作用</th></tr></thead><tbody><tr><td><code>===</code></td><td>严格等于</td><td>测试左右值是否相同</td></tr><tr><td><code>!==</code></td><td>严格不等于</td><td>测试左右值是否<strong>不</strong>相同</td></tr><tr><td><code>&lt;</code></td><td>小于</td><td>测试左值是否小于右值。</td></tr><tr><td><code>></code></td><td>大于</td><td>测试左值是否大于右值</td></tr><tr><td><code>&lt;=</code></td><td>小于或等于</td><td>测试左值是否小于或等于右值。</td></tr><tr><td><code>>=</code></td><td>大于或等于</td><td>测试左值是否大于或等于正确值</td></tr><tr><td>它们都返回 <code>true</code>/<code>false</code> 值</td><td></td><td></td></tr></tbody></table><h4 id=string>String</h4><p>字符串是文本的一部分。当你给一个变量赋值为字符串时，你需要用单引号或者双引号把值给包起来，否则 JavaScript 将会把这个字符串值理解成别的变量名。</p><pre tabindex=0><code>let dolphinGoodbye = &#39;so long&#39;;
+</code></pre><h5 id=连接字符串>连接字符串</h5><p>连接是一个很花哨的编程词，意思是“连接在一起”。在 JavaScript 中连接字符串使用加号 (+) 操作符，我们也用它来将数字加在一起：</p><pre tabindex=0><code>let one = &#39;Hello, &#39;;
+let two = &#39;how are you?&#39;;
+let joined = one + two;
+joined;
+</code></pre><h5 id=字符串方法>字符串方法</h5><ul><li>获取长度：你可以很轻松的使用 <code>length</code> 属性。</li><li>检索特定字符串字符：以使用方括号表示法返回字符串中的任何字符 - 这意味着您可以在变量名的末尾包含方括号（[ ]）。在方括号内，您可以包含要返回的字符的编号</li><li>查找：可以使用<code>indexOf()</code>方法来完成</li><li>知道字符串中的子字符串开始的位置，以及想要结束的字符时，`slice()可以用来提取它</li><li>大小写：字符串方法<code>toLowerCase()</code>和<code>toUpperCase()</code>字符串并将所有字符分别转换为小写或大写。例如，如果要在将数据存储在数据库中之前对所有用户输入的数据进行规范化，这可能非常有用。</li><li>替换：可以使用<code>replace()</code>方法将字符串中的一个子字符串替换为另一个子字符串。</li></ul><h4 id=boolean>Boolean</h4><p>Boolean 的值有 2 种：true 或 false。它们通常被用于在适当的代码之后，测试条件是否成立。</p><pre tabindex=0><code>let iAmAlive = true;
+</code></pre><p>然而实际上通常是以下用法：</p><pre tabindex=0><code>let test = 6 &lt; 3;
+</code></pre><h4 id=array>Array</h4><h5 id=基本>基本</h5><p>数组是一个单个对象，其中包含很多值，方括号括起来，并用逗号分隔。</p><pre tabindex=0><code>let myNameArray = [&#39;Chris&#39;, &#39;Bob&#39;, &#39;Jim&#39;];
+let myNumberArray = [10,15,40];
+</code></pre><p>当数组被定义后，您可以使用如下所示的语法来访问各自的值，例如下行：</p><pre tabindex=0><code>myNameArray[0]; // should return &#39;Chris&#39;
+myNumberArray[2]; // should return 40
+</code></pre><p>此处的方括号包含一个索引值，该值指定要返回的值的位置。您可能已经注意到，计算机从 0 开始计数，而不是像我们人类那样的 1。</p><h5 id=创建数组>创建数组</h5><p>数组由方括号构成，其中包含用逗号分隔的元素列表。</p><pre tabindex=0><code>let shopping = [&#39;bread&#39;, &#39;milk&#39;, &#39;cheese&#39;, &#39;hummus&#39;, &#39;noodles&#39;];
+shopping;
+</code></pre><p>请注意，数组中包含数组的话称之为多维数组。您可以通过将两组方括号链接在一起来访问数组内的另一个数组。</p><pre tabindex=0><code>random[2][2];
+</code></pre><p><code>length</code> 获取数组长度</p><h5 id=有用的数组方法>有用的数组方法</h5><p>1.字符串和数组之间转化
+一个包含在一个长长的字符串中的原始数据，您可能希望将有用的项目分成更有用的表单，然后对它们进行处理，例如将它们显示在数据表中。为此，我们可以使用 <code>split()</code> 方法。在其最简单的形式中，这需要一个参数，您要将字符串分隔的字符，并返回分隔符之间的子串，作为数组中的项。</p><pre tabindex=0><code>let myData = &#39;Manchester,London,Liverpool,Birmingham,Leeds,Carlisle&#39;;
+</code></pre><p>现在我们用每个逗号分隔它：</p><pre tabindex=0><code>let myArray = myData.split(&#39;,&#39;);
+myArray;
+</code></pre><p>最后，尝试找到新数组的长度，并从中检索一些项目：</p><pre tabindex=0><code>myArray.length;
+myArray[0]; // the first item in the array
+myArray[1]; // the second item in the array
+myArray[myArray.length-1]; // the last item in the array
+</code></pre><p>您也可以使用 <code>join()</code> 方法进行相反的操作。尝试以下：</p><pre tabindex=0><code>let myNewString = myArray.join(&#39;,&#39;);
+myNewString;
+</code></pre><p>将数组转换为字符串的另一种方法是使用 <code>toString()</code>方法。 <code>toString()</code> 可以比 <code>join()</code> 更简单，因为它不需要一个参数，但更有限制。使用 <code>join()</code> 可以指定不同的分隔符</p><pre tabindex=0><code>let dogNames = [&#34;Rocket&#34;,&#34;Flash&#34;,&#34;Bella&#34;,&#34;Slugger&#34;];
+dogNames.toString(); //Rocket,Flash,Bella,Slugger
+</code></pre><p>2.添加和删除数组项
+要在数组末尾添加或删除一个项目，我们可以使用 <code>push()</code> 和 <code>pop()</code></p><pre tabindex=0><code>myArray.push(&#39;Cardiff&#39;);
+myArray;
+myArray.push(&#39;Bradford&#39;, &#39;Brighton&#39;);
+myArray;
+</code></pre><pre tabindex=0><code>myArray.pop();
+</code></pre><p><code>unshift</code> <code>shift</code> 它们分别作用于数组的开始，而不是结尾。</p><h4 id=object>Object</h4><p>对象是现实生活中的模型的一种代码结构。您可以有一个简单的对象，代表一个停车场，并包含有关其宽度和长度的信息，或者您可以有一个代表一个人的对象，并包含有关他们的名字，身高，体重，他们说什么语言，如何说 你好，他们，等等。</p><pre tabindex=0><code>let dog = { name : &#39;Spot&#39;, breed : &#39;Dalmatian&#39; };
+</code></pre><p>要检索存储在对象中的信息，可以使用以下语法：</p><pre tabindex=0><code>dog.name
+</code></pre><h4 id=动态类型>动态类型</h4><p>JavaScript 是一种“动态类型语言”，这意味着不同于其他一些语言 (译者注：如 C、JAVA)，您不需要指定变量将包含什么数据类型（例如 number 或 string）</p></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><a href=#变量>变量</a><ul><li><a href=#变量-1>变量</a></li><li><a href=#声明变量>声明变量</a></li><li><a href=#初始化>初始化</a></li><li><a href=#var和let的区别>var和let的区别</a></li><li><a href=#变量类型>变量类型</a></li></ul></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2023 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

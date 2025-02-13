@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java高级 on Merthon</title><link>https://merthon.github.io/tags/java%E9%AB%98%E7%BA%A7/</link><description>Recent content in Java高级 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 08 Jul 2022 19:28:51 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/java%E9%AB%98%E7%BA%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>Java高级：反射（Reflect）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
+&lt;h3 id="1-反射的概述">1. 反射的概述&lt;/h3>
+&lt;p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
+对于任意一个对象，都能够调用它的任意属性和方法；
+这种动态获取信息以及动态调用对象方法的功能称为 Java 语言的反射机制。&lt;/p>
+&lt;p>&lt;strong>一句话总结：反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。&lt;/strong>&lt;/p>
+&lt;h3 id="2-为什么要使用反射">2. 为什么要使用反射&lt;/h3>
+&lt;ul>
+&lt;li>获取任意类的名称、package 信息、所有属性、方法、注解、类型、类加载器等&lt;/li>
+&lt;li>获取任意对象的属性，并且能改变对象的属性&lt;/li>
+&lt;li>调用任意对象的方法&lt;/li>
+&lt;li>判断任意一个对象所属的类&lt;/li>
+&lt;li>实例化任意一个类的对象&lt;/li>
+&lt;li>通过反射我们可以实现动态装配，降低代码的耦合度,动态代理等。&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-获取-class-对象的三种方式">3. 获取 Class 对象的三种方式&lt;/h3>
+&lt;ul>
+&lt;li>类名.class 属性&lt;/li>
+&lt;li>对象名.getClass()方法&lt;/li>
+&lt;li>Class.forName(全类名)方法&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ReflectDemo&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*获取Class类的对象*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第一种方法，forName(全类名)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo1.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第二种,通过Class属性来获取&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass2 &lt;span style="color:#f92672">=&lt;/span> Student.&lt;span style="color:#a6e22e">class&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass2);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//第三种，利用对象的getclass&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student student &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Student();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class&lt;span style="color:#f92672">&amp;lt;?&lt;/span> &lt;span style="color:#66d9ef">extends&lt;/span> Student&lt;span style="color:#f92672">&amp;gt;&lt;/span> aClass3 &lt;span style="color:#f92672">=&lt;/span> student.&lt;span style="color:#a6e22e">getClass&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(aClass3);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> String name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name, &lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">age&lt;/span> &lt;span style="color:#f92672">=&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> String &lt;span style="color:#a6e22e">getName&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">setName&lt;/span>(String name) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">=&lt;/span> name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">getAge&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">setAge&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">age&lt;/span> &lt;span style="color:#f92672">=&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Studt&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;学生上课&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">@Override&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> String &lt;span style="color:#a6e22e">toString&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Student{&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;name=&amp;#39;&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#39;\&amp;#39;&amp;#39;&lt;/span> &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;, age=&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> age &lt;span style="color:#f92672">+&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;}&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-反射获取构造方法">4. 反射获取构造方法&lt;/h3>
+&lt;h4 id="41-class-类获取构造方法对象的方法">4.1 Class 类获取构造方法对象的方法&lt;/h4>
+&lt;ul>
+&lt;li>getConstructors() 返回所有公共构造方法的数组&lt;/li>
+&lt;li>getConstructor(参数和构造方法参数一致)返回单个公共构造方法&lt;/li>
+&lt;li>getDeclaredConstructors() 返回所有构造方法的数组&lt;/li>
+&lt;li>getDeclaredConstructor(参数和构造方法参数一致)返回单个私有构造方法的数组&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method4&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method3&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor&lt;span style="color:#f92672">[]&lt;/span> constructors &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructors&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (Constructor constructor : constructors) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method2&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method1&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor&lt;span style="color:#f92672">[]&lt;/span> constructors1 &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructors&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (Constructor constructor : constructors1) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(constructor);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="42-constructor-类用于创建对象的方法">4.2 Constructor 类用于创建对象的方法&lt;/h4>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>方法名&lt;/th>
+ &lt;th>说明&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>T newInstance(Object&amp;hellip;initargs)&lt;/td>
+ &lt;td>根据指定的构造方法创建对象&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>setAccessible(boolean flag)&lt;/td>
+ &lt;td>设置为 true,表示取消访问检查&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ReflectDemo2&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*Constructor用于创建对象的方法*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//T newInstance（参数）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//method1();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//metho2();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//metho3();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">metho3&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个公共构造方法）空参&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">metho2&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个私有构造方法）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getDeclaredConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//私有的注意点&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.被private修饰的不能直接使用，需要临时取消访问检查&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> constructor.&lt;span style="color:#a6e22e">setAccessible&lt;/span>(&lt;span style="color:#66d9ef">true&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//4.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;zhangsan&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">method1&lt;/span>() &lt;span style="color:#66d9ef">throws&lt;/span> ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取Class类的对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Class aClass &lt;span style="color:#f92672">=&lt;/span> Class.&lt;span style="color:#a6e22e">forName&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;com.chen.reflectdemo2.Student&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2获取Constructor构造方法对象 （演示返回单个公共构造方法）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Constructor constructor &lt;span style="color:#f92672">=&lt;/span> aClass.&lt;span style="color:#a6e22e">getConstructor&lt;/span>(String.&lt;span style="color:#a6e22e">class&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>.&lt;span style="color:#a6e22e">class&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//3.newInstance来创建对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Student zhangsan &lt;span style="color:#f92672">=&lt;/span> (Student) constructor.&lt;span style="color:#a6e22e">newInstance&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;zhangsan&amp;#34;&lt;/span>, 15);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(zhangsan);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> String name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> age;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/*--------------------------------------*/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//私有的有参构造方法&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;name的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;私有的有参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//公有的无参构造方法&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;公有无参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//共有的有参构造&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(String name, &lt;span style="color:#66d9ef">int&lt;/span> age) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;name的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> name &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#e6db74">&amp;#34;int的值为&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> age);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;公有的有参构造方法&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5反射获取成员变量">5.反射获取成员变量&lt;/h3>
+&lt;h4 id="51-class-类获取成员变量对象的方法">5.1 Class 类获取成员变量对象的方法&lt;/h4>
+&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
+&lt;p>类加载器就是负责将.class 文件（实际存储到硬盘上的一些理文件）加载到内存中&lt;/p>
+&lt;p>关于类加载时机，用到就加载，不用就不加载&lt;/p>
+&lt;h3 id="2类加载器的过程">2.类加载器的过程&lt;/h3>
+&lt;p>&lt;img src="https://merthon.github.io/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;h5 id="加载">加载：&lt;/h5>
+&lt;ul>
+&lt;li>通过&lt;strong>全限定名&lt;/strong>（包名+类名），获取这个类，准备用流来传输&lt;/li>
+&lt;li>将这个类加载到内存中&lt;/li>
+&lt;li>加载完毕创建一个 class 对象&lt;/li>
+&lt;/ul>
+&lt;h5 id="链接">链接&lt;/h5>
+&lt;ul>
+&lt;li>验证：看文件中信息是否虚拟机规范要求，有无安全隐患&lt;/li>
+&lt;li>准备：初始化静态变量&lt;/li>
+&lt;li>解析：类中使用了其他类，此时要找到对应的类&lt;/li>
+&lt;/ul>
+&lt;h5 id="初始化">初始化&lt;/h5>
+&lt;p>静态变量赋值以及初始化其他资源&lt;/p>
+&lt;h3 id="3类加载的分类">3.类加载的分类&lt;/h3>
+&lt;ul>
+&lt;li>启动类加载器（BootstrapClassLoader)：虚拟机内置的&lt;/li>
+&lt;li>平台类加载器（PlatformClassLoader）：负责加载 JDK 一些特殊模块&lt;/li>
+&lt;li>系统类加载器（SystemClassLoader）：负责加载用户类路径上所指定的类库&lt;/li>
+&lt;/ul>
+&lt;h3 id="4双亲委派模型">4.双亲委派模型&lt;/h3>
+&lt;p>​ ClassLoader 的双亲委派模型中，各个 ClassLoader 之间的关系是通过组合关系来复用父加载器。当一个 ClassLoader 收到来类加载的请求，首先把该请求委派该父类 ClassLoader 处理，当父类 ClassLoader 无法处理时，才由当前类 ClassLoader 来处理。对于每个 ClassLoader 这个方式，也就是父类的优先于子类处理类加载的请求，那么也就是说任何一个请求第一次处理的便是最顶层的 Bootstrap ClassLoader(启动类加载器)。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ClassLoaderDemo2&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系统类加载器getSystemClassLoader()&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader systemClassLoader &lt;span style="color:#f92672">=&lt;/span> ClassLoader.&lt;span style="color:#a6e22e">getSystemClassLoader&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系统类加载器的父加载器getParent() ---平台类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader1 &lt;span style="color:#f92672">=&lt;/span> systemClassLoader.&lt;span style="color:#a6e22e">getParent&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//获取系平台类加载器的父加载器getParent() ---启动类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader2 &lt;span style="color:#f92672">=&lt;/span> classLoader1.&lt;span style="color:#a6e22e">getParent&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(systemClassLoader);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//jdk.internal.loader.ClassLoaders$AppClassLoader@2437c6dc&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(classLoader1);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//jdk.internal.loader.ClassLoaders$PlatformClassLoader@880ec60&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(classLoader2);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//null&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5类加载器常用方法">5.类加载器常用方法&lt;/h3>
+&lt;ul>
+&lt;li>static ClassLoader getSystemClassloader() 获取一个系统类加载器&lt;/li>
+&lt;li>InputStream getResourceAsStream(String name) 加载某一个资源文件&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ClassLoaderDemo1&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(String&lt;span style="color:#f92672">[]&lt;/span> args) &lt;span style="color:#66d9ef">throws&lt;/span> IOException {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//ClassLoader getSystemClassloader() 获取一个类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//InputStream getResourceAsStream(String name) 加载某一个资源文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//1.获取一个类加载器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ClassLoader classLoader &lt;span style="color:#f92672">=&lt;/span> ClassLoader.&lt;span style="color:#a6e22e">getSystemClassLoader&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//2.利用加载器加载某一个资源文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//参数就是文件路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//返回值是字节流&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> InputStream is &lt;span style="color:#f92672">=&lt;/span> classLoader.&lt;span style="color:#a6e22e">getResourceAsStream&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;prop.properties&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//创建properties对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Properties prop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Properties();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> prop.&lt;span style="color:#a6e22e">load&lt;/span>(is);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> System.&lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">println&lt;/span>(prop);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//这里打的就是prop.properties配置里面的内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//释放资源&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> is.&lt;span style="color:#a6e22e">close&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

@@ -1,0 +1,145 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>JDBC_02</title>
+<meta name=description content="1. JDBC 工具类的抽取 1.1 配置文件 在 src 下创建 config.properties 文件
+driverClass=com.mysql.jdbc.Driver url=jdbc:mysql://localhost:3306/db1 username=root password=数据库密码 1.2 工具 …"><meta name=keywords content='blog,hugo,MySQL,java,笔记'><meta property="og:url" content="https://merthon.github.io/posts/jdbc_02/"><meta property="og:type" content="website"><meta property="og:title" content="JDBC_02"><meta property="og:description" content="1. JDBC 工具类的抽取 1.1 配置文件 在 src 下创建 config.properties 文件
+driverClass=com.mysql.jdbc.Driver url=jdbc:mysql://localhost:3306/db1 username=root password=数据库密码 1.2 工具 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="JDBC_02"><meta name=twitter:description content="1. JDBC 工具类的抽取 1.1 配置文件 在 src 下创建 config.properties 文件
+driverClass=com.mysql.jdbc.Driver url=jdbc:mysql://localhost:3306/db1 username=root password=数据库密码 1.2 工具 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/jdbc_02/"><meta property="twitter:url" content="https://merthon.github.io/posts/jdbc_02/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/jdbc_02/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>JDBC_02</h1><small role=doc-subtitle></small><p class=post-date>July 27, 2022</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/mysql>MySQL</a></li><li class=post-tag><a href=https://merthon.github.io/tags/java>java</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0>笔记</a></li></ul></div><div class=post-content><h4 id=1-jdbc-工具类的抽取>1. JDBC 工具类的抽取</h4><h5 id=11-配置文件>1.1 配置文件</h5><p>在 src 下创建 config.properties 文件</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-properties data-lang=properties><span style=display:flex><span><span style=color:#a6e22e>driverClass</span><span style=color:#f92672>=</span><span style=color:#e6db74>com.mysql.jdbc.Driver</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>url</span><span style=color:#f92672>=</span><span style=color:#e6db74>jdbc:mysql://localhost:3306/db1</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>username</span><span style=color:#f92672>=</span><span style=color:#e6db74>root</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>password</span><span style=color:#f92672>=</span><span style=color:#e6db74>数据库密码</span>
+</span></span></code></pre></div><h5 id=12-工具类的抽取>1.2 工具类的抽取</h5><p>对于 JDBC 工具类的抽取实现步骤有以下几步</p><ul><li>1.私有构造方法</li><li>2.声明配置信息变量</li><li>3.提供静态代码块，读取配置文件信息为变量赋值，注册驱动</li><li>4.提供获取数据库连接的方法</li><li>5.提供释放资源的方法</li></ul><h5 id=13-代码实现>1.3 代码实现</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> com.xxxxxchen.JDBC02.utils;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.InputStream;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.sql.*;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.util.Properties;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/**
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * JDBC工具类
+</span></span></span><span style=display:flex><span><span style=color:#75715e> *
+</span></span></span><span style=display:flex><span><span style=color:#75715e> * @author KevinWilliams*/</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>JDBCUtils</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**1.私有化构造方法*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#a6e22e>JDBCUtils</span>(){}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**2.声明所需要的配置变量*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String url;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String username;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> String password;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> Connection con;
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/*3.提供静态代码块，读取配置文件信息为变量赋值，注册驱动*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>//读取配置文件信息为变量赋值</span>
+</span></span><span style=display:flex><span>            InputStream is <span style=color:#f92672>=</span> JDBCUtils.<span style=color:#a6e22e>class</span>.<span style=color:#a6e22e>getClassLoader</span>().<span style=color:#a6e22e>getResourceAsStream</span>(<span style=color:#e6db74>&#34;config.properties&#34;</span>);
+</span></span><span style=display:flex><span>            Properties prop <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Properties();
+</span></span><span style=display:flex><span>            prop.<span style=color:#a6e22e>load</span>(is);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>//driverClass = prop.getProperty(&#34;driverClass&#34;);</span>
+</span></span><span style=display:flex><span>            url <span style=color:#f92672>=</span> prop.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;url&#34;</span>);
+</span></span><span style=display:flex><span>            username <span style=color:#f92672>=</span> prop.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;username&#34;</span>);
+</span></span><span style=display:flex><span>            password <span style=color:#f92672>=</span> prop.<span style=color:#a6e22e>getProperty</span>(<span style=color:#e6db74>&#34;password&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>//注册驱动</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// Class.forName(driverClass);</span>
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (Exception e) {
+</span></span><span style=display:flex><span>            e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**4.提供获取数据库连接的方法*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> Connection <span style=color:#a6e22e>getConnection</span>(){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>            con <span style=color:#f92672>=</span> DriverManager.<span style=color:#a6e22e>getConnection</span>(url,username,password);
+</span></span><span style=display:flex><span>        } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>            e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> con;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/**5.提供释放资源的方法*/</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>close</span>(Connection con, Statement stat, ResultSet sr){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(con<span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                con.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>                e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(stat<span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                stat.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>                e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(sr<span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                sr.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>                e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>close</span>(Connection con, Statement stat){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(con<span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                con.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>                e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(stat<span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>){
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>                stat.<span style=color:#a6e22e>close</span>();
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>catch</span> (SQLException e) {
+</span></span><span style=display:flex><span>                e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h4 id=2-sql-注入攻击>2. SQL 注入攻击</h4><h5 id=21-什么是-sql-注入攻击>2.1 什么是 sql 注入攻击</h5><p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功</p><h5 id=22-sql-注入攻击原理>2.2 sql 注入攻击原理</h5><ul><li>按照正常道理来说，我们在密码处输入的所有内容，都应该认为是密码的组成</li><li>但是现在 Statement 对象在执行 sql 语句时，将一部分内容当做查询条件来执行了</li></ul><h5 id=23-preparedstatement-解决攻击>2.3 PreparedStatement 解决攻击</h5><ul><li>PreparedStatement 的介绍</li></ul><p>​ PreparedStatement 就是预编译 sql 语句的执行者对象。在执行 sql 语句之前，将 sql 语句进行提前编译。明确 sql 语句的格式后，就不会改变了。剩余的内容都会认为是参数！参数使用?作为占位符</p><ul><li>为参数赋值的方法：setXxx(参数 1,参数 2);</li></ul><p>​ 参数 1：?的位置编号(编号从 1 开始)</p><p>​ 参数 2：?的实际参数</p><ul><li>执行 sql 语句的方法</li></ul><p>​ 执行 insert、update、delete 语句：int executeUpdate();</p><p>​ 执行 select 语句：ResultSet executeQuery();</p><h5 id=24-使用-preparedstatement>2.4 使用 PreparedStatement</h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e>	 使用PreparedStatement的登录方法，解决注入攻击
+</span></span></span><span style=display:flex><span><span style=color:#75715e>*/</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> User <span style=color:#a6e22e>findByLoginNameAndPassword</span>(String loginName, String password) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//定义必要信息</span>
+</span></span><span style=display:flex><span>    Connection conn <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>    PreparedStatement pstm <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>    ResultSet rs <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>    User user <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//1.获取连接</span>
+</span></span><span style=display:flex><span>        conn <span style=color:#f92672>=</span> JDBCUtils.<span style=color:#a6e22e>getConnection</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//2.创建操作SQL对象</span>
+</span></span><span style=display:flex><span>        String sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;SELECT * FROM user WHERE loginname=? AND password=?&#34;</span>;
+</span></span><span style=display:flex><span>        pstm <span style=color:#f92672>=</span> conn.<span style=color:#a6e22e>prepareStatement</span>(sql);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//3.设置参数</span>
+</span></span><span style=display:flex><span>        pstm.<span style=color:#a6e22e>setString</span>(1,loginName);
+</span></span><span style=display:flex><span>        pstm.<span style=color:#a6e22e>setString</span>(2,password);
+</span></span><span style=display:flex><span>        System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(sql);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//4.执行sql语句，获取结果集</span>
+</span></span><span style=display:flex><span>        rs <span style=color:#f92672>=</span> pstm.<span style=color:#a6e22e>executeQuery</span>();
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//5.获取结果集</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (rs.<span style=color:#a6e22e>next</span>()) {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>//6.封装</span>
+</span></span><span style=display:flex><span>            user <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> User();
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setUid</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;uid&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setUcode</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;ucode&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setUsername</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;username&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setPassword</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;password&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setGender</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;gender&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setDutydate</span>(rs.<span style=color:#a6e22e>getDate</span>(<span style=color:#e6db74>&#34;dutydate&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setBirthday</span>(rs.<span style=color:#a6e22e>getDate</span>(<span style=color:#e6db74>&#34;birthday&#34;</span>));
+</span></span><span style=display:flex><span>            user.<span style=color:#a6e22e>setLoginname</span>(rs.<span style=color:#a6e22e>getString</span>(<span style=color:#e6db74>&#34;loginname&#34;</span>));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#75715e>//7.返回</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> user;
+</span></span><span style=display:flex><span>    }<span style=color:#66d9ef>catch</span> (Exception e){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>throw</span> <span style=color:#66d9ef>new</span> RuntimeException(e);
+</span></span><span style=display:flex><span>    }<span style=color:#66d9ef>finally</span> {
+</span></span><span style=display:flex><span>        JDBCUtils.<span style=color:#a6e22e>close</span>(conn,pstm,rs);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><ul><li></li></ul></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2022 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

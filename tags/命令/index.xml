@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>命令 on Merthon</title><link>https://merthon.github.io/tags/%E5%91%BD%E4%BB%A4/</link><description>Recent content in 命令 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 13 Apr 2022 09:56:02 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E5%91%BD%E4%BB%A4/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux下dpkg，apt Get，yum和rpm命令的区别</title><link>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</link><pubDate>Wed, 13 Apr 2022 09:56:02 +0800</pubDate><guid>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</guid><description>&lt;h3 id="1linux-派系">1.Linux 派系&lt;/h3>
+&lt;ul>
+&lt;li>RedHat 系列：RedHat，CentOS，Fedora 等&lt;/li>
+&lt;li>Debian 系列：Debian，Ubuntu 等&lt;/li>
+&lt;/ul>
+&lt;h3 id="2redhat-系列">2.RedHat 系列&lt;/h3>
+&lt;h4 id="rpm">rpm&lt;/h4>
+&lt;p>rpm 是由 RedHat 开发的软年包管理方式，使用 rpm 我们可以方便的进行软件的安装，查询，卸载，升级等工作。常见的安装包格式 rpm 包，安装 rpm 的命令是”rpm -参数 安装包名“。如：&lt;/p>
+&lt;pre tabindex="0">&lt;code>安装命令：
+
+sudo rpm -ivh 安装包.rpm
+
+卸载命令：
+
+sudo rpm -e 安装包.rpm
+&lt;/code>&lt;/pre>&lt;p>但是 rpm 软件包之间的依赖性问题往往会很繁琐，尤其是软件由多个 rpm 包组成时，所以 yum 的优势就体现出来了。&lt;/p>
+&lt;h4 id="yum">yum&lt;/h4>
+&lt;p>Yum（全称为 Yellow dog Updater, Modified）是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器。基於 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软体包，无须繁琐地一次次下载、安装。yum 提供了查找、安装、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。弊端是必须联网，且源不出问题，yum 的源就相对脆弱一些。&lt;/p>
+&lt;pre tabindex="0">&lt;code>yum [options] [command] [package ...]
+&lt;/code>&lt;/pre>&lt;h5 id="常用命令">常用命令：&lt;/h5>
+&lt;ul>
+&lt;li>列出所有可更新的软件清单命令：&lt;strong>yum check-update&lt;/strong>&lt;/li>
+&lt;li>更新所有软件命令：&lt;strong>yum update&lt;/strong>&lt;/li>
+&lt;li>仅安装指定的软件命令：&lt;strong>yum install &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>仅更新指定的软件命令：&lt;strong>yum update &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>列出所有可安裝的软件清单命令：&lt;strong>yum list&lt;/strong>&lt;/li>
+&lt;li>删除软件包命令：&lt;strong>yum remove &amp;lt;package_name&amp;gt;&lt;/strong>&lt;/li>
+&lt;li>查找软件包命令：&lt;strong>yum search &lt;!-- raw HTML omitted -->&lt;/strong>&lt;/li>
+&lt;li>清除缓存命令:
+&lt;ul>
+&lt;li>&lt;strong>yum clean packages&lt;/strong>: 清除缓存目录下的软件包&lt;/li>
+&lt;li>&lt;strong>yum clean headers&lt;/strong>: 清除缓存目录下的 headers&lt;/li>
+&lt;li>&lt;strong>yum clean oldheaders&lt;/strong>: 清除缓存目录下旧的 headers&lt;/li>
+&lt;li>&lt;strong>yum clean, yum clean all (= yum clean packages; yum clean oldheaders)&lt;/strong> :清除缓存目录下的软件包及旧的 headers&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="3debian-系列">3.Debian 系列&lt;/h3>
+&lt;h4 id="dpkg">dpkg&lt;/h4>
+&lt;p>dpkg 是 Debian Package 的简写。为 Debian 专门开发的套件管理系统，方便软件的安装、更新及移除。所有源自 Debian 的 Linux 发行版都使用 dpkg，例如 Ubuntu、Knoppix 等。&lt;/p></description></item></channel></rss>

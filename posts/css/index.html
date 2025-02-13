@@ -1,0 +1,138 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>CSS</title>
+<meta name=description content="CSS学习笔记 层叠样式表 (Cascading Style Sheets)
+语法 每个声明分号结尾
+选择器 { 声明1; 声明2; …… } CSS导入方式 建议从外部引入css
+内部样式：style标签内写css的代码
+<style> h1{ color: red; } </style> 外 …"><meta name=keywords content='blog,hugo,CSS'><meta property="og:url" content="https://merthon.github.io/posts/css/"><meta property="og:type" content="website"><meta property="og:title" content="CSS"><meta property="og:description" content="CSS学习笔记 层叠样式表 (Cascading Style Sheets)
+语法 每个声明分号结尾
+选择器 { 声明1; 声明2; …… } CSS导入方式 建议从外部引入css
+内部样式：style标签内写css的代码
+<style> h1{ color: red; } </style> 外 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="CSS"><meta name=twitter:description content="CSS学习笔记 层叠样式表 (Cascading Style Sheets)
+语法 每个声明分号结尾
+选择器 { 声明1; 声明2; …… } CSS导入方式 建议从外部引入css
+内部样式：style标签内写css的代码
+<style> h1{ color: red; } </style> 外 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/css/"><meta property="twitter:url" content="https://merthon.github.io/posts/css/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/css/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>CSS</h1><small role=doc-subtitle></small><p class=post-date>May 26, 2023</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/css>CSS</a></li></ul></div><div class=post-content><p>CSS学习笔记
+层叠样式表 (Cascading Style Sheets)</p><h2 id=语法>语法</h2><p>每个声明分号结尾</p><pre tabindex=0><code>选择器 {
+    声明1;
+    声明2;
+    ……
+}
+</code></pre><h2 id=css导入方式>CSS导入方式</h2><p>建议从外部引入css</p><ul><li><p>内部样式：style标签内写css的代码</p><pre tabindex=0><code>&lt;style&gt;
+    h1{
+        color: red;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>外部样式</p><ul><li><p>链接式（常用）</p><pre tabindex=0><code>&lt;link rel=&#34;stylesheet&#34; href=&#34;css/style.css&#34;&gt;
+</code></pre></li><li><p>导入式（CSS2.1特有的，现在不常用，了解就行，不建议使用）</p><pre tabindex=0><code>&lt;style&gt;
+    @import &#34;css/style.css&#34;;
+&lt;/style&gt;
+</code></pre></li></ul></li><li><p>行内样式 标签的style属性</p></li></ul><p>优先级：就近原则，行内最近，其它的看位置</p><h2 id=选择器>选择器</h2><p>选中页面中的某个或某类元素</p><h3 id=基本选择器>基本选择器</h3><p>优先级是id选择器 > 类选择器 > 标签选择器</p><ul><li><p>标签选择器：直接用标签名就可选到所有这种标签</p><pre tabindex=0><code>&lt;style&gt;
+    h1 {
+        color: red;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>类选择器 calss：点加类名</p><pre tabindex=0><code>&lt;style&gt;
+    .class_name {
+        color: red;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>id 选择器：<code>#</code>号加id（id必须唯一）</p><pre tabindex=0><code>&lt;style&gt;
+    #id_name {
+        color: red;
+    }
+&lt;/style&gt;
+</code></pre></li></ul><p>总结一下：点加类名，#加id</p><h3 id=关系选择器>关系选择器</h3><ul><li><p>后代选择器：某个元素的所有子孙节点，例如body中的所有p标签</p><pre tabindex=0><code>&lt;style&gt;
+    body p {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>子选择器：某个元素的直接子节点</p><pre tabindex=0><code>&lt;style&gt;
+    body &gt; p {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>兄弟选择器：某个元素相邻的元素，例如class1下面相邻的p元素</p><pre tabindex=0><code>&lt;style&gt;
+    .class1 + p {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre></li><li><p>通用选择器：某元素相邻的下面的所有元素</p><pre tabindex=0><code>&lt;style&gt;
+    .class1 ~ p {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre></li></ul><h3 id=伪类选择器>伪类选择器</h3><h4 id=简单伪类>简单伪类</h4><p>伪类是选择器的一种，它用于选择处于特定状态的元素，比如当它们是这一类型的第一个元素时，或者是当鼠标指针悬浮在元素上面的时候。</p><p>伪类就是开头为冒号的关键字:</p><pre tabindex=0><code>:pseudo-class-name
+</code></pre><p>ul标签下的第一个li标签</p><pre tabindex=0><code>&lt;style&gt;
+    ul li:first-child {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre><p>选择当前元素的父元素的第一个子元素，并且是当前元素才生效</p><pre tabindex=0><code>&lt;style&gt;
+    p:nth-child(1) {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre><h4 id=用户行为伪类>用户行为伪类</h4><p>一些伪类只会在用户以某种方式和文档交互的时候应用。这些<strong>用户行为伪类</strong>，有时叫做<strong>动态伪类</strong>，表现得就像是一个类在用户和元素交互的时候加到了元素上一样。</p><pre tabindex=0><code>a:link,
+a:visited {
+    color: rebeccapurple;
+    font-weight: bold;
+}
+
+a:hover {
+    color:hotpink;
+}   
+</code></pre><h3 id=属性选择器重要>属性选择器（重要）</h3><p>相当于id和calss结合了</p><p>带有class属性的a标签</p><pre tabindex=0><code>&lt;style&gt;
+    a[class] {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre><p>可以指定属性名和属性值，而且属性值支持正则表达式</p><ul><li>=是绝对等于</li><li>*=是包含</li><li>^=开头是</li><li>$=结尾是</li></ul><pre tabindex=0><code>&lt;style&gt;
+    a[class*=&#34;links&#34;] {
+        background: green;
+    }
+&lt;/style&gt;
+</code></pre><h2 id=样式和属性>样式和属性</h2><p>重点要突出的文字使用span标签包起来</p><h3 id=字体样式>字体样式</h3><ul><li>可以直接用一个font属性写，font: 风格 粗细 大小 字体</li><li>font-family 字体</li><li>font-size 字体大小</li><li>font-weight 字体粗细</li><li>color 字体颜色</li></ul><h3 id=文本样式>文本样式</h3><ul><li>颜色 color</li><li>对齐方式 text-align center</li><li>首行缩进 text-indent：2em</li><li>行高 line-height</li><li>下划线 text-decoration: underline、中划线 text-decoration: through、上划线 text-decoration: overline</li></ul><h3 id=超链接伪类>超链接伪类</h3><p>例如hover：鼠标悬浮在a标签改变颜色</p><pre tabindex=0><code>a:hover{
+    color: red;
+}
+</code></pre><h3 id=阴影>阴影</h3><p>text- shadow：阴影颜色 水平偏移 垂直偏移 阴影半径</p><h3 id=列表样式>列表样式</h3><ul><li>list-style：none 去掉列表前的圆点</li></ul><h3 id=背景>背景</h3><ul><li><p>颜色 background-color</p></li><li><p>图片 background-img</p></li><li><p>边框 border</p></li><li><p>渐变色，建议使用这个网站：https://www.grabient.com/</p></li></ul><p>一个背景渐变和文字居中的案例:</p><ul><li>注意要让背景铺满屏幕background-attachment: fixed;不然加了文字就变成一条一条的背景了。</li><li>要让div处于屏幕中央，使用绝对布局，position: absolute;</li></ul><pre tabindex=0><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&#34;en&#34;&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            background-color: #0093E9;
+            background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+            background-attachment: fixed;
+        }
+
+        div {
+            font-family: Courier;
+            font-size: x-large;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div&gt;
+        Hello, This is BXS.
+    &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id=盒模型>盒模型</h2><ul><li>margin 外边距</li><li>border 边框</li><li>padding 内边距</li></ul><p>都是分上下左右的</p><h3 id=边框>边框</h3><p>border: red solid 10px;</p><ul><li>颜色 红色</li><li>样式 solid实线 dashed 虚线</li><li>粗细 10个像素</li></ul><h3 id=外边距>外边距</h3><p>body总有一个margin默认是是8px，不是0</p><p>常用外边距来使元素水平居中，margin: auto;</p><h2 id=圆角边框>圆角边框</h2><pre tabindex=0><code>border-radius: 50px;
+</code></pre><p>正方形当圆角边框和边长相等时就是圆</p><h2 id=阴影-1>阴影</h2><p>可以做边框发光的效果</p><pre tabindex=0><code>box-shadow: 10px 10px 1px yellow;
+</code></pre><h2 id=浮动>浮动</h2><p>标准文档流：块级元素从上到下顺序排列</p><p>display属性</p><ul><li>none 不显示</li><li>block 块级显示</li><li>inline 行内显示</li><li>inline-block 既是行内也是块元素：是块元素，但是可以显示在一行</li></ul><p>float属性</p><ul><li>left 往左浮动</li><li>right</li></ul><p>clear：例如如果向右浮动，右边已经有了别的元素，则它会清理一下，自己往移动一点，还是保证自己贴着右边</p><h2 id=父级边框塌陷的问题>父级边框塌陷的问题</h2><p>块元素float浮动之后，父元素高度变了</p><ul><li><p>解决方式1：直接设置父元素的高度为**px</p></li><li><p>解决方式2：增加一个空的div标签，清除浮动clear：both</p></li><li><p>解决方式3：overflow：hidden</p></li><li><p>解决方式4（推荐）：在父元素添加伪类,添加一个空内容的block，清除浮动</p><pre tabindex=0><code>#father:after {
+  content: &#34;&#34;;
+  display: block;
+  clear:both;
+}
+</code></pre></li></ul><p>overflow属性</p><ul><li>hidden 超过宽高的部分隐藏</li><li>scroll 超过的时候会出现滚动条</li></ul><h2 id=定位>定位</h2><h3 id=相对定位>相对定位</h3><p>position：relative</p><p>相对于自己原来的位置进行偏移</p><p>使用了相对定位的元素仍然处于标准文档流中，原来的位置会被保留</p><h3 id=绝对定位>绝对定位</h3><p>position：absolute</p><p>没有父元素时，根据浏览器边框定位</p><h3 id=固定定位>固定定位</h3><p>position：fixed</p><p>固定在屏幕的某个位置</p><h3 id=z-index>Z-index</h3><p>图层</p><p>zindex：0 表示放到第0层,默认是0，最高不限</p><h2 id=透明度>透明度</h2><p>opacity:0.5</p><h2 id=动画>动画</h2><p>了解一下就行：<a href=https://www.runoob.com/css3/css3-animations.html>CSS3 动画(opens new window)</a></p></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><a href=#语法>语法</a></li><li><a href=#css导入方式>CSS导入方式</a></li><li><a href=#选择器>选择器</a><ul><li><a href=#基本选择器>基本选择器</a></li><li><a href=#关系选择器>关系选择器</a></li><li><a href=#伪类选择器>伪类选择器</a></li><li><a href=#属性选择器重要>属性选择器（重要）</a></li></ul></li><li><a href=#样式和属性>样式和属性</a><ul><li><a href=#字体样式>字体样式</a></li><li><a href=#文本样式>文本样式</a></li><li><a href=#超链接伪类>超链接伪类</a></li><li><a href=#阴影>阴影</a></li><li><a href=#列表样式>列表样式</a></li><li><a href=#背景>背景</a></li></ul></li><li><a href=#盒模型>盒模型</a><ul><li><a href=#边框>边框</a></li><li><a href=#外边距>外边距</a></li></ul></li><li><a href=#圆角边框>圆角边框</a></li><li><a href=#阴影-1>阴影</a></li><li><a href=#浮动>浮动</a></li><li><a href=#父级边框塌陷的问题>父级边框塌陷的问题</a></li><li><a href=#定位>定位</a><ul><li><a href=#相对定位>相对定位</a></li><li><a href=#绝对定位>绝对定位</a></li><li><a href=#固定定位>固定定位</a></li><li><a href=#z-index>Z-index</a></li></ul></li><li><a href=#透明度>透明度</a></li><li><a href=#动画>动画</a></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2023 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>
