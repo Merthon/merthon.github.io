@@ -1,1 +1,765 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>http://localhost:1313/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 08 Feb 2022 13:13:06 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Python笔记（基础篇）</title><link>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B0%E5%9F%BA%E7%A1%80%E7%AF%87/</link><pubDate>Tue, 08 Feb 2022 13:13:06 +0800</pubDate><guid>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B0%E5%9F%BA%E7%A1%80%E7%AF%87/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>https://merthon.github.io/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 14 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>装饰器，迭代器，生成器</title><link>https://merthon.github.io/posts/%E8%A3%85%E9%A5%B0%E5%99%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8/</link><pubDate>Tue, 14 Jan 2025 02:07:33 +0800</pubDate><guid>https://merthon.github.io/posts/%E8%A3%85%E9%A5%B0%E5%99%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8/</guid><description>&lt;h1 id="装饰器decorator">装饰器（Decorator&lt;/h1>
+&lt;h2 id="什么是装饰器">什么是装饰器？&lt;/h2>
+&lt;p>装饰器是一种设计模式，它允许你在不修改函数或方法代码的前提下，动态地扩展函数或方法的功能。装饰器本质上是一个函数，它接收另一个函数作为参数，并返回一个新的函数，这个新函数包含了原函数的功能，并且可能添加了一些额外的行为。
+装饰器常用于：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>函数增强&lt;/strong>：在不改变函数体的情况下，给函数添加额外的功能（如日志、验证等）。&lt;/li>
+&lt;li>&lt;strong>代码复用&lt;/strong>：将某些公共的功能（例如权限检查、缓存）提取出来并应用到多个函数。&lt;/li>
+&lt;/ul>
+&lt;h2 id="工作原理">工作原理&lt;/h2>
+&lt;p>装饰器的工作方式是通过&lt;strong>闭包&lt;/strong>。一个装饰器通常会返回一个封装原函数的新函数，这个新函数会在原函数执行前或执行后插入一些额外的操作。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 定义一个装饰器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">decorator&lt;/span>(func):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">wrapper&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;Before function call&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> func()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;After function call&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> wrapper
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 应用装饰器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">@decorator&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">say_hello&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;Hello, World!&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 调用装饰后的函数&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>say_hello()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="工作过程">&lt;strong>工作过程：&lt;/strong>&lt;/h2>
+&lt;ol>
+&lt;li>&lt;code>@decorator&lt;/code> 语法是装饰器的简写，相当于 &lt;code>say_hello = decorator(say_hello)&lt;/code>。&lt;/li>
+&lt;li>当我们调用 &lt;code>say_hello()&lt;/code> 时，实际调用的是装饰器返回的 &lt;code>wrapper&lt;/code> 函数。&lt;/li>
+&lt;li>&lt;code>wrapper&lt;/code> 函数在调用原始的 &lt;code>say_hello()&lt;/code> 函数之前和之后分别添加了额外的操作。&lt;/li>
+&lt;/ol>
+&lt;h2 id="装饰器常见用法">装饰器常见用法：&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>日志记录&lt;/strong>：在函数执行前后记录日志。&lt;/li>
+&lt;li>&lt;strong>权限控制&lt;/strong>：检查当前用户是否有权限执行某个操作。&lt;/li>
+&lt;li>&lt;strong>性能监控&lt;/strong>：测量函数的执行时间。&lt;/li>
+&lt;/ul>
+&lt;h1 id="迭代器iterator">迭代器（Iterator）&lt;/h1>
+&lt;h2 id="什么是迭代器">什么是迭代器？&lt;/h2>
+&lt;p>迭代器是一个对象，它遵循 &lt;strong>迭代协议&lt;/strong>，可以逐个访问集合中的元素。要成为一个迭代器，必须实现以下两个方法：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>__iter__()&lt;/code>：返回自身的迭代器对象。&lt;/li>
+&lt;li>&lt;code>__next__()&lt;/code>：返回集合中的下一个元素，如果没有元素了，就抛出 &lt;code>StopIteration&lt;/code> 异常。&lt;/li>
+&lt;/ul>
+&lt;h2 id="工作原理-1">工作原理&lt;/h2>
+&lt;p>迭代器的核心是 &lt;code>__next__()&lt;/code> 方法，它每次调用时会返回集合中的下一个元素，直到没有元素可以返回为止。&lt;/p>
+&lt;p>在 Python 中，所有的可迭代对象（例如列表、元组、字典等）都隐式地实现了 &lt;code>__iter__()&lt;/code> 方法，支持迭代。&lt;/p></description></item><item><title>Selenium的使用</title><link>https://merthon.github.io/posts/selenium%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 12 Jan 2025 18:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/selenium%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>Selenium 是一个强大的 Web 自动化测试工具，广泛用于自动化浏览器操作。它支持多种浏览器，并可以与编程语言如 Python、Java、C# 等配合使用。&lt;/p>
+&lt;h1 id="安装">安装&lt;/h1>
+&lt;p>首先，你需要安装 Selenium 库。可以通过 pip 安装：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>pip install selenium
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="下载webdriver">下载WebDriver&lt;/h1>
+&lt;p>Selenium 需要使用 WebDriver 来驱动浏览器。不同的浏览器需要不同的 WebDriver
+下载对应浏览器的 WebDriver，并确保 WebDriver 可执行文件在你的系统路径中。&lt;/p>
+&lt;h1 id="基本使用">基本使用&lt;/h1>
+&lt;p>Selenium 的一个简单示例，展示如何使用 Python 驱动浏览器打开网页，查找元素并执行操作。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> selenium &lt;span style="color:#f92672">import&lt;/span> webdriver
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> selenium.webdriver.common.by &lt;span style="color:#f92672">import&lt;/span> By
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> selenium.webdriver.common.keys &lt;span style="color:#f92672">import&lt;/span> Keys
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 设置 WebDriver 路径（如果 WebDriver 不在 PATH 中）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver &lt;span style="color:#f92672">=&lt;/span> webdriver&lt;span style="color:#f92672">.&lt;/span>Chrome(executable_path&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;/path/to/chromedriver&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 打开网页&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://www.google.com&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查找搜索框元素&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>search_box &lt;span style="color:#f92672">=&lt;/span> driver&lt;span style="color:#f92672">.&lt;/span>find_element(By&lt;span style="color:#f92672">.&lt;/span>NAME, &lt;span style="color:#e6db74">&amp;#39;q&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 向搜索框输入文本&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>search_box&lt;span style="color:#f92672">.&lt;/span>send_keys(&lt;span style="color:#e6db74">&amp;#39;Selenium&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 模拟按下 Enter 键&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>search_box&lt;span style="color:#f92672">.&lt;/span>send_keys(Keys&lt;span style="color:#f92672">.&lt;/span>RETURN)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 等待一段时间，等待页面加载完成&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>implicitly_wait(&lt;span style="color:#ae81ff">5&lt;/span>) &lt;span style="color:#75715e"># 等待最多 5 秒&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取页面标题并打印&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(driver&lt;span style="color:#f92672">.&lt;/span>title)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 关闭浏览器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>quit()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="常用操作">常用操作&lt;/h1>
+&lt;ol>
+&lt;li>查找元素&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>find_element(By.ID, 'id')&lt;/code>：通过 ID 查找元素&lt;/li>
+&lt;li>&lt;code>find_element(By.NAME, 'name')&lt;/code>：通过名称查找元素&lt;/li>
+&lt;li>&lt;code>find_element(By.CLASS_NAME, 'class')&lt;/code>：通过类名查找元素&lt;/li>
+&lt;li>&lt;code>find_element(By.XPATH, 'xpath')&lt;/code>：通过 XPath 查找元素&lt;/li>
+&lt;li>&lt;code>find_element(By.CSS_SELECTOR, 'css_selector')&lt;/code>：通过 CSS 选择器查找元素&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>元素操作&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>send_keys('text')&lt;/code>：向输入框中输入文本&lt;/li>
+&lt;li>&lt;code>click()&lt;/code>：点击元素&lt;/li>
+&lt;li>&lt;code>clear()&lt;/code>：清除输入框中的文本&lt;/li>
+&lt;/ul>
+&lt;ol start="3">
+&lt;li>等待&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>driver.implicitly_wait(seconds)&lt;/code>：隐式等待，查找元素时如果没有立即找到，会等待指定的时间后再抛出异常。&lt;/li>
+&lt;li>&lt;code>WebDriverWait(driver, timeout).until(condition)&lt;/code>：显式等待，直到某个条件成立。&lt;/li>
+&lt;/ul>
+&lt;h1 id="处理弹窗和切换窗口">处理弹窗和切换窗口&lt;/h1>
+&lt;h2 id="处理-javascript-弹窗">处理 JavaScript 弹窗&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>alert &lt;span style="color:#f92672">=&lt;/span> driver&lt;span style="color:#f92672">.&lt;/span>switch_to&lt;span style="color:#f92672">.&lt;/span>alert
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>alert&lt;span style="color:#f92672">.&lt;/span>accept() &lt;span style="color:#75715e"># 接受弹窗&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>alert&lt;span style="color:#f92672">.&lt;/span>dismiss() &lt;span style="color:#75715e"># 关闭弹窗&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="切换窗口">切换窗口&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取所有窗口句柄&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>windows &lt;span style="color:#f92672">=&lt;/span> driver&lt;span style="color:#f92672">.&lt;/span>window_handles
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 切换到新的窗口&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>switch_to&lt;span style="color:#f92672">.&lt;/span>window(windows[&lt;span style="color:#ae81ff">1&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 切换回原来的窗口&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>switch_to&lt;span style="color:#f92672">.&lt;/span>window(windows[&lt;span style="color:#ae81ff">0&lt;/span>])
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="使用-headless-模式">使用 Headless 模式&lt;/h1>
+&lt;p>Selenium 可以在不显示浏览器窗口的情况下运行，这被称为无头模式（Headless Mode）。对于大多数任务，尤其是爬虫，使用无头模式非常有用。&lt;/p></description></item><item><title>Playwright的使用</title><link>https://merthon.github.io/posts/playwright%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 12 Jan 2025 09:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/playwright%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>安装 Playwright&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>pip install playwright
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>安装 Playwright 后，还需要下载浏览器的依赖：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>playwright install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="启动浏览器">启动浏览器&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> playwright.sync_api &lt;span style="color:#f92672">import&lt;/span> sync_playwright
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">with&lt;/span> sync_playwright() &lt;span style="color:#66d9ef">as&lt;/span> p:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 启动 Chromium 浏览器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> browser &lt;span style="color:#f92672">=&lt;/span> p&lt;span style="color:#f92672">.&lt;/span>chromium&lt;span style="color:#f92672">.&lt;/span>launch(headless&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">False&lt;/span>) &lt;span style="color:#75715e"># headless=False 表示显示浏览器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> page &lt;span style="color:#f92672">=&lt;/span> browser&lt;span style="color:#f92672">.&lt;/span>new_page()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 访问网页&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> page&lt;span style="color:#f92672">.&lt;/span>goto(&lt;span style="color:#e6db74">&amp;#39;https://example.com&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 截图保存到文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> page&lt;span style="color:#f92672">.&lt;/span>screenshot(path&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;example.png&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 关闭浏览器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> browser&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="与页面交互">与页面交互&lt;/h1>
+&lt;p>Playwright 提供了许多方法来模拟用户的浏览器操作，如点击、填写表单、获取文本等。&lt;/p>
+&lt;h2 id="点击按钮">点击按钮&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>page&lt;span style="color:#f92672">.&lt;/span>click(&lt;span style="color:#e6db74">&amp;#39;button#submit&amp;#39;&lt;/span>) &lt;span style="color:#75715e"># 点击指定的按钮&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="填写表单">填写表单&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>page&lt;span style="color:#f92672">.&lt;/span>fill(&lt;span style="color:#e6db74">&amp;#39;input[name=&amp;#34;username&amp;#34;]&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;myUsername&amp;#39;&lt;/span>) &lt;span style="color:#75715e"># 填写用户名字段&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="获取文本">获取文本&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>text &lt;span style="color:#f92672">=&lt;/span> page&lt;span style="color:#f92672">.&lt;/span>text_content(&lt;span style="color:#e6db74">&amp;#39;h1&amp;#39;&lt;/span>) &lt;span style="color:#75715e"># 获取 &amp;lt;h1&amp;gt; 标签中的文本&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="截图">截图&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>page&lt;span style="color:#f92672">.&lt;/span>screenshot(path&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;screenshot.png&amp;#39;&lt;/span>) &lt;span style="color:#75715e"># 截取页面截图并保存为文件&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="等待元素加载">等待元素加载&lt;/h1>
+&lt;p>在页面加载或交互时，可能需要等待某个元素出现，可以使用 &lt;code>wait_for_selector&lt;/code> 方法：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>page&lt;span style="color:#f92672">.&lt;/span>wait_for_selector(&lt;span style="color:#e6db74">&amp;#39;div#content&amp;#39;&lt;/span>) &lt;span style="color:#75715e"># 等待页面中出现指定的元素&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="使用异步版本">使用异步版本&lt;/h1>
+&lt;p>Playwright 提供了同步和异步两种 API。上面展示的是同步 API，你也可以使用异步 API 来执行相同的操作，下面是使用异步方式的示例：&lt;/p></description></item><item><title>爬虫中代理的使用</title><link>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E4%B8%AD%E4%BB%A3%E7%90%86%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 12 Jan 2025 02:08:30 +0800</pubDate><guid>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E4%B8%AD%E4%BB%A3%E7%90%86%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>在爬虫中使用代理是为了应对一些网站的反爬虫机制，它能够帮助你隐藏爬虫的真实 IP 地址，避免被封禁。&lt;/p>
+&lt;h1 id="代理的基本概念">代理的基本概念&lt;/h1>
+&lt;p>代理服务器是一个中间服务器，它接受客户端的请求并代表客户端访问目标网站。通过代理，客户端的 IP 地址对目标服务器来说是代理服务器的 IP 地址，而不是爬虫的真实 IP。
+常见的代理类型：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>HTTP 代理&lt;/strong>：适用于普通的 HTTP 请求。&lt;/li>
+&lt;li>&lt;strong>HTTPS 代理&lt;/strong>：适用于 HTTPS 请求，提供加密传输。&lt;/li>
+&lt;li>&lt;strong>SOCKS 代理&lt;/strong>：支持更多的协议类型，比 HTTP/HTTPS 代理更通用。&lt;/li>
+&lt;li>&lt;strong>透明代理&lt;/strong>：代理服务器不会修改请求或响应，目标服务器能看到真实的请求信息。&lt;/li>
+&lt;li>&lt;strong>匿名代理&lt;/strong>：代理服务器隐藏了客户端的 IP 地址，但目标服务器知道请求来自代理服务器。&lt;/li>
+&lt;li>&lt;strong>高匿代理&lt;/strong>：代理服务器不仅隐藏了客户端的 IP 地址，还不会暴露自己是代理服务器。&lt;/li>
+&lt;/ul>
+&lt;h1 id="代理池">代理池&lt;/h1>
+&lt;p>为了提高爬虫的稳定性，通常会使用代理池，即预先准备一个代理 IP 列表，爬虫在运行时会从池中随机选取代理进行请求。这样，即便某个代理 IP 被封禁，爬虫仍然能够继续工作。
+常见的代理池策略：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>随机选择&lt;/strong>：每次请求时从代理池中随机选择一个代理。&lt;/li>
+&lt;li>&lt;strong>按频率限制使用&lt;/strong>：一些代理池会根据 IP 的使用频率进行调度，避免频繁使用同一个代理 IP。&lt;/li>
+&lt;li>&lt;strong>代理检查&lt;/strong>：定期检查代理是否可用，剔除掉失效的代理。&lt;/li>
+&lt;/ul>
+&lt;h1 id="设置代理">设置代理&lt;/h1>
+&lt;ol>
+&lt;li>在 Python 爬虫中使用代理通常依赖于请求库（如 &lt;code>requests&lt;/code>）或 Scrapy 框架。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>proxies &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;http&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;http://username:password@proxy_ip:proxy_port&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;https&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;https://username:password@proxy_ip:proxy_port&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;http://example.com&amp;#39;&lt;/span>, proxies&lt;span style="color:#f92672">=&lt;/span>proxies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>使用 Scrapy 设置代理：
+在 Scrapy 中，你可以通过中间件来设置代理。Scrapy 提供了 &lt;code>HttpProxyMiddleware&lt;/code> 来处理代理设置。
+&lt;strong>启用代理中间件&lt;/strong>：
+在 &lt;code>settings.py&lt;/code> 中启用中间件：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>DOWNLOADER_MIDDLEWARES &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware&amp;#39;&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>设置代理&lt;/strong>：
+可以通过设置 &lt;code>http_proxy&lt;/code> 来指定全局代理，或者在 &lt;code>spider&lt;/code> 里为特定请求设置代理。&lt;/p></description></item><item><title>Pyquery的使用</title><link>https://merthon.github.io/posts/pyquery%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sat, 11 Jan 2025 11:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/pyquery%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>&lt;code>pyquery&lt;/code> 是一个用于网页抓取和解析的 Python 库，提供了一种类似 jQuery 的语法。它可以帮助你方便地选择 HTML 元素并进行操作。下面是 &lt;code>pyquery&lt;/code> 的基本用法：
+基本用法
+解析 HTML 字符串：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> pyquery &lt;span style="color:#f92672">import&lt;/span> PyQuery &lt;span style="color:#66d9ef">as&lt;/span> pq
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># HTML 示例&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>html &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;lt;html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;div class=&amp;#34;content&amp;#34;&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;p&amp;gt;这是第一段内容&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;p&amp;gt;这是第二段内容&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;a href=&amp;#34;http://example.com&amp;#34;&amp;gt;链接1&amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;a href=&amp;#34;http://example.org&amp;#34;&amp;gt;链接2&amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;lt;/html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 解析 HTML 字符串&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>doc &lt;span style="color:#f92672">=&lt;/span> pq(html)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取所有 &amp;lt;p&amp;gt; 标签中的文本&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(doc(&lt;span style="color:#e6db74">&amp;#39;p&amp;#39;&lt;/span>)&lt;span style="color:#f92672">.&lt;/span>text()) &lt;span style="color:#75715e"># 输出：这是第一段内容这是第二段内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取所有链接&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> link &lt;span style="color:#f92672">in&lt;/span> doc(&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(pq(link)&lt;span style="color:#f92672">.&lt;/span>attr(&lt;span style="color:#e6db74">&amp;#39;href&amp;#39;&lt;/span>)) &lt;span style="color:#75715e"># 输出链接的 href 属性&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>解析 HTML 文件&lt;/p></description></item><item><title>Ajax数据爬取</title><link>https://merthon.github.io/posts/ajax%E6%95%B0%E6%8D%AE%E7%88%AC%E5%8F%96/</link><pubDate>Sat, 11 Jan 2025 09:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/ajax%E6%95%B0%E6%8D%AE%E7%88%AC%E5%8F%96/</guid><description>&lt;p>Ajax 数据爬取是一个常见的任务，特别是当目标网站使用 JavaScript 动态加载数据时。通常，爬虫需要模拟浏览器的行为，去获取这些通过 Ajax 请求加载的内容。&lt;/p>
+&lt;h1 id="什么是-ajax-请求">什么是 Ajax 请求？&lt;/h1>
+&lt;p>Ajax（Asynchronous JavaScript and XML）是指一种在不刷新页面的情况下，向服务器请求数据并更新页面的技术。它常用于单页应用（SPA）中，能够实现页面局部刷新，提高用户体验。&lt;/p>
+&lt;h1 id="ajax-请求的工作原理">Ajax 请求的工作原理&lt;/h1>
+&lt;p>当你浏览一个网站时，如果页面没有完全刷新，而是动态加载数据，通常是通过 Ajax 实现的。以下是常见的流程：&lt;/p>
+&lt;ul>
+&lt;li>浏览器通过 JavaScript 发送一个异步 HTTP 请求（如 GET 或 POST 请求）。&lt;/li>
+&lt;li>服务器响应数据，通常是 JSON 格式的内容。&lt;/li>
+&lt;li>浏览器接收到数据后，利用 JavaScript 动态更新页面中的内容。&lt;/li>
+&lt;/ul>
+&lt;h1 id="如何爬取-ajax-加载的数据">如何爬取 Ajax 加载的数据？&lt;/h1>
+&lt;h2 id="分析网络请求">分析网络请求&lt;/h2>
+&lt;p>要抓取 Ajax 请求返回的数据，首先需要分析网页中的网络请求。你可以使用浏览器的开发者工具（DevTools）来捕获这些请求：&lt;/p>
+&lt;ul>
+&lt;li>打开浏览器（例如 Chrome），右键点击页面选择“检查”或按 &lt;code>F12&lt;/code> 键。&lt;/li>
+&lt;li>转到“Network”标签。&lt;/li>
+&lt;li>刷新页面并观察发出的网络请求，尤其是 &lt;code>XHR&lt;/code>（XMLHttpRequest）类型的请求，这些通常是 Ajax 请求。&lt;/li>
+&lt;li>查看请求的 URL 和请求头信息，找出是否有相关的参数或者身份认证信息。&lt;/li>
+&lt;/ul>
+&lt;h2 id="发送相同的请求">发送相同的请求&lt;/h2>
+&lt;p>一旦你知道了 Ajax 请求的 URL、请求参数和请求头，你可以使用爬虫工具（如 &lt;code>requests&lt;/code> 或 &lt;code>Selenium&lt;/code>）模拟这些请求。&lt;/p>
+&lt;ul>
+&lt;li>使用 &lt;strong>requests&lt;/strong> 模拟请求：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://example.com/ajax-data&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>headers &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;User-Agent&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 其他请求头，可能包括 cookie 或 Authorization&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>params &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;key&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;value&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 请求的查询参数&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>get(url, headers&lt;span style="color:#f92672">=&lt;/span>headers, params&lt;span style="color:#f92672">=&lt;/span>params)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data &lt;span style="color:#f92672">=&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>json() &lt;span style="color:#75715e"># 如果返回的是 JSON 格式的数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(data)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>使用 &lt;strong>Selenium&lt;/strong> 动态加载数据：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> selenium &lt;span style="color:#f92672">import&lt;/span> webdriver
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> selenium.webdriver.common.by &lt;span style="color:#f92672">import&lt;/span> By
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 初始化 WebDriver（这里使用 Chrome）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver &lt;span style="color:#f92672">=&lt;/span> webdriver&lt;span style="color:#f92672">.&lt;/span>Chrome()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#34;https://example.com&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 等待 Ajax 请求完成（可以根据页面的某个元素来等待）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>implicitly_wait(&lt;span style="color:#ae81ff">10&lt;/span>) &lt;span style="color:#75715e"># 等待最多10秒&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查找已加载的动态内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>content &lt;span style="color:#f92672">=&lt;/span> driver&lt;span style="color:#f92672">.&lt;/span>find_element(By&lt;span style="color:#f92672">.&lt;/span>ID, &lt;span style="color:#e6db74">&amp;#39;ajax-content&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(content&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>driver&lt;span style="color:#f92672">.&lt;/span>quit()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="模拟-cookie-和-session">模拟 Cookie 和 Session&lt;/h2>
+&lt;p>如果请求需要身份认证（比如需要登录），你需要模拟登录并获取有效的 Session 或 Cookie。你可以通过浏览器开发者工具查看这些 Cookie 信息，然后在爬虫请求中使用它们：&lt;/p></description></item><item><title>Parsel库使用</title><link>https://merthon.github.io/posts/parsel%E5%BA%93%E4%BD%BF%E7%94%A8/</link><pubDate>Fri, 10 Jan 2025 11:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/parsel%E5%BA%93%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>&lt;code>parsel&lt;/code> 是一个 Python 库，主要用于 HTML 和 XML 数据的解析，特别适用于 Web 爬虫的开发。它基于 &lt;code>lxml&lt;/code> 和 &lt;code>cssselect&lt;/code>，支持 CSS 选择器和 XPath 查询来提取网页数据。下面是一些基本的使用方法：&lt;/p>
+&lt;h3 id="基本用法">基本用法&lt;/h3>
+&lt;p>&lt;strong>从 HTML 字符串中提取数据&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> parsel &lt;span style="color:#f92672">import&lt;/span> Selector
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>html &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;lt;html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;head&amp;gt;&amp;lt;title&amp;gt;My Page&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;h1&amp;gt;Welcome to My Page&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;p class=&amp;#34;description&amp;#34;&amp;gt;This is a test page.&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;lt;/body&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;lt;/html&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selector &lt;span style="color:#f92672">=&lt;/span> Selector(text&lt;span style="color:#f92672">=&lt;/span>html)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用 CSS 选择器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title &lt;span style="color:#f92672">=&lt;/span> selector&lt;span style="color:#f92672">.&lt;/span>css(&lt;span style="color:#e6db74">&amp;#39;title::text&amp;#39;&lt;/span>)&lt;span style="color:#f92672">.&lt;/span>get() &lt;span style="color:#75715e"># 获取 &amp;lt;title&amp;gt;标签的文本&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(title) &lt;span style="color:#75715e"># 输出：My Page&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用 XPath 选择器&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>description &lt;span style="color:#f92672">=&lt;/span> selector&lt;span style="color:#f92672">.&lt;/span>xpath(&lt;span style="color:#e6db74">&amp;#39;//p[@class=&amp;#34;description&amp;#34;]/text()&amp;#39;&lt;/span>)&lt;span style="color:#f92672">.&lt;/span>get()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(description) &lt;span style="color:#75715e"># 输出：This is a test page.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>从网页文件中提取数据&lt;/strong> 如果你有一个 HTML 文件，想要提取其中的数据，可以这样做：&lt;/p></description></item><item><title>基于Session和Cookie的模拟登录</title><link>https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Esession%E5%92%8Ccookie%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</link><pubDate>Thu, 09 Jan 2025 22:15:35 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Esession%E5%92%8Ccookie%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</guid><description>&lt;h1 id="原理">原理&lt;/h1>
+&lt;p>通过浏览器登录某个网站时，服务器会创建一个 &lt;strong>Session&lt;/strong>，并通过 &lt;strong>Cookie&lt;/strong> 存储在客户端（即浏览器）中。每当你访问网站时，浏览器会自动将这些 Cookie 包含在请求中，告知服务器你是一个已经登录的用户，从而获得相应的权限。
+在爬虫中模拟登录时，我们需要使用 &lt;code>requests.Session()&lt;/code> 来维护会话（Session），并通过 &lt;code>requests.Session().cookies&lt;/code> 来保存和使用 Cookie，以便后续请求能够模拟登录后的行为。&lt;/p>
+&lt;h1 id="步骤">步骤&lt;/h1>
+&lt;ol>
+&lt;li>发送 GET 请求获取登录页面
+我们需要发送 GET 请求获取登录页面。这是为了获取可能包含的隐藏字段（如 CSRF token）以及初始的 Cookie。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 登录页面的 URL&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://example.com/login&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建一个会话对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>session &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>Session()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 发送 GET 请求获取登录页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>get(login_url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 打印返回的 HTML 内容，查看页面结构，特别是是否有 CSRF token 等&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>解析页面中的隐藏字段（例如 CSRF token）
+多网站会使用 CSRF token 来防止跨站请求伪造，登录请求中必须包含正确的 CSRF token。我们需要从登录页面中提取这个 token。&lt;/li>
+&lt;/ol>
+&lt;p>这里使用 &lt;code>BeautifulSoup&lt;/code> 来解析 HTML 页面并提取隐藏字段。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> bs4 &lt;span style="color:#f92672">import&lt;/span> BeautifulSoup
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 解析 HTML 页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>soup &lt;span style="color:#f92672">=&lt;/span> BeautifulSoup(response&lt;span style="color:#f92672">.&lt;/span>text, &lt;span style="color:#e6db74">&amp;#39;html.parser&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 假设 CSRF token 存储在一个名为 csrf_token 的 input 标签中&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>csrf_token &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find(&lt;span style="color:#e6db74">&amp;#39;input&amp;#39;&lt;/span>, {&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;csrf_token&amp;#39;&lt;/span>})[&lt;span style="color:#e6db74">&amp;#39;value&amp;#39;&lt;/span>]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
+&lt;li>构建登录请求的表单数据
+我们已经从页面中获取到了 CSRF token，现在我们可以构造一个包含用户名、密码和 CSRF token 的字典作为表单数据。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 构造登录表单数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_data &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;username&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_username&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;password&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_password&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;csrf_token&amp;#39;&lt;/span>: csrf_token, &lt;span style="color:#75715e"># 包含 CSRF token&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="4">
+&lt;li>发送 POST 请求提交登录表单
+使用 &lt;code>requests.Session()&lt;/code> 提交 POST 请求登录，并使用 &lt;code>session&lt;/code> 对象保持会话，以便后续请求能够带上登录状态。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 发送 POST 请求进行登录&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_response &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>post(login_url, data&lt;span style="color:#f92672">=&lt;/span>login_data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 检查登录是否成功&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> login_response&lt;span style="color:#f92672">.&lt;/span>ok:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录成功&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录失败&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="5">
+&lt;li>访问需要身份认证的页面
+登录成功后，我们就可以使用 &lt;code>session&lt;/code> 对象继续发送请求，访问需要登录权限的页面。由于 &lt;code>session&lt;/code> 会自动管理 Cookie，所有后续请求会自动带上登录信息（如 &lt;code>session_id&lt;/code>）。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 登录成功后访问受保护的页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>protected_url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://example.com/protected_page&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>protected_page &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>get(protected_url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 打印受保护页面的内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(protected_page&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="demo">demo&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> bs4 &lt;span style="color:#f92672">import&lt;/span> BeautifulSoup
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 登录页面 URL&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://example.com/login&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 受保护页面 URL&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>protected_url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://example.com/protected_page&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建一个会话对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>session &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>Session()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 发送 GET 请求获取登录页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>get(login_url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">not&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>ok:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;无法访问登录页面&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 解析页面，提取 CSRF token&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>soup &lt;span style="color:#f92672">=&lt;/span> BeautifulSoup(response&lt;span style="color:#f92672">.&lt;/span>text, &lt;span style="color:#e6db74">&amp;#39;html.parser&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>csrf_token &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find(&lt;span style="color:#e6db74">&amp;#39;input&amp;#39;&lt;/span>, {&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;csrf_token&amp;#39;&lt;/span>})[&lt;span style="color:#e6db74">&amp;#39;value&amp;#39;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 构造登录表单数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_data &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;username&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_username&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;password&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_password&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;csrf_token&amp;#39;&lt;/span>: csrf_token,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 发送 POST 请求进行登录&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_response &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>post(login_url, data&lt;span style="color:#f92672">=&lt;/span>login_data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> login_response&lt;span style="color:#f92672">.&lt;/span>ok:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录成功&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录失败&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> exit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 登录成功后，访问受保护页面&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>protected_page &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>get(protected_url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> protected_page&lt;span style="color:#f92672">.&lt;/span>ok:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;成功访问受保护的页面&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(protected_page&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;访问受保护页面失败&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>模拟登录</title><link>https://merthon.github.io/posts/%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</link><pubDate>Thu, 09 Jan 2025 14:22:35 +0800</pubDate><guid>https://merthon.github.io/posts/%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</guid><description>&lt;h1 id="基本原理">基本原理&lt;/h1>
+&lt;p>通过模拟用户在浏览器中执行的登录操作，获取并维持用户的登录状态，从而访问需要身份认证的网页或数据。&lt;/p>
+&lt;h2 id="发送登录请求">发送登录请求&lt;/h2>
+&lt;p>用户在浏览器中提交登录表单时，会向服务器发送一个 HTTP 请求，这个请求通常是一个 &lt;strong>POST&lt;/strong> 请求，包含了用户输入的 &lt;strong>用户名&lt;/strong> 和 &lt;strong>密码&lt;/strong>，以及其他一些必要的字段（例如：CSRF token、验证码等）。&lt;/p>
+&lt;h2 id="认证与验证">认证与验证&lt;/h2>
+&lt;p>服务器收到登录请求后，会进行认证与验证，主要包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>检查用户名和密码是否正确&lt;/strong>：服务器会对比数据库中的用户数据，验证用户名和密码是否匹配。&lt;/li>
+&lt;li>&lt;strong>CSRF token 检查&lt;/strong>：如果存在 CSRF 防护，服务器会验证请求中包含的 CSRF token 是否有效。这个 token 是防止跨站请求伪造攻击的标记。&lt;/li>
+&lt;/ul>
+&lt;h2 id="设置-cookie-或-token">设置 Cookie 或 Token&lt;/h2>
+&lt;p>如果登录信息正确，服务器会在响应中设置一个 &lt;strong>Session cookie&lt;/strong> 或者返回一个 &lt;strong>JWT（JSON Web Token）&lt;/strong>。这些都是用来表示用户身份的认证信息。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Session cookie&lt;/strong>：通常在服务器端生成一个 session ID，并通过 cookie 返回给客户端。该 session ID 用于标识用户的会话，服务器会将会话信息（如用户身份）保存在内存或数据库中。&lt;/li>
+&lt;li>&lt;strong>JWT&lt;/strong>：在某些情况下，服务器会返回一个 JWT，客户端需要在后续请求中带上这个 token，来证明自己已经登录。&lt;/li>
+&lt;/ul>
+&lt;h2 id="维护登录状态">维护登录状态&lt;/h2>
+&lt;p>登录成功后，为了模拟用户持续登录的状态，爬虫需要维护登录过程中获取到的 &lt;strong>Session&lt;/strong> 或 &lt;strong>Cookie&lt;/strong>。通过在后续的 HTTP 请求中附带这些认证信息，爬虫可以继续访问需要登录权限的页面。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>保持会话（Session）&lt;/strong>：通过 HTTP 请求中的 &lt;strong>Cookie&lt;/strong>，爬虫可以维持与服务器的会话，这样就可以重复使用相同的登录状态进行多次请求。&lt;/li>
+&lt;li>&lt;strong>使用 Token&lt;/strong>：如果使用的是 JWT 等 token 认证方式，爬虫则需要在后续请求的 &lt;strong>Authorization header&lt;/strong> 中附带 token。&lt;/li>
+&lt;/ul>
+&lt;h2 id="访问受保护的资源">访问受保护的资源&lt;/h2>
+&lt;p>登录成功后，用户通常会被重定向到一个主页或其他受保护的页面。此时，爬虫只需要带上保存的 &lt;strong>Cookie&lt;/strong> 或 &lt;strong>Token&lt;/strong>，就可以访问这些页面。&lt;/p></description></item><item><title>基于JWT的模拟登录</title><link>https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</link><pubDate>Thu, 09 Jan 2025 02:15:35 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/</guid><description>&lt;p>&lt;strong>JWT（JSON Web Token）&lt;/strong> 的模拟登录通常用于无状态认证系统，尤其是在 RESTful API 和现代 web 应用中，广泛用于替代传统的基于 Session 的身份验证机制。JWT 是一种轻量级的认证机制，通常由服务器在用户登录时生成，并作为认证凭据返回给客户端。客户端通过存储和发送 JWT 来进行后续的身份验证。&lt;/p>
+&lt;h1 id="jwt-的基本原理">JWT 的基本原理&lt;/h1>
+&lt;p>WT 是由三部分组成的：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Header&lt;/strong>：指定 JWT 的类型（通常是 JWT）以及签名算法（如 HS256）。&lt;/li>
+&lt;li>&lt;strong>Payload&lt;/strong>：包含声明（Claims），通常包括用户的基本信息（如 &lt;code>user_id&lt;/code>）和过期时间（&lt;code>exp&lt;/code>）。这些信息是未加密的，可以被任何人读取，但不能篡改。&lt;/li>
+&lt;li>&lt;strong>Signature&lt;/strong>：使用密钥对 Header 和 Payload 进行签名，以防止数据被篡改。&lt;/li>
+&lt;/ol>
+&lt;h4 id="wt-工作流程">WT 工作流程：&lt;/h4>
+&lt;ol>
+&lt;li>用户使用用户名和密码发送请求进行登录。&lt;/li>
+&lt;li>服务器验证用户信息后，生成一个包含用户信息的 JWT，并返回给客户端。&lt;/li>
+&lt;li>客户端将 JWT 存储在本地（通常存储在 &lt;code>localStorage&lt;/code> 或 &lt;code>sessionStorage&lt;/code> 中，或者作为 HTTP cookie）。&lt;/li>
+&lt;li>客户端在后续请求中将 JWT 放入请求头中，以便服务器验证该请求是否来自已认证的用户。&lt;/li>
+&lt;/ol>
+&lt;h1 id="基于-jwt-的模拟登录实现步骤">基于 JWT 的模拟登录实现步骤&lt;/h1>
+&lt;p>主要步骤包括：&lt;/p>
+&lt;ul>
+&lt;li>向登录接口发送用户名和密码请求。&lt;/li>
+&lt;li>服务器验证成功后返回 JWT。&lt;/li>
+&lt;li>将 JWT 存储并用于后续请求中的身份验证。&lt;/li>
+&lt;/ul>
+&lt;h2 id="发送-post-请求获取-jwt">发送 POST 请求获取 JWT&lt;/h2>
+&lt;p>首先，向服务器的登录 API 发送 POST 请求，提交用户名和密码。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 登录接口 URL&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://example.com/api/login&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 用户名和密码&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>login_data &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;username&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_username&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;password&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;your_password&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 发送 POST 请求进行登录&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>post(login_url, json&lt;span style="color:#f92672">=&lt;/span>login_data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 检查登录是否成功&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>ok:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 解析返回的 JSON 响应，提取 JWT&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> token &lt;span style="color:#f92672">=&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>json()&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;token&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录成功，获取到的 JWT:&amp;#34;&lt;/span>, token)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;登录失败&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="使用-jwt-访问受保护的资源">使用 JWT 访问受保护的资源&lt;/h2>
+&lt;p>一旦获取到 JWT，下一步是将其用于后续的身份验证。在每个请求中，JWT 会被放置在请求头的 &lt;code>Authorization&lt;/code> 字段中。&lt;/p></description></item><item><title>BeautifulSoup使用</title><link>https://merthon.github.io/posts/beautifulsoup%E4%BD%BF%E7%94%A8/</link><pubDate>Tue, 07 Jan 2025 12:20:12 +0800</pubDate><guid>https://merthon.github.io/posts/beautifulsoup%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>&lt;code>BeautifulSoup&lt;/code> 是一个非常流行的 Python 库，用于从 HTML 或 XML 文档中提取数据。它常用于网页爬取（web scraping）项目中，特别是在处理不规则的网页结构时，具有很好的灵活性。它可以与 &lt;code>requests&lt;/code> 或 &lt;code>urllib&lt;/code> 配合使用来获取网页内容，然后用来解析和提取所需的数据。
+基本用法
+导入库并下载网页内容：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> bs4 &lt;span style="color:#f92672">import&lt;/span> BeautifulSoup
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取网页内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;http://example.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>get(url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建 BeautifulSoup 对象&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>soup &lt;span style="color:#f92672">=&lt;/span> BeautifulSoup(response&lt;span style="color:#f92672">.&lt;/span>content, &lt;span style="color:#e6db74">&amp;#39;html.parser&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查找元素：
+1.通过标签名查找:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取第一个 &amp;lt;a&amp;gt; 标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>a_tag &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find(&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(a_tag)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>2.&lt;strong>通过类名查找&lt;/strong>：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取具有特定 class 的标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>div_tag &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find(&lt;span style="color:#e6db74">&amp;#39;div&amp;#39;&lt;/span>, class_&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;class-name&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(div_tag)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>3.&lt;strong>通过 id 查找&lt;/strong>：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取 id 为 specific-id 的标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>element &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find(id&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;specific-id&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(element)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查找多个元素：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取所有 &amp;lt;a&amp;gt; 标签&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>all_a_tags &lt;span style="color:#f92672">=&lt;/span> soup&lt;span style="color:#f92672">.&lt;/span>find_all(&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> tag &lt;span style="color:#f92672">in&lt;/span> all_a_tags:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(tag)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>获取标签的属性：&lt;/p></description></item><item><title>Urllib库的使用</title><link>https://merthon.github.io/posts/urllib%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Tue, 07 Jan 2025 10:10:26 +0800</pubDate><guid>https://merthon.github.io/posts/urllib%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;h3 id="1-urllib-库的基本模块">1. &lt;code>urllib&lt;/code> 库的基本模块&lt;/h3>
+&lt;p>&lt;code>urllib&lt;/code> 是 Python 标准库中用于处理 URL（Uniform Resource Locator）的模块，它提供了一系列功能来访问、解析、以及操作 URL。常见的用途包括发起 HTTP 请求、解析 URL、编码和解码查询字符串等。
+&lt;code>urllib&lt;/code> 库包含几个子模块，每个子模块提供不同的功能：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>urllib.request&lt;/code>：用于打开和读取 URLs（发起 HTTP 请求）。&lt;/li>
+&lt;li>&lt;code>urllib.parse&lt;/code>：用于解析 URL。&lt;/li>
+&lt;li>&lt;code>urllib.error&lt;/code>：包含与请求相关的异常类。&lt;/li>
+&lt;li>&lt;code>urllib.robotparser&lt;/code>：用于解析 robots.txt 文件，确定网站允许哪些爬虫访问。&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-主要功能">2. 主要功能&lt;/h3>
+&lt;h4 id="21-发送-http-请求-urllibrequest">2.1 发送 HTTP 请求 (&lt;code>urllib.request&lt;/code>)&lt;/h4>
+&lt;p>可以使用 &lt;code>urllib.request&lt;/code> 模块来发送 GET 或 POST 请求。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>GET 请求&lt;/strong>：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> urllib.request
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://www.example.com&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> urllib&lt;span style="color:#f92672">.&lt;/span>request&lt;span style="color:#f92672">.&lt;/span>urlopen(url)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>html &lt;span style="color:#f92672">=&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>read()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(html&lt;span style="color:#f92672">.&lt;/span>decode(&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>POST 请求&lt;/strong>：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> urllib.request
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> urllib.parse
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>url &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;https://www.example.com/login&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#39;username&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;user&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;password&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;pass&amp;#39;&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data &lt;span style="color:#f92672">=&lt;/span> urllib&lt;span style="color:#f92672">.&lt;/span>parse&lt;span style="color:#f92672">.&lt;/span>urlencode(data)&lt;span style="color:#f92672">.&lt;/span>encode(&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>request &lt;span style="color:#f92672">=&lt;/span> urllib&lt;span style="color:#f92672">.&lt;/span>request&lt;span style="color:#f92672">.&lt;/span>Request(url, data&lt;span style="color:#f92672">=&lt;/span>data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> urllib&lt;span style="color:#f92672">.&lt;/span>request&lt;span style="color:#f92672">.&lt;/span>urlopen(request)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>html &lt;span style="color:#f92672">=&lt;/span> response&lt;span style="color:#f92672">.&lt;/span>read()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(html&lt;span style="color:#f92672">.&lt;/span>decode(&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="22-url-编码与解码-urllibparse">2.2 URL 编码与解码 (&lt;code>urllib.parse&lt;/code>)&lt;/h4>
+&lt;p>URL 编码是指将特殊字符（如空格、中文等）转换为适合 URL 使用的格式。&lt;/p></description></item><item><title>Requests库的使用</title><link>https://merthon.github.io/posts/requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Mon, 06 Jan 2025 10:10:26 +0800</pubDate><guid>https://merthon.github.io/posts/requests%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>&lt;code>requests&lt;/code> 是 Python 中最流行的 HTTP 请求库之一，简化了 HTTP 请求的发送和响应处理。&lt;/p>
+&lt;h3 id="1-发送-get-请求">1. 发送 GET 请求&lt;/h3>
+&lt;p>&lt;code>requests.get()&lt;/code> 用于发送 GET 请求。它从指定的 URL 获取数据。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://httpbin.org/get&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取响应内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 获取 JSON 数据（如果有）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>json())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查看响应状态码&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>status_code)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 查看响应头&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>headers)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-发送-post-请求">2. 发送 POST 请求&lt;/h3>
+&lt;p>&lt;code>requests.post()&lt;/code> 用于发送 POST 请求，通常用于向服务器提交数据。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#39;key&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;value&amp;#39;&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>post(&lt;span style="color:#e6db74">&amp;#39;https://httpbin.org/post&amp;#39;&lt;/span>, data&lt;span style="color:#f92672">=&lt;/span>data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以通过 &lt;code>json&lt;/code> 参数发送 JSON 数据：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>json_data &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#39;name&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;John&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;age&amp;#39;&lt;/span>: &lt;span style="color:#ae81ff">30&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>post(&lt;span style="color:#e6db74">&amp;#39;https://httpbin.org/post&amp;#39;&lt;/span>, json&lt;span style="color:#f92672">=&lt;/span>json_data)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="3-添加请求头">3. 添加请求头&lt;/h3>
+&lt;p>有时需要传递特定的请求头（比如 User-Agent 或 Authorization 等）。可以通过 &lt;code>headers&lt;/code> 参数传递自定义的头信息。&lt;/p></description></item><item><title>Httpx库的使用</title><link>https://merthon.github.io/posts/httpx%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 05 Jan 2025 10:10:26 +0800</pubDate><guid>https://merthon.github.io/posts/httpx%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>&lt;code>httpx&lt;/code> 是一个用于 Python 的高性能 HTTP 客户端库，支持异步操作，是 &lt;code>requests&lt;/code> 的现代替代品，功能更强大，特别适合处理异步任务和 HTTP/2。&lt;/p>
+&lt;h3 id="基本用法">&lt;strong>基本用法&lt;/strong>&lt;/h3>
+&lt;h4 id="1-同步请求">&lt;strong>1. 同步请求&lt;/strong>&lt;/h4>
+&lt;p>&lt;code>httpx&lt;/code> 的用法类似 &lt;code>requests&lt;/code>，可以轻松发起同步 HTTP 请求。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> httpx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> httpx&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://jsonplaceholder.typicode.com/posts/1&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>status_code) &lt;span style="color:#75715e"># 状态码&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>json()) &lt;span style="color:#75715e"># 返回 JSON 数据&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>支持的基本方法：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>httpx.get(url, ...)&lt;/code>&lt;/li>
+&lt;li>&lt;code>httpx.post(url, ...)&lt;/code>&lt;/li>
+&lt;li>&lt;code>httpx.put(url, ...)&lt;/code>&lt;/li>
+&lt;li>&lt;code>httpx.delete(url, ...)&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-异步请求">&lt;strong>2. 异步请求&lt;/strong>&lt;/h4>
+&lt;p>&lt;code>httpx&lt;/code> 支持异步操作，通过 &lt;code>async&lt;/code> 和 &lt;code>await&lt;/code> 发起请求。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> httpx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> asyncio
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">async&lt;/span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">fetch_data&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">async&lt;/span> &lt;span style="color:#66d9ef">with&lt;/span> httpx&lt;span style="color:#f92672">.&lt;/span>AsyncClient() &lt;span style="color:#66d9ef">as&lt;/span> client:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> response &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">await&lt;/span> client&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://jsonplaceholder.typicode.com/posts/1&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(response&lt;span style="color:#f92672">.&lt;/span>json())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>asyncio&lt;span style="color:#f92672">.&lt;/span>run(fetch_data())
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="高级用法">&lt;strong>高级用法&lt;/strong>&lt;/h3>
+&lt;h4 id="1-设置超时">&lt;strong>1. 设置超时&lt;/strong>&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> httpx&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://example.com&amp;#39;&lt;/span>, timeout&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">10.0&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>2.设置自定义 Headers&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>headers &lt;span style="color:#f92672">=&lt;/span> {&lt;span style="color:#e6db74">&amp;#39;User-Agent&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;MyApp/1.0&amp;#39;&lt;/span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> httpx&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;https://example.com&amp;#39;&lt;/span>, headers&lt;span style="color:#f92672">=&lt;/span>headers)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>3.发送 JSON 数据&lt;/p></description></item><item><title>爬虫基础</title><link>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80/</link><pubDate>Sat, 04 Jan 2025 09:14:26 +0800</pubDate><guid>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E5%9F%BA%E7%A1%80/</guid><description>&lt;h1 id="1-uri和url">1. URI和URL&lt;/h1>
+&lt;p>URI：全称Uniform Resource Identifier，即统一资源标志符；
+URL：Uniform Resource Locator，即统一资源定位符。
+URL基本组成格式：&lt;/p>
+&lt;pre tabindex="0">&lt;code>scheme://[username:password@]hostname[:port][/path][;parameters][?query][fragment]
+&lt;/code>&lt;/pre>&lt;p>scheme：协议。常用的协议有http、https、Ftp等，另外schcme也被常称作protocol。
+usemame、password：用户名和密码。
+hostname：主机地址。可以是域名或IP地址。
+port：端口。服务器设定的端口。
+path：路径。用来指定访问某个资源时的附加信息。
+query：查询。用来查询某些资源。
+fragment:片段。对资源描述的部分补充。&lt;/p>
+&lt;h1 id="2http-and-https">2.HTTP and HTTPS&lt;/h1>
+&lt;p>HTTP为超文本传输协议，作用是把超文本数据从网络传输到本地测览器，能够保证高效而准确地传输超文本文档。
+HTTPS是以安全为目标的HTTP通道，换句话说，就是HTTP的安全版，即在HTTP下加人SSL层
+HTTPS工作大概流程：&lt;/p>
+&lt;ul>
+&lt;li>客户端发起请求，服务器返回公钥证书。&lt;/li>
+&lt;li>客户端验证证书的合法性。&lt;/li>
+&lt;li>使用公钥加密生成一个会话密钥。&lt;/li>
+&lt;li>双方使用该会话密钥加密和解密数据。&lt;/li>
+&lt;/ul>
+&lt;h2 id="21http请求过程">2.1HTTP请求过程&lt;/h2>
+&lt;p>HTTP 请求通常由以下几个部分组成：&lt;/p>
+&lt;h3 id="211-请求方法">2.1.1 请求方法&lt;/h3>
+&lt;p>HTTP 提供了多种请求方法，每种方法的语义不同。常见的请求方法有：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>GET&lt;/strong>：请求指定的资源，通常用于获取数据。&lt;/li>
+&lt;li>&lt;strong>POST&lt;/strong>：向服务器发送数据，通常用于提交表单或上传文件。&lt;/li>
+&lt;li>&lt;strong>PUT&lt;/strong>：上传指定资源的完整替换版本。&lt;/li>
+&lt;li>&lt;strong>DELETE&lt;/strong>：删除指定资源。&lt;/li>
+&lt;li>&lt;strong>PATCH&lt;/strong>：部分更新资源。&lt;/li>
+&lt;li>&lt;strong>HEAD&lt;/strong>：请求服务器返回响应头部，通常用于检查资源是否存在。&lt;/li>
+&lt;li>&lt;strong>OPTIONS&lt;/strong>：询问服务器支持哪些 HTTP 方法。&lt;/li>
+&lt;/ul>
+&lt;h3 id="212-请求网址request-url">2.1.2 请求网址（Request URL）&lt;/h3>
+&lt;p>请求的 URL 指定了要访问的资源的位置，包含了协议、主机、路径、查询参数等信息。&lt;/p>
+&lt;h3 id="213-请求头request-headers">2.1.3 请求头（Request Headers）&lt;/h3>
+&lt;p>请求头部提供了关于客户端、请求和数据的额外信息。常见的请求头包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Host&lt;/strong>：指定目标主机的域名。&lt;/li>
+&lt;li>&lt;strong>User-Agent&lt;/strong>：客户端软件的标识。&lt;/li>
+&lt;li>&lt;strong>Accept&lt;/strong>：告知服务器客户端能够处理的数据类型，如 &lt;code>text/html&lt;/code>、&lt;code>application/json&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>Content-Type&lt;/strong>：请求体的类型，如 &lt;code>application/json&lt;/code>、&lt;code>application/x-www-form-urlencoded&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>Authorization&lt;/strong>：包含身份验证信息，如 Basic 或 Bearer Token。&lt;/li>
+&lt;li>&lt;strong>Cookie&lt;/strong>：客户端存储的 Cookies，通常用于会话管理。&lt;/li>
+&lt;/ul>
+&lt;h3 id="214-请求体request-body">2.1.4 请求体（Request Body）&lt;/h3>
+&lt;p>请求体包含请求的具体数据，例如表单数据或上传的文件。对于 &lt;code>POST&lt;/code>、&lt;code>PUT&lt;/code> 等方法，通常需要有请求体。&lt;/p></description></item><item><title>Python笔记03</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</link><pubDate>Sat, 28 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</guid><description>&lt;h1 id="模块和包">模块和包&lt;/h1>
+&lt;h2 id="什么是模块模块化编程">什么是模块？模块化编程&lt;/h2>
+&lt;p>python提供了强大的模块支持，主要体现在，不仅 Python 标准库中包含了大量的模块（称为标准模块），还有大量的第三方模块。
+模块就是 Python 程序。换句话说，任何 Python 程序都可以作为模块。
+代码的可重用性体现在，当编写好一个模块后，只要编程过程中需要用到该模块中的某个功能（由变量、函数、类实现），无需做重复性的编写工作，直接在程序中导入该模块即可使用该功能。
+模块，可以理解为是对代码更高级的封装，即把能够实现某一特定功能的代码编写在同一个 .py 文件中，并将其作为一个独立的模块，这样既可以方便其它程序或脚本导入并使用，同时还能有效避免函数名和变量名发生冲突。
+举例：先创建一个hello.py文件&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">say&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#39;Hello world&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再在同一目录下创建一个say.py文件&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 导入刚刚创建好的hello&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> hello
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hello&lt;span style="color:#f92672">.&lt;/span>say()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行后就是HelloWorld
+hello.py 就是一个自定义的模块（有关自定义模块，后续章节会做详细讲解），我们只需要将 hellp.py 模块导入到 say.py 文件中，就可以直接在 say.py 文件中使用模块中的资源。&lt;/p>
+&lt;h2 id="导入模块-import用法">导入模块 import用法&lt;/h2>
+&lt;p>主要有以下两种：&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>import 模块名1 [as 别名1], 模块名2 [as 别名2]，…&lt;/code>：使用这种语法格式的 import 语句，会导入指定模块中的所有成员（包括变量、函数、类等）。不仅如此，当需要使用模块中的成员时，需用该模块名（或别名）作为前缀，否则 Python 解释器会报错。&lt;/li>
+&lt;li>&lt;code>from 模块名 import 成员名1 [as 别名1]，成员名2 [as 别名2]，…&lt;/code>： 使用这种语法格式的 import 语句，只会导入模块中指定的成员，而不是全部成员。同时，当程序中使用该成员时，无需附加任何前缀，直接使用成员名（或别名）即可。
+注意，用 [] 括起来的部分，可以使用，也可以省略。&lt;br>
+其中，第二种 import 语句也可以导入指定模块中的所有成员，即使用 form 模块名 import ＊，但不推荐。
+一般不推荐使用“from 模块 import”这种语法导入指定模块内的所有成员，因为它存在潜在的风险。比如同时导入 module1 和 module2 内的所有成员，假如这两个模块内都有一个 foo() 函数，那么当在程序中执行如下代码时：&lt;br>
+foo()
+上面调用的这个 foo() 函数到底是 module1 模块中的还是 module2 模块中的？因此，这种导入指定模块内所有成员的用法是有风险的。&lt;/li>
+&lt;/ol>
+&lt;h2 id="包">包&lt;/h2>
+&lt;h3 id="创建包">创建包&lt;/h3>
+&lt;p>包其实就是文件夹，更确切的说，是一个包含“&lt;strong>init&lt;/strong>.py”文件的文件夹。因此，如果我们想手动创建一个包，只需进行以下 2 步操作：&lt;/p></description></item><item><title>Python笔记02</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</link><pubDate>Fri, 27 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</guid><description>&lt;h1 id="流程控制">流程控制&lt;/h1>
+&lt;h2 id="if-else">if-else&lt;/h2>
+&lt;p>Python 中的 if else 语句可以细分为三种形式，分别是 if 语句、if else 语句和 if elif else 语句
+对语法格式的说明：&lt;/p>
+&lt;ul>
+&lt;li>“表达式”可以是一个单一的值或者变量，也可以是由运算符组成的复杂语句，形式不限，只要它能得到一个值就行。不管“表达式”的结果是什么类型，if else 都能判断它是否成立（真或者假）。&lt;/li>
+&lt;li>“代码块”由具由相同缩进量的若干条语句组成。&lt;/li>
+&lt;li>if、elif、else 语句的最后都有冒号&lt;code>:&lt;/code>，不要忘记。&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>age &lt;span style="color:#f92672">=&lt;/span> int( input(&lt;span style="color:#e6db74">&amp;#34;请输入你的年龄：&amp;#34;&lt;/span>) )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> age &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">18&lt;/span> :
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;你还未成年，建议在家人陪同下使用该软件！&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;如果你已经得到了家长的同意，请忽略以上提示。&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#该语句不属于if的代码块&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(&lt;span style="color:#e6db74">&amp;#34;软件正在使用中...&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="判断表达式是否成立">判断表达式是否成立&lt;/h3>
+&lt;p>if 和 elif 后面的“表达式”的形式是很自由的，只要表达式有一个结果，不管这个结果是什么类型，Python 都能判断它是“真”还是“假”。&lt;/p>
+&lt;h3 id="对缩进的要求">对缩进的要求&lt;/h3>
+&lt;p>pyhton是以缩进来标记代码块的，代码块一定要有缩进，没有缩进的不是代码块。另外，同一个代码块的缩进量要相同，缩进量不同的不属于同一个代码块。&lt;/p>
+&lt;h2 id="pass语句及其作用">pass语句及其作用&lt;/h2>
+&lt;p> Python 提供了一种更加专业的做法，就是空语句 pass。&lt;strong>pass&lt;/strong> 是 Python 中的关键字，用来让解释器跳过此处，什么都不做。&lt;/p>
+&lt;h2 id="assert断言函数及用法">assert断言函数及用法&lt;/h2>
+&lt;p>assert 语句，又称断言语句，可以看做是功能缩小版的 if 语句，它用于判断某个表达式的值，如果值为真，则程序可以继续往下执行；反之，Python 解释器会报 AssertionError 错误。&lt;/p>
+&lt;h2 id="while循环">while循环&lt;/h2>
+&lt;p>while 循环和 if 条件分支语句类似，即在条件（表达式）为真的情况下，会执行相应的代码块。不同之处在于，只要条件为真，while 就会一直重复执行那段代码块。&lt;/p>
+&lt;h2 id="for循环">for循环&lt;/h2>
+&lt;p>它常用于遍历字符串、列表、元组、字典、集合等序列类型，逐个获取序列中的各个元素。&lt;br>
+for 循环的语法格式如下：&lt;br>
+for 迭代变量 in 字符串|列表|元组|字典|集合：&lt;br>
+    代码块
+格式中，迭代变量用于存放从序列类型变量中读取出来的元素，所以一般不会在循环中对迭代变量手动赋值；代码块指的是具有相同缩进格式的多行代码（和 while 一样），由于和循环结构联用，因此代码块又称为循环体。&lt;/p></description></item><item><title>Python笔记01</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</link><pubDate>Thu, 26 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</guid><description>&lt;h1 id="基础知识">基础知识&lt;/h1>
+&lt;h2 id="变量">变量&lt;/h2>
+&lt;p>变量（Variable）可以看成一个小箱子，专门用来“盛装”程序中的数据。底层看，程序中的数据最终都要放到内存（内存条）中，变量其实就是这块内存的名字。
+和变量相对应的是常量（Constant），它们都是用来“盛装”数据的小箱子，不同的是：变量保存的数据可以被多次修改，而常量一旦保存某个数据之后就不能修改了。&lt;/p>
+&lt;h3 id="变量的赋值">变量的赋值&lt;/h3>
+&lt;p>将数据放入变量的过程叫做赋值（Assignment）。Python 使用等号&lt;code>=&lt;/code>作为赋值运算符，具体格式为：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>name &lt;span style="color:#f92672">=&lt;/span> value
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>name 表示变量名；value 表示值，也就是要存储的数据。&lt;br>
+注意，变量是标识符的一种，它的名字不能随便起.&lt;/p>
+&lt;h3 id="弱类型语言">弱类型语言&lt;/h3>
+&lt;p>弱类型语言有两个特点：&lt;/p>
+&lt;ul>
+&lt;li>变量无须声明就可以直接赋值，对一个不存在的变量赋值就相当于定义了一个新变量。&lt;/li>
+&lt;li>变量的数据类型可以随时改变，比如，同一个变量可以一会儿被赋值为整数，一会儿被赋值为字符串。&lt;/li>
+&lt;/ul>
+&lt;h2 id="数据类型">数据类型&lt;/h2>
+&lt;h3 id="整型">整型&lt;/h3>
+&lt;p>整数就是没有小数部分的数字，python中的整数包括正整数、0 和负整数。&lt;/p>
+&lt;h3 id="进制">进制&lt;/h3>
+&lt;p>在 Python 中，可以使用多种进制来表示整数：&lt;/p>
+&lt;h4 id="1-十进制形式">1) 十进制形式&lt;/h4>
+&lt;p>我们平时常见的整数就是十进制形式，它由 0~9 共十个数字排列组合而成。&lt;br>
+注意，使用十进制形式的整数不能以 0 作为开头，除非这个数值本身就是 0。&lt;/p>
+&lt;h4 id="2-二进制形式">2) 二进制形式&lt;/h4>
+&lt;p>由 0 和 1 两个数字组成，书写时以&lt;code>0b&lt;/code>或&lt;code>0B&lt;/code>开头。例如，101 对应十进制数是 5。&lt;/p>
+&lt;h4 id="3-八进制形式">3) 八进制形式&lt;/h4>
+&lt;p>八进制整数由 0~7 共八个数字组成，以&lt;code>0o&lt;/code>或&lt;code>0O&lt;/code>开头。注意，第一个符号是数字 0，第二个符号是大写或小写的字母 O。 &lt;br>
+在 Python 2.x 中，八进制数字还可以直接以&lt;code>0&lt;/code>（数字零）开头。&lt;/p>
+&lt;h4 id="4-十六进制形式">4) 十六进制形式&lt;/h4>
+&lt;p>由 0&lt;del>9 十个数字以及 A&lt;/del>F（或 a~f）六个字母组成，书写时以&lt;code>0x&lt;/code>或&lt;code>0X&lt;/code>开头&lt;/p>
+&lt;h3 id="数字分隔符">数字分隔符&lt;/h3>
+&lt;p>为了提高数字的的可读性，Python 3.x 允许使用下划线&lt;code>_&lt;/code>作为数字（包括整数和小数）的分隔符。通常每隔三个数字添加一个下划线，类似于英文数字中的逗号。下划线不会影响数字本身的值&lt;/p>
+&lt;h2 id="小数和浮点数">小数和浮点数&lt;/h2>
+&lt;p>小数通常以浮点数的形式存储。浮点数和定点数是相对的：小数在存储过程中如果小数点发生移动，就称为浮点数；如果小数点不动，就称为定点数。&lt;/p>
+&lt;h2 id="复数">复数&lt;/h2>
+&lt;p>复数（Complex）是 python的内置类型，直接书写即可。换句话说，Python 语言本身就支持复数，而不依赖于标准库或者第三方库。&lt;br>
+复数由实部（real）和虚部（imag）构成，在 Python 中，复数的虚部以&lt;code>j&lt;/code>或者&lt;code>J&lt;/code>作为后缀，具体格式为：
+a + bj
+a 表示实部，b 表示虚部。&lt;/p></description></item></channel></rss>

@@ -1,0 +1,120 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>基于JWT的模拟登录</title>
+<meta name=description content="JWT（JSON Web Token） 的模拟登录通常用于无状态认证系统，尤其是在 RESTful API 和现代 web 应用中，广泛用于替代传统的基于 Session 的身份验证机制。JWT 是一种轻量级的认证机制，通常由服务器在用户登录时生成，并作为认证凭据返回给客户端。客户端通过存储和发送 JWT 来进行后续的 …"><meta name=keywords content='blog,hugo,Python,爬虫,模拟登录'><meta property="og:url" content="https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/"><meta property="og:type" content="website"><meta property="og:title" content="基于JWT的模拟登录"><meta property="og:description" content="JWT（JSON Web Token） 的模拟登录通常用于无状态认证系统，尤其是在 RESTful API 和现代 web 应用中，广泛用于替代传统的基于 Session 的身份验证机制。JWT 是一种轻量级的认证机制，通常由服务器在用户登录时生成，并作为认证凭据返回给客户端。客户端通过存储和发送 JWT 来进行后续的 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="基于JWT的模拟登录"><meta name=twitter:description content="JWT（JSON Web Token） 的模拟登录通常用于无状态认证系统，尤其是在 RESTful API 和现代 web 应用中，广泛用于替代传统的基于 Session 的身份验证机制。JWT 是一种轻量级的认证机制，通常由服务器在用户登录时生成，并作为认证凭据返回给客户端。客户端通过存储和发送 JWT 来进行后续的 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/"><meta property="twitter:url" content="https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/%E5%9F%BA%E4%BA%8Ejwt%E7%9A%84%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>基于JWT的模拟登录</h1><small role=doc-subtitle></small><p class=post-date>January 9, 2025
+| Updated January 9, 2025</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/python>Python</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E7%88%AC%E8%99%AB>爬虫</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95>模拟登录</a></li></ul></div><div class=post-content><p><strong>JWT（JSON Web Token）</strong> 的模拟登录通常用于无状态认证系统，尤其是在 RESTful API 和现代 web 应用中，广泛用于替代传统的基于 Session 的身份验证机制。JWT 是一种轻量级的认证机制，通常由服务器在用户登录时生成，并作为认证凭据返回给客户端。客户端通过存储和发送 JWT 来进行后续的身份验证。</p><h1 id=jwt-的基本原理>JWT 的基本原理</h1><p>WT 是由三部分组成的：</p><ol><li><strong>Header</strong>：指定 JWT 的类型（通常是 JWT）以及签名算法（如 HS256）。</li><li><strong>Payload</strong>：包含声明（Claims），通常包括用户的基本信息（如 <code>user_id</code>）和过期时间（<code>exp</code>）。这些信息是未加密的，可以被任何人读取，但不能篡改。</li><li><strong>Signature</strong>：使用密钥对 Header 和 Payload 进行签名，以防止数据被篡改。</li></ol><h4 id=wt-工作流程>WT 工作流程：</h4><ol><li>用户使用用户名和密码发送请求进行登录。</li><li>服务器验证用户信息后，生成一个包含用户信息的 JWT，并返回给客户端。</li><li>客户端将 JWT 存储在本地（通常存储在 <code>localStorage</code> 或 <code>sessionStorage</code> 中，或者作为 HTTP cookie）。</li><li>客户端在后续请求中将 JWT 放入请求头中，以便服务器验证该请求是否来自已认证的用户。</li></ol><h1 id=基于-jwt-的模拟登录实现步骤>基于 JWT 的模拟登录实现步骤</h1><p>主要步骤包括：</p><ul><li>向登录接口发送用户名和密码请求。</li><li>服务器验证成功后返回 JWT。</li><li>将 JWT 存储并用于后续请求中的身份验证。</li></ul><h2 id=发送-post-请求获取-jwt>发送 POST 请求获取 JWT</h2><p>首先，向服务器的登录 API 发送 POST 请求，提交用户名和密码。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 登录接口 URL</span>
+</span></span><span style=display:flex><span>login_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/login&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 用户名和密码</span>
+</span></span><span style=display:flex><span>login_data <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;username&#39;</span>: <span style=color:#e6db74>&#39;your_username&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;password&#39;</span>: <span style=color:#e6db74>&#39;your_password&#39;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 发送 POST 请求进行登录</span>
+</span></span><span style=display:flex><span>response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(login_url, json<span style=color:#f92672>=</span>login_data)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 检查登录是否成功</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 解析返回的 JSON 响应，提取 JWT</span>
+</span></span><span style=display:flex><span>    token <span style=color:#f92672>=</span> response<span style=color:#f92672>.</span>json()<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;token&#39;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;登录成功，获取到的 JWT:&#34;</span>, token)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;登录失败&#34;</span>)
+</span></span></code></pre></div><h2 id=使用-jwt-访问受保护的资源>使用 JWT 访问受保护的资源</h2><p>一旦获取到 JWT，下一步是将其用于后续的身份验证。在每个请求中，JWT 会被放置在请求头的 <code>Authorization</code> 字段中。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 需要访问的受保护资源 URL</span>
+</span></span><span style=display:flex><span>protected_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/protected_resource&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 请求头包含 JWT</span>
+</span></span><span style=display:flex><span>headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;Authorization&#39;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;Bearer </span><span style=color:#e6db74>{</span>token<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 发送 GET 请求，访问受保护的资源</span>
+</span></span><span style=display:flex><span>protected_response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(protected_url, headers<span style=color:#f92672>=</span>headers)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 打印受保护页面的内容</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> protected_response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;成功访问受保护资源&#34;</span>)
+</span></span><span style=display:flex><span>    print(protected_response<span style=color:#f92672>.</span>json())  <span style=color:#75715e># 假设返回的是 JSON 数据</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;访问受保护资源失败&#34;</span>)
+</span></span></code></pre></div><h2 id=处理-jwt-过期>处理 JWT 过期</h2><p>JWT 通常会设置过期时间（<code>exp</code>），如果 JWT 过期，服务器会拒绝请求。在这种情况下，客户端通常需要使用 <strong>刷新 token（refresh token）</strong> 来获取新的 JWT。</p><h2 id=刷新-jwt如果支持刷新-token>刷新 JWT（如果支持刷新 token）</h2><p>如果服务器提供刷新功能，你可以通过刷新 token 获取新的 JWT。在刷新过程中，通常会提供一个刷新 token（通常是一个长期有效的 token），你可以使用它来获取新的 JWT。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 刷新 token 接口 URL</span>
+</span></span><span style=display:flex><span>refresh_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/refresh_token&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 发送请求刷新 JWT</span>
+</span></span><span style=display:flex><span>refresh_data <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;refresh_token&#39;</span>: <span style=color:#e6db74>&#39;your_refresh_token&#39;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>refresh_response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(refresh_url, json<span style=color:#f92672>=</span>refresh_data)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 处理刷新结果</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> refresh_response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 获取新的 JWT</span>
+</span></span><span style=display:flex><span>    new_token <span style=color:#f92672>=</span> refresh_response<span style=color:#f92672>.</span>json()<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;token&#39;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;JWT 已刷新，新的 token:&#34;</span>, new_token)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;刷新 JWT 失败&#34;</span>)
+</span></span></code></pre></div><h1 id=demo>demo</h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 登录接口 URL</span>
+</span></span><span style=display:flex><span>login_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/login&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 受保护资源接口 URL</span>
+</span></span><span style=display:flex><span>protected_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/protected_resource&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 刷新 token 接口 URL</span>
+</span></span><span style=display:flex><span>refresh_url <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;https://example.com/api/refresh_token&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 用户名和密码</span>
+</span></span><span style=display:flex><span>login_data <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;username&#39;</span>: <span style=color:#e6db74>&#39;your_username&#39;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;password&#39;</span>: <span style=color:#e6db74>&#39;your_password&#39;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 发送 POST 请求进行登录，获取 JWT</span>
+</span></span><span style=display:flex><span>response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(login_url, json<span style=color:#f92672>=</span>login_data)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>    token <span style=color:#f92672>=</span> response<span style=color:#f92672>.</span>json()<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;token&#39;</span>)
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;登录成功，获取到的 JWT:&#34;</span>, token)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;登录失败&#34;</span>)
+</span></span><span style=display:flex><span>    exit()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用 JWT 访问受保护资源</span>
+</span></span><span style=display:flex><span>headers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;Authorization&#39;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;Bearer </span><span style=color:#e6db74>{</span>token<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>protected_response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(protected_url, headers<span style=color:#f92672>=</span>headers)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> protected_response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;成功访问受保护资源&#34;</span>)
+</span></span><span style=display:flex><span>    print(protected_response<span style=color:#f92672>.</span>json())
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    print(<span style=color:#e6db74>&#34;访问受保护资源失败&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 如果遇到 JWT 过期，尝试刷新 JWT</span>
+</span></span><span style=display:flex><span>    refresh_data <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#39;refresh_token&#39;</span>: <span style=color:#e6db74>&#39;your_refresh_token&#39;</span>,
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    refresh_response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(refresh_url, json<span style=color:#f92672>=</span>refresh_data)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> refresh_response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>        new_token <span style=color:#f92672>=</span> refresh_response<span style=color:#f92672>.</span>json()<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;token&#39;</span>)
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;JWT 已刷新，新的 token:&#34;</span>, new_token)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 使用新的 token 再次访问受保护资源</span>
+</span></span><span style=display:flex><span>        headers[<span style=color:#e6db74>&#39;Authorization&#39;</span>] <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;Bearer </span><span style=color:#e6db74>{</span>new_token<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;</span>
+</span></span><span style=display:flex><span>        protected_response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>get(protected_url, headers<span style=color:#f92672>=</span>headers)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> protected_response<span style=color:#f92672>.</span>ok:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>&#34;成功访问受保护资源（刷新后）&#34;</span>)
+</span></span><span style=display:flex><span>            print(protected_response<span style=color:#f92672>.</span>json())
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>&#34;访问受保护资源失败（刷新后）&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;刷新 JWT 失败&#34;</span>)
+</span></span></code></pre></div></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><a href=#jwt-的基本原理>JWT 的基本原理</a><ul><li><ul><li></li></ul></li></ul></li><li><a href=#基于-jwt-的模拟登录实现步骤>基于 JWT 的模拟登录实现步骤</a><ul><li><a href=#发送-post-请求获取-jwt>发送 POST 请求获取 JWT</a></li><li><a href=#使用-jwt-访问受保护的资源>使用 JWT 访问受保护的资源</a></li><li><a href=#处理-jwt-过期>处理 JWT 过期</a></li><li><a href=#刷新-jwt如果支持刷新-token>刷新 JWT（如果支持刷新 token）</a></li></ul></li><li><a href=#demo>demo</a></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

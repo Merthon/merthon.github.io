@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RabbitMQ on Merthon</title><link>https://merthon.github.io/tags/rabbitmq/</link><description>Recent content in RabbitMQ on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 04 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml"/><item><title>RabbitMQ安装</title><link>https://merthon.github.io/posts/rabbitmq%E5%AE%89%E8%A3%85/</link><pubDate>Sat, 04 Jan 2025 11:01:01 +0800</pubDate><guid>https://merthon.github.io/posts/rabbitmq%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-rabbitmq-镜像">拉取 RabbitMQ 镜像&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull rabbitmq:management
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>rabbitmq:management&lt;/code> 镜像包含 RabbitMQ 和一个基于浏览器的管理界面，推荐使用。&lt;/p>
+&lt;h1 id="启动-rabbitmq-容器">启动 RabbitMQ 容器&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker run -d --name rabbitmq &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p 5672:5672 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p 15672:15672 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -v /Users/chenx/Workspace/rabbitmq-data:/var/lib/rabbitmq &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> rabbitmq:management
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>&lt;code>--name rabbitmq&lt;/code>：容器名称为 &lt;code>rabbitmq&lt;/code>。&lt;/li>
+&lt;li>&lt;code>-p 5672:5672&lt;/code>：映射 AMQP 通信端口。&lt;/li>
+&lt;li>&lt;code>-p 15672:15672&lt;/code>：映射管理界面端口。&lt;/li>
+&lt;li>&lt;code>-v /Users/chenx/Workspace/rabbitmq-data:/var/lib/rabbitmq&lt;/code>：将 RabbitMQ 数据存储在指定路径下。&lt;/li>
+&lt;/ul>
+&lt;h1 id="验证安装是否成功">验证安装是否成功&lt;/h1>
+&lt;h4 id="访问-rabbitmq-管理界面">&lt;strong>访问 RabbitMQ 管理界面：&lt;/strong>&lt;/h4>
+&lt;p>打开浏览器并访问 http://localhost:15672。&lt;br>
+默认的用户名和密码是：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>用户名&lt;/strong>: &lt;code>guest&lt;/code>&lt;/li>
+&lt;li>&lt;strong>密码&lt;/strong>: &lt;code>guest&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h1 id="使用-docker-命令直接管理">使用 Docker 命令直接管理&lt;/h1>
+&lt;p>可以通过 &lt;code>docker exec&lt;/code> 在容器中直接执行 RabbitMQ 管理命令，无需进入容器交互式 shell。例如：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker exec rabbitmq rabbitmqctl add_user &amp;lt;username&amp;gt; &amp;lt;password&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker exec rabbitmq rabbitmqctl set_user_tags &amp;lt;username&amp;gt; administrator
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker exec rabbitmq rabbitmqctl set_permissions -p / &amp;lt;username&amp;gt; &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="注意事项">注意事项&lt;/h1>
+&lt;p>&lt;strong>删除默认用户&lt;/strong>&lt;/p></description></item></channel></rss>

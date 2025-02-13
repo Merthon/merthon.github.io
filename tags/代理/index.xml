@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>代理 on Merthon</title><link>https://merthon.github.io/tags/%E4%BB%A3%E7%90%86/</link><description>Recent content in 代理 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 12 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E4%BB%A3%E7%90%86/index.xml" rel="self" type="application/rss+xml"/><item><title>爬虫中代理的使用</title><link>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E4%B8%AD%E4%BB%A3%E7%90%86%E7%9A%84%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 12 Jan 2025 02:08:30 +0800</pubDate><guid>https://merthon.github.io/posts/%E7%88%AC%E8%99%AB%E4%B8%AD%E4%BB%A3%E7%90%86%E7%9A%84%E4%BD%BF%E7%94%A8/</guid><description>&lt;p>在爬虫中使用代理是为了应对一些网站的反爬虫机制，它能够帮助你隐藏爬虫的真实 IP 地址，避免被封禁。&lt;/p>
+&lt;h1 id="代理的基本概念">代理的基本概念&lt;/h1>
+&lt;p>代理服务器是一个中间服务器，它接受客户端的请求并代表客户端访问目标网站。通过代理，客户端的 IP 地址对目标服务器来说是代理服务器的 IP 地址，而不是爬虫的真实 IP。
+常见的代理类型：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>HTTP 代理&lt;/strong>：适用于普通的 HTTP 请求。&lt;/li>
+&lt;li>&lt;strong>HTTPS 代理&lt;/strong>：适用于 HTTPS 请求，提供加密传输。&lt;/li>
+&lt;li>&lt;strong>SOCKS 代理&lt;/strong>：支持更多的协议类型，比 HTTP/HTTPS 代理更通用。&lt;/li>
+&lt;li>&lt;strong>透明代理&lt;/strong>：代理服务器不会修改请求或响应，目标服务器能看到真实的请求信息。&lt;/li>
+&lt;li>&lt;strong>匿名代理&lt;/strong>：代理服务器隐藏了客户端的 IP 地址，但目标服务器知道请求来自代理服务器。&lt;/li>
+&lt;li>&lt;strong>高匿代理&lt;/strong>：代理服务器不仅隐藏了客户端的 IP 地址，还不会暴露自己是代理服务器。&lt;/li>
+&lt;/ul>
+&lt;h1 id="代理池">代理池&lt;/h1>
+&lt;p>为了提高爬虫的稳定性，通常会使用代理池，即预先准备一个代理 IP 列表，爬虫在运行时会从池中随机选取代理进行请求。这样，即便某个代理 IP 被封禁，爬虫仍然能够继续工作。
+常见的代理池策略：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>随机选择&lt;/strong>：每次请求时从代理池中随机选择一个代理。&lt;/li>
+&lt;li>&lt;strong>按频率限制使用&lt;/strong>：一些代理池会根据 IP 的使用频率进行调度，避免频繁使用同一个代理 IP。&lt;/li>
+&lt;li>&lt;strong>代理检查&lt;/strong>：定期检查代理是否可用，剔除掉失效的代理。&lt;/li>
+&lt;/ul>
+&lt;h1 id="设置代理">设置代理&lt;/h1>
+&lt;ol>
+&lt;li>在 Python 爬虫中使用代理通常依赖于请求库（如 &lt;code>requests&lt;/code>）或 Scrapy 框架。&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>proxies &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;http&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;http://username:password@proxy_ip:proxy_port&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;https&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;https://username:password@proxy_ip:proxy_port&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>response &lt;span style="color:#f92672">=&lt;/span> requests&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;http://example.com&amp;#39;&lt;/span>, proxies&lt;span style="color:#f92672">=&lt;/span>proxies)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(response&lt;span style="color:#f92672">.&lt;/span>text)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>使用 Scrapy 设置代理：
+在 Scrapy 中，你可以通过中间件来设置代理。Scrapy 提供了 &lt;code>HttpProxyMiddleware&lt;/code> 来处理代理设置。
+&lt;strong>启用代理中间件&lt;/strong>：
+在 &lt;code>settings.py&lt;/code> 中启用中间件：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>DOWNLOADER_MIDDLEWARES &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware&amp;#39;&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>设置代理&lt;/strong>：
+可以通过设置 &lt;code>http_proxy&lt;/code> 来指定全局代理，或者在 &lt;code>spider&lt;/code> 里为特定请求设置代理。&lt;/p></description></item></channel></rss>

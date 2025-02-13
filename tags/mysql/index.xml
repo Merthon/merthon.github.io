@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MySQL on Merthon</title><link>https://merthon.github.io/tags/mysql/</link><description>Recent content in MySQL on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 27 Jul 2022 20:52:38 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mysql on Merthon</title><link>https://merthon.github.io/tags/mysql/</link><description>Recent content in Mysql on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL数据库安装</title><link>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Sun, 05 Jan 2025 13:55:51 +0800</pubDate><guid>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="1安装">1.安装&lt;/h1>
+&lt;p>首先，确保你在 OrbStack 上安装了 Docker，然后拉取 MySQL 镜像。&lt;/p>
+&lt;ol>
+&lt;li>打开 OrbStack，进入终端。&lt;/li>
+&lt;li>执行以下命令来拉取 MySQL 镜像：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull mysql:latest
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这会从 Docker Hub 拉取最新版的 MySQL 镜像。&lt;/p>
+&lt;h1 id="2启动">2.启动&lt;/h1>
+&lt;p>接下来，我们可以启动一个 MySQL 容器并配置它。运行以下命令：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker run --name mysql-container -e MYSQL_ROOT_PASSWORD&lt;span style="color:#f92672">=&lt;/span>root -p 3306:3306 -d mysql:latest
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>解释：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>--name mysql-container&lt;/code>：指定容器的名字为 &lt;code>mysql-container&lt;/code>。&lt;/li>
+&lt;li>&lt;code>-e MYSQL_ROOT_PASSWORD=root&lt;/code>：设置 MySQL 的 root 用户密码为 &lt;code>root&lt;/code>（你可以换成更强的密码）。&lt;/li>
+&lt;li>&lt;code>-p 3306:3306&lt;/code>：将容器的 3306 端口映射到本机的 3306 端口，方便你从外部连接。&lt;/li>
+&lt;li>&lt;code>-d mysql:latest&lt;/code>：在后台运行 MySQL 容器，使用最新版的 MySQL 镜像&lt;/li>
+&lt;/ul>
+&lt;h1 id="3检查">3.检查&lt;/h1>
+&lt;p>你可以用以下命令检查容器是否启动成功：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker ps
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果一切正常，你会看到类似如下的输出，表示 MySQL 容器正在运行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>abcd1234efgh mysql:latest &lt;span style="color:#e6db74">&amp;#34;docker-entrypoint.s…&amp;#34;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> seconds ago Up &lt;span style="color:#ae81ff">3&lt;/span> seconds 0.0.0.0:3306-&amp;gt;3306/tcp mysql-container
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="4进入-mysql-容器并连接数据库">4.进入 MySQL 容器并连接数据库&lt;/h1>
+&lt;p>接下来，进入容器并连接 MySQL。&lt;/p></description></item><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
 &lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
 &lt;p>在 src 下创建 config.properties 文件&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>

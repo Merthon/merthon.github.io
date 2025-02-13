@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MongoDB on Merthon</title><link>https://merthon.github.io/tags/mongodb/</link><description>Recent content in MongoDB on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 03 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/mongodb/index.xml" rel="self" type="application/rss+xml"/><item><title>MongoDB数据库安装</title><link>https://merthon.github.io/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 01:55:51 +0800</pubDate><guid>https://merthon.github.io/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-mongodb-镜像">拉取 MongoDB 镜像&lt;/h1>
+&lt;ol>
+&lt;li>打开终端，拉取官方 MongoDB Docker 镜像：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull mongo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>如果需要特定版本的 MongoDB，可以指定版本号：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull mongo:6.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="创建-mongodb-容器">创建 MongoDB 容器&lt;/h1>
+&lt;p>运行以下命令启动 MongoDB 容器：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker run -d &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --name mongodb &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p 27017:27017 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -v /path/to/mongodb/data:/data/db &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -e MONGO_INITDB_ROOT_USERNAME&lt;span style="color:#f92672">=&lt;/span>admin &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -e MONGO_INITDB_ROOT_PASSWORD&lt;span style="color:#f92672">=&lt;/span>yourpassword &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> mongo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>&lt;code>--name mongodb&lt;/code>：指定容器名称。&lt;/li>
+&lt;li>&lt;code>-p 27017:27017&lt;/code>：将 MongoDB 的默认端口映射到主机端口。&lt;/li>
+&lt;li>&lt;code>-v /path/to/mongodb/data:/data/db&lt;/code>：将数据文件存储在主机路径中，替换 &lt;code>/path/to/mongodb/data&lt;/code> 为实际路径（建议将路径指向你的工作目录）。&lt;/li>
+&lt;li>&lt;code>-e MONGO_INITDB_ROOT_USERNAME=admin&lt;/code> 和 &lt;code>-e MONGO_INITDB_ROOT_PASSWORD=yourpassword&lt;/code>：设置 MongoDB 的管理员用户名和密码。&lt;/li>
+&lt;/ul>
+&lt;h1 id="验证-mongodb-容器状态">验证 MongoDB 容器状态&lt;/h1>
+&lt;p>查看 MongoDB 容器是否运行成功：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker ps
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

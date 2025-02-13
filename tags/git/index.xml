@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Merthon</title><link>https://merthon.github.io/tags/git/</link><description>Recent content in Git on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 09 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Commit规范</title><link>https://merthon.github.io/posts/commit%E8%A7%84%E8%8C%83/</link><pubDate>Sun, 09 Feb 2025 02:37:08 +0800</pubDate><guid>https://merthon.github.io/posts/commit%E8%A7%84%E8%8C%83/</guid><description>&lt;p>在开发中，使用一致的 &lt;strong>Git commit 规范&lt;/strong> 可以帮助团队成员理解每个提交的目的和内容。常见的 &lt;strong>commit 规范&lt;/strong> 包括：&lt;/p>
+&lt;h3 id="1-常见的-commit-message-格式">1. &lt;strong>常见的 Commit Message 格式&lt;/strong>&lt;/h3>
+&lt;p>一般采用 &lt;strong>简短&lt;/strong> 但具有描述性的方式来撰写 commit 信息，通常使用以下格式：&lt;/p>
+&lt;p>php-template&lt;/p>
+&lt;p>复制编辑&lt;/p>
+&lt;p>&lt;code>&amp;lt;类型&amp;gt;(&amp;lt;范围&amp;gt;): &amp;lt;描述&amp;gt;&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;code>&amp;lt;类型&amp;gt;&lt;/code>：表示 commit 的类型，通常是以下之一：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>feat&lt;/code>: 新功能&lt;/li>
+&lt;li>&lt;code>fix&lt;/code>: 修复问题&lt;/li>
+&lt;li>&lt;code>docs&lt;/code>: 文档修改&lt;/li>
+&lt;li>&lt;code>style&lt;/code>: 代码格式调整（不影响功能）&lt;/li>
+&lt;li>&lt;code>refactor&lt;/code>: 代码重构&lt;/li>
+&lt;li>&lt;code>perf&lt;/code>: 性能优化&lt;/li>
+&lt;li>&lt;code>test&lt;/code>: 测试相关的修改&lt;/li>
+&lt;li>&lt;code>chore&lt;/code>: 其他杂项修改（如构建工具、CI 配置等）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>&amp;lt;范围&amp;gt;&lt;/code>（可选）：表示此次提交的影响范围，比如具体模块、功能名等。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>&amp;lt;描述&amp;gt;&lt;/code>：简洁描述提交的内容，通常首字母小写，不超过 50 个字符，且避免使用句号。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-实例">2. &lt;strong>实例&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>feat(user): add user authentication&lt;/code>&lt;/li>
+&lt;li>&lt;code>fix(auth): resolve login issue&lt;/code>&lt;/li>
+&lt;li>&lt;code>docs(readme): update installation instructions&lt;/code>&lt;/li>
+&lt;li>&lt;code>style(ui): format buttons on homepage&lt;/code>&lt;/li>
+&lt;li>&lt;code>refactor(core): optimize data processing logic&lt;/code>&lt;/li>
+&lt;li>&lt;code>perf(query): improve search performance&lt;/code>&lt;/li>
+&lt;li>&lt;code>test(api): add unit tests for user routes&lt;/code>&lt;/li>
+&lt;li>&lt;code>chore(deps): update dependency versions&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-消息模板">3. &lt;strong>消息模板&lt;/strong>&lt;/h3>
+&lt;p>一个常见的 commit 信息模板可以是：&lt;/p></description></item><item><title>Git笔记</title><link>https://merthon.github.io/posts/git%E7%AC%94%E8%AE%B0/</link><pubDate>Thu, 14 Nov 2024 09:31:49 +0800</pubDate><guid>https://merthon.github.io/posts/git%E7%AC%94%E8%AE%B0/</guid><description>&lt;h1 id="git笔记">Git笔记&lt;/h1>
+&lt;h3 id="1概述">1.概述&lt;/h3>
+&lt;p>Git是一个开源的分布式版本控制系统，用于敏捷高效地处理任何项目。&lt;/p>
+&lt;h3 id="2配置">2.配置&lt;/h3>
+&lt;h5 id="21-用户信息配置">2.1 用户信息配置&lt;/h5>
+&lt;pre tabindex="0">&lt;code class="language-git" data-lang="git">$ git config --global user.name &amp;#34;名称&amp;#34;
+$ git config --global user.email 邮箱
+&lt;/code>&lt;/pre>&lt;p>如果用了**&amp;ndash;global**选项，那么配置文件就在用户主目录下，以后所有项目就会默认使用这里配置的用户信息。&lt;/p>
+&lt;p>新的设定保存在~/.gitconfig文件里&lt;/p>
+&lt;h5 id="22-查看配置">2.2 查看配置&lt;/h5>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ git config --list
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="3git工作流程">3.Git工作流程&lt;/h3>
+&lt;ul>
+&lt;li>克隆Git资源作为工作目录。&lt;/li>
+&lt;li>在克隆的资源上添加或者修改文件。&lt;/li>
+&lt;li>如果其他人修改了你可以更新资源。&lt;/li>
+&lt;li>在提交前查看修改。&lt;/li>
+&lt;li>提交&lt;/li>
+&lt;li>修改完成后，如果发现错误，可以撤回提交再次修改并提交。&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-工作区暂存区版本库">4. 工作区，暂存区，版本库&lt;/h3>
+&lt;ul>
+&lt;li>工作区：就是在自己电脑看的见的目录&lt;/li>
+&lt;li>暂存区：英文叫stage或index，一般存放在.git目录中的index（.git/index）中，也叫索引。&lt;/li>
+&lt;li>版本库：隐藏目录.git，是Git的版本库。&lt;/li>
+&lt;/ul>
+&lt;h3 id="5实际操作">5.实际操作&lt;/h3>
+&lt;h4 id="51-初始化仓库">5.1 初始化仓库&lt;/h4>
+&lt;p>要使用git进行版本控制，必须初始化仓库。&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-git" data-lang="git">git init
+&lt;/code>&lt;/pre>&lt;p>初始化成功之后就会在执行git init命令的目录下生成一个.git目录，这个目录存储着管理当前目录内容所需要的仓库数据。在git中我们把这个内容叫做：&lt;em>&lt;strong>附属于该仓库的工作树&lt;/strong>&lt;/em>&lt;/p>
+&lt;h4 id="52-查看仓库状态">5.2 查看仓库状态&lt;/h4>
+&lt;p>工作树和仓库在被操作的过程中，状态是不断发生变化的，随时查看状态&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git status
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="53-暂存区添加文件">5.3 暂存区添加文件&lt;/h4>
+&lt;p>要想让文件成为Git仓库的管理对象，就需要将其加入暂存区中，暂存区是提交之前的一个临时区域。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git add .
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="54-保存仓库历史记录">5.4 保存仓库历史记录&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git commit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>git commit可以将当前暂存区的文件实际保存到仓库的历史记录中&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git commit -m &lt;span style="color:#e6db74">&amp;#34;frist commit&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>-m参数后的&amp;quot;frist commit&amp;quot;叫做提交信息，是对这个提交的概述。(*提交信息要有意义！)&lt;/p>
+&lt;h4 id="54-提交日志">5.4 提交日志&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看以往仓库中提交的日志&lt;/p></description></item></channel></rss>

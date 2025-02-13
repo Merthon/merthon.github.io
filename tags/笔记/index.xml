@@ -1,4 +1,102 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>笔记 on Merthon</title><link>https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/</link><description>Recent content in 笔记 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 27 Jul 2022 20:52:38 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>笔记 on Merthon</title><link>https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/</link><description>Recent content in 笔记 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>Python笔记03</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</link><pubDate>Sat, 28 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</guid><description>&lt;h1 id="模块和包">模块和包&lt;/h1>
+&lt;h2 id="什么是模块模块化编程">什么是模块？模块化编程&lt;/h2>
+&lt;p>python提供了强大的模块支持，主要体现在，不仅 Python 标准库中包含了大量的模块（称为标准模块），还有大量的第三方模块。
+模块就是 Python 程序。换句话说，任何 Python 程序都可以作为模块。
+代码的可重用性体现在，当编写好一个模块后，只要编程过程中需要用到该模块中的某个功能（由变量、函数、类实现），无需做重复性的编写工作，直接在程序中导入该模块即可使用该功能。
+模块，可以理解为是对代码更高级的封装，即把能够实现某一特定功能的代码编写在同一个 .py 文件中，并将其作为一个独立的模块，这样既可以方便其它程序或脚本导入并使用，同时还能有效避免函数名和变量名发生冲突。
+举例：先创建一个hello.py文件&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">say&lt;/span>():
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#39;Hello world&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再在同一目录下创建一个say.py文件&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 导入刚刚创建好的hello&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> hello
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hello&lt;span style="color:#f92672">.&lt;/span>say()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行后就是HelloWorld
+hello.py 就是一个自定义的模块（有关自定义模块，后续章节会做详细讲解），我们只需要将 hellp.py 模块导入到 say.py 文件中，就可以直接在 say.py 文件中使用模块中的资源。&lt;/p>
+&lt;h2 id="导入模块-import用法">导入模块 import用法&lt;/h2>
+&lt;p>主要有以下两种：&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>import 模块名1 [as 别名1], 模块名2 [as 别名2]，…&lt;/code>：使用这种语法格式的 import 语句，会导入指定模块中的所有成员（包括变量、函数、类等）。不仅如此，当需要使用模块中的成员时，需用该模块名（或别名）作为前缀，否则 Python 解释器会报错。&lt;/li>
+&lt;li>&lt;code>from 模块名 import 成员名1 [as 别名1]，成员名2 [as 别名2]，…&lt;/code>： 使用这种语法格式的 import 语句，只会导入模块中指定的成员，而不是全部成员。同时，当程序中使用该成员时，无需附加任何前缀，直接使用成员名（或别名）即可。
+注意，用 [] 括起来的部分，可以使用，也可以省略。&lt;br>
+其中，第二种 import 语句也可以导入指定模块中的所有成员，即使用 form 模块名 import ＊，但不推荐。
+一般不推荐使用“from 模块 import”这种语法导入指定模块内的所有成员，因为它存在潜在的风险。比如同时导入 module1 和 module2 内的所有成员，假如这两个模块内都有一个 foo() 函数，那么当在程序中执行如下代码时：&lt;br>
+foo()
+上面调用的这个 foo() 函数到底是 module1 模块中的还是 module2 模块中的？因此，这种导入指定模块内所有成员的用法是有风险的。&lt;/li>
+&lt;/ol>
+&lt;h2 id="包">包&lt;/h2>
+&lt;h3 id="创建包">创建包&lt;/h3>
+&lt;p>包其实就是文件夹，更确切的说，是一个包含“&lt;strong>init&lt;/strong>.py”文件的文件夹。因此，如果我们想手动创建一个包，只需进行以下 2 步操作：&lt;/p></description></item><item><title>Python笔记02</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</link><pubDate>Fri, 27 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</guid><description>&lt;h1 id="流程控制">流程控制&lt;/h1>
+&lt;h2 id="if-else">if-else&lt;/h2>
+&lt;p>Python 中的 if else 语句可以细分为三种形式，分别是 if 语句、if else 语句和 if elif else 语句
+对语法格式的说明：&lt;/p>
+&lt;ul>
+&lt;li>“表达式”可以是一个单一的值或者变量，也可以是由运算符组成的复杂语句，形式不限，只要它能得到一个值就行。不管“表达式”的结果是什么类型，if else 都能判断它是否成立（真或者假）。&lt;/li>
+&lt;li>“代码块”由具由相同缩进量的若干条语句组成。&lt;/li>
+&lt;li>if、elif、else 语句的最后都有冒号&lt;code>:&lt;/code>，不要忘记。&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>age &lt;span style="color:#f92672">=&lt;/span> int( input(&lt;span style="color:#e6db74">&amp;#34;请输入你的年龄：&amp;#34;&lt;/span>) )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> age &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">18&lt;/span> :
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;你还未成年，建议在家人陪同下使用该软件！&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">&amp;#34;如果你已经得到了家长的同意，请忽略以上提示。&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#该语句不属于if的代码块&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(&lt;span style="color:#e6db74">&amp;#34;软件正在使用中...&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="判断表达式是否成立">判断表达式是否成立&lt;/h3>
+&lt;p>if 和 elif 后面的“表达式”的形式是很自由的，只要表达式有一个结果，不管这个结果是什么类型，Python 都能判断它是“真”还是“假”。&lt;/p>
+&lt;h3 id="对缩进的要求">对缩进的要求&lt;/h3>
+&lt;p>pyhton是以缩进来标记代码块的，代码块一定要有缩进，没有缩进的不是代码块。另外，同一个代码块的缩进量要相同，缩进量不同的不属于同一个代码块。&lt;/p>
+&lt;h2 id="pass语句及其作用">pass语句及其作用&lt;/h2>
+&lt;p> Python 提供了一种更加专业的做法，就是空语句 pass。&lt;strong>pass&lt;/strong> 是 Python 中的关键字，用来让解释器跳过此处，什么都不做。&lt;/p>
+&lt;h2 id="assert断言函数及用法">assert断言函数及用法&lt;/h2>
+&lt;p>assert 语句，又称断言语句，可以看做是功能缩小版的 if 语句，它用于判断某个表达式的值，如果值为真，则程序可以继续往下执行；反之，Python 解释器会报 AssertionError 错误。&lt;/p>
+&lt;h2 id="while循环">while循环&lt;/h2>
+&lt;p>while 循环和 if 条件分支语句类似，即在条件（表达式）为真的情况下，会执行相应的代码块。不同之处在于，只要条件为真，while 就会一直重复执行那段代码块。&lt;/p>
+&lt;h2 id="for循环">for循环&lt;/h2>
+&lt;p>它常用于遍历字符串、列表、元组、字典、集合等序列类型，逐个获取序列中的各个元素。&lt;br>
+for 循环的语法格式如下：&lt;br>
+for 迭代变量 in 字符串|列表|元组|字典|集合：&lt;br>
+    代码块
+格式中，迭代变量用于存放从序列类型变量中读取出来的元素，所以一般不会在循环中对迭代变量手动赋值；代码块指的是具有相同缩进格式的多行代码（和 while 一样），由于和循环结构联用，因此代码块又称为循环体。&lt;/p></description></item><item><title>Python笔记01</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</link><pubDate>Thu, 26 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</guid><description>&lt;h1 id="基础知识">基础知识&lt;/h1>
+&lt;h2 id="变量">变量&lt;/h2>
+&lt;p>变量（Variable）可以看成一个小箱子，专门用来“盛装”程序中的数据。底层看，程序中的数据最终都要放到内存（内存条）中，变量其实就是这块内存的名字。
+和变量相对应的是常量（Constant），它们都是用来“盛装”数据的小箱子，不同的是：变量保存的数据可以被多次修改，而常量一旦保存某个数据之后就不能修改了。&lt;/p>
+&lt;h3 id="变量的赋值">变量的赋值&lt;/h3>
+&lt;p>将数据放入变量的过程叫做赋值（Assignment）。Python 使用等号&lt;code>=&lt;/code>作为赋值运算符，具体格式为：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>name &lt;span style="color:#f92672">=&lt;/span> value
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>name 表示变量名；value 表示值，也就是要存储的数据。&lt;br>
+注意，变量是标识符的一种，它的名字不能随便起.&lt;/p>
+&lt;h3 id="弱类型语言">弱类型语言&lt;/h3>
+&lt;p>弱类型语言有两个特点：&lt;/p>
+&lt;ul>
+&lt;li>变量无须声明就可以直接赋值，对一个不存在的变量赋值就相当于定义了一个新变量。&lt;/li>
+&lt;li>变量的数据类型可以随时改变，比如，同一个变量可以一会儿被赋值为整数，一会儿被赋值为字符串。&lt;/li>
+&lt;/ul>
+&lt;h2 id="数据类型">数据类型&lt;/h2>
+&lt;h3 id="整型">整型&lt;/h3>
+&lt;p>整数就是没有小数部分的数字，python中的整数包括正整数、0 和负整数。&lt;/p>
+&lt;h3 id="进制">进制&lt;/h3>
+&lt;p>在 Python 中，可以使用多种进制来表示整数：&lt;/p>
+&lt;h4 id="1-十进制形式">1) 十进制形式&lt;/h4>
+&lt;p>我们平时常见的整数就是十进制形式，它由 0~9 共十个数字排列组合而成。&lt;br>
+注意，使用十进制形式的整数不能以 0 作为开头，除非这个数值本身就是 0。&lt;/p>
+&lt;h4 id="2-二进制形式">2) 二进制形式&lt;/h4>
+&lt;p>由 0 和 1 两个数字组成，书写时以&lt;code>0b&lt;/code>或&lt;code>0B&lt;/code>开头。例如，101 对应十进制数是 5。&lt;/p>
+&lt;h4 id="3-八进制形式">3) 八进制形式&lt;/h4>
+&lt;p>八进制整数由 0~7 共八个数字组成，以&lt;code>0o&lt;/code>或&lt;code>0O&lt;/code>开头。注意，第一个符号是数字 0，第二个符号是大写或小写的字母 O。 &lt;br>
+在 Python 2.x 中，八进制数字还可以直接以&lt;code>0&lt;/code>（数字零）开头。&lt;/p>
+&lt;h4 id="4-十六进制形式">4) 十六进制形式&lt;/h4>
+&lt;p>由 0&lt;del>9 十个数字以及 A&lt;/del>F（或 a~f）六个字母组成，书写时以&lt;code>0x&lt;/code>或&lt;code>0X&lt;/code>开头&lt;/p>
+&lt;h3 id="数字分隔符">数字分隔符&lt;/h3>
+&lt;p>为了提高数字的的可读性，Python 3.x 允许使用下划线&lt;code>_&lt;/code>作为数字（包括整数和小数）的分隔符。通常每隔三个数字添加一个下划线，类似于英文数字中的逗号。下划线不会影响数字本身的值&lt;/p>
+&lt;h2 id="小数和浮点数">小数和浮点数&lt;/h2>
+&lt;p>小数通常以浮点数的形式存储。浮点数和定点数是相对的：小数在存储过程中如果小数点发生移动，就称为浮点数；如果小数点不动，就称为定点数。&lt;/p>
+&lt;h2 id="复数">复数&lt;/h2>
+&lt;p>复数（Complex）是 python的内置类型，直接书写即可。换句话说，Python 语言本身就支持复数，而不依赖于标准库或者第三方库。&lt;br>
+复数由实部（real）和虚部（imag）构成，在 Python 中，复数的虚部以&lt;code>j&lt;/code>或者&lt;code>J&lt;/code>作为后缀，具体格式为：
+a + bj
+a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
 &lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
 &lt;p>在 src 下创建 config.properties 文件&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>

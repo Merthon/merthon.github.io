@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Redis on Merthon</title><link>https://merthon.github.io/tags/redis/</link><description>Recent content in Redis on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 03 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml"/><item><title>Redis安装</title><link>https://merthon.github.io/posts/redis%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 14:11:27 +0800</pubDate><guid>https://merthon.github.io/posts/redis%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="安装">安装&lt;/h1>
+&lt;p>运行以下命令从 Docker Hub 获取最新的 Redis 镜像：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull redis:latest
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="创建-redis-容器">创建 Redis 容器&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker run -d &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --name redis &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p 6379:6379 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -v /Users/chenx/Workspace/redis-data:/data &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> redis:latest &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> redis-server --save &lt;span style="color:#ae81ff">60&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> --loglevel warning
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="参数解释">参数解释：&lt;/h4>
+&lt;ul>
+&lt;li>&lt;code>-d&lt;/code>：以守护进程方式运行容器。&lt;/li>
+&lt;li>&lt;code>--name redis&lt;/code>：为容器指定名称为 &lt;code>redis&lt;/code>。&lt;/li>
+&lt;li>&lt;code>-p 6379:6379&lt;/code>：将宿主机的 6379 端口映射到容器的 6379 端口。&lt;/li>
+&lt;li>&lt;code>-v /Users/chenx/Workspace/redis-data:/data&lt;/code>：将 Redis 的数据存储在指定目录中，方便持久化。&lt;/li>
+&lt;li>&lt;code>redis:latest&lt;/code>：使用最新的 Redis 镜像。&lt;/li>
+&lt;li>&lt;code>redis-server --save 60 1 --loglevel warning&lt;/code>：启动 Redis 服务器并配置保存和日志级别参数。&lt;/li>
+&lt;/ul>
+&lt;h1 id="验证安装">验证安装&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker ps
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="进入-redis-容器使用-redis-cli">进入 Redis 容器使用 &lt;code>redis-cli&lt;/code>&lt;/h2>
+&lt;p>Redis 容器自带 &lt;code>redis-cli&lt;/code> 工具，你可以直接进入容器运行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker exec -it redis sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在容器内，运行以下命令：&lt;/p></description></item></channel></rss>
