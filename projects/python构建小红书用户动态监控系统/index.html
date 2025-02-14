@@ -1,0 +1,578 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>Python构建小红书用户动态监控系统</title>
+<meta name=description content="项目说明 该项目是基于https://github.com/beilunyang/xhs-monitor开发的，目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互 …"><meta name=keywords content='blog,hugo'><meta property="og:url" content="https://merthon.github.io/projects/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/"><meta property="og:type" content="website"><meta property="og:title" content="Python构建小红书用户动态监控系统"><meta property="og:description" content="项目说明 该项目是基于https://github.com/beilunyang/xhs-monitor开发的，目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Python构建小红书用户动态监控系统"><meta name=twitter:description content="项目说明 该项目是基于https://github.com/beilunyang/xhs-monitor开发的，目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互 …"><meta property="twitter:domain" content="https://merthon.github.io/projects/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/"><meta property="twitter:url" content="https://merthon.github.io/projects/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/projects/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>Python构建小红书用户动态监控系统</h1></div><div class=post-content><h1 id=项目说明>项目说明</h1><p>该项目是基于https://github.com/beilunyang/xhs-monitor开发的，目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互动，提高用户参与度和互动效果。</p><h1 id=文件结构>文件结构</h1><p>本项目主要包含以下几个文件：
+comment_generator.py：生成评论的模块。
+config.py：配置文件，存储项目运行时的配置项。
+db.py：数据库操作文件，负责笔记历史数据的存储与读取。
+monitor.py：主程序文件，负责监控和执行互动操作。
+wecom.py：与企业微信接口对接的模块，发送通知消息。
+utils.py：工具模块，提供一些辅助功能。</p><h1 id=代码和功能详情>代码和功能详情</h1><h2 id=配置文件configpy>配置文件config.py</h2><p>该文件包含项目的配置信息，包括监控行为、LLM 配置等</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 配置小红书，企业微信通知以及监控相关信息</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 小红书config</span>
+</span></span><span style=display:flex><span>XHS_CONFIG <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;COOKIE&#34;</span>: <span style=color:#e6db74>&#34;登录后小红书的cookie&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这里使用企业微信 Webhook</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 机器人 Webhook 是最简单的方法，无需 API 认证，也没有 IP 限制</span>
+</span></span><span style=display:flex><span>WECOM_CONFIG <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;WEBHOOK_URL&#34;</span>: <span style=color:#e6db74>&#34;自己获取的Webhook URL&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>MONITOR_CONFIG <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;USER_ID_1&#34;</span>: <span style=color:#e6db74>&#34;被监控用户的小红书id&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;USER_ID_2&#34;</span>: <span style=color:#e6db74>&#34;被监控用户的小红书id&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;USER_ID_3&#34;</span>: <span style=color:#e6db74>&#34;被监控用户的小红书id&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;USER_ID_4&#34;</span>: <span style=color:#e6db74>&#34;被监控用户的小红书id&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;USER_ID_5&#34;</span>: <span style=color:#e6db74>&#34;被监控用户的小红书id&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#75715e># &#34;USER_ID&#34;: &#34;被监控用户的小红书id&#34;,</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;CHECK_INTERVAL&#34;</span>: <span style=color:#ae81ff>5</span>,  <span style=color:#75715e># 检查笔记更新时间（秒）</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;ERROR_COUNT&#34;</span>: <span style=color:#ae81ff>10</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;AUTO_INTERACT&#34;</span>: <span style=color:#66d9ef>True</span>,  <span style=color:#75715e># 是否开启自动互动</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;FALLBACK_COMMENTS&#34;</span>: [  <span style=color:#75715e># 随机选择一条评论</span>
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;太棒了！&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;喜欢这篇笔记&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;我来啦~&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;路过~&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;感谢分享&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;期待更新~&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;支持支持！&#34;</span>
+</span></span><span style=display:flex><span>    ],
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;LIKE_DELAY&#34;</span>: <span style=color:#ae81ff>5</span>,  <span style=color:#75715e># 点赞延迟(秒)</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;COMMENT_DELAY&#34;</span>: <span style=color:#ae81ff>10</span>,  <span style=color:#75715e># 评论延迟(秒)</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e># LLM配置</span>
+</span></span><span style=display:flex><span>LLM_CONFIG <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;API_KEY&#34;</span>: <span style=color:#e6db74>&#34;OpenAI API Key&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;API_BASE&#34;</span>: <span style=color:#e6db74>&#34;API代理地址&#34;</span>, 
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;MODEL&#34;</span>: <span style=color:#e6db74>&#34;gpt-3.5-turbo&#34;</span>,  
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;MAX_TOKENS&#34;</span>: <span style=color:#ae81ff>150</span>, <span style=color:#75715e># 生成的评论最大字数</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;TEMPERATURE&#34;</span>: <span style=color:#ae81ff>0.7</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;SYSTEM_PROMPT&#34;</span>: <span style=color:#e6db74>&#34;&#34;&#34;你是一个正在追求心仪女生的人，需要对她的小红书笔记进行评论。
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>请根据笔记内容生成一条甜蜜、真诚但不过分的评论。评论要：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>1. 体现你在认真看她的内容
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>2. 表达适度的赞美和支持
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>3. 语气要自然、真诚
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>4. 避免过分讨好或低声下气
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>5. 根据内容类型（图文/视频）采用合适的表达
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>6. 字数控制在100字以内
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>7. 避免过于模板化的表达
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>8. 评论内容要符合小红书平台规则&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>} 
+</span></span></code></pre></div><p>该文件包含项目的配置信息，包括监控行为、LLM 配置等。主要的配置项有：
+MONITOR_CONFIG: 包含是否开启自动互动（AUTO_INTERACT）、评论延迟（COMMENT_DELAY）、点赞延迟（LIKE_DELAY）等。
+LLM_CONFIG: 包含用于生成评论的大语言模型的配置，如 API_KEY、API_BASE、MODEL、TEMPERATURE 等。</p><h2 id=企业微信群机器人通知wecompy>企业微信群机器人通知wecom.py</h2><p>与企业微信接口对接的模块，发送通知消息。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WecomMessage</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, webhook_url: str):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        初始化 WecomMessage 实例
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param webhook_url: 企业微信机器人的 Webhook 地址
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>webhook_url <span style=color:#f92672>=</span> webhook_url
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>send_text</span>(self, content: str):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        发送文本消息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param content: 消息内容
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 是否发送成功
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            message <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;msgtype&#34;</span>: <span style=color:#e6db74>&#34;text&#34;</span>,
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;text&#34;</span>: {
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;content&#34;</span>: content
+</span></span><span style=display:flex><span>                },
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;enable_duplicate_check&#34;</span>: <span style=color:#ae81ff>1</span>, <span style=color:#75715e># 启用重复消息检查</span>
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>&#34;duplicate_check_interval&#34;</span>: <span style=color:#ae81ff>1800</span> <span style=color:#75715e># 重复消息的检查间隔（单位：秒），这里设置为 30 分钟</span>
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>            <span style=color:#75715e># # 向 Webhook URL 发送 POST 请求，携带消息体</span>
+</span></span><span style=display:flex><span>            response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(self<span style=color:#f92672>.</span>webhook_url,json<span style=color:#f92672>=</span>message)
+</span></span><span style=display:flex><span>            result <span style=color:#f92672>=</span> response<span style=color:#f92672>.</span>json() <span style=color:#75715e># 解析返回的 JSON 响应</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 如果返回的 errcode 为 0，则表示发送成功</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> result<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;errcode&#34;</span>) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;群机器人消息发送成功&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 如果发送失败，记录错误信息并返回</span>
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;群消息机器人发送失败: </span><span style=color:#e6db74>{</span>result<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;群机器人消息发送异常: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span> 
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>finally</span>:
+</span></span><span style=display:flex><span>            time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>1.5</span>)  <span style=color:#75715e>#1.5 秒延时，防止频繁请求</span>
+</span></span></code></pre></div><p><code>send_notification(message: str)</code>: 发送通知到企业微信。
+<code>send_interaction_result(result: str)</code>: 发送互动结果（如成功点赞或评论）到企业微信。</p><h2 id=数据库文件>数据库文件</h2><p>负责与数据库进行交互，存储用户笔记历史数据。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> sqlite3
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> typing <span style=color:#f92672>import</span> Dict
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Database</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, db_path: str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;notes.db&#34;</span>):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        初始化数据库连接
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param db_path: 数据库文件路径
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>db_path <span style=color:#f92672>=</span> db_path
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>init_db()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>init_db</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        初始化数据库表
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>with</span> sqlite3<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>db_path) <span style=color:#66d9ef>as</span> conn:
+</span></span><span style=display:flex><span>                cursor <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span>                cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#39;&#39;&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    CREATE TABLE IF NOT EXISTS notes (
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        note_id TEXT PRIMARY KEY,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        user_id TEXT NOT NULL,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        title TEXT,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        discovered_time TEXT NOT NULL,
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        type TEXT
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    )
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#39;&#39;&#39;</span>)
+</span></span><span style=display:flex><span>                conn<span style=color:#f92672>.</span>commit()
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>&#34;数据库表初始化成功&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> sqlite3<span style=color:#f92672>.</span>DatabaseError <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;数据库初始化失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>add_note_if_not_exists</span>(self, note_data: Dict) <span style=color:#f92672>-&gt;</span> bool:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        添加笔记记录
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_data: 笔记数据字典，包含 note_id, user_id, title, type 等信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 是否为新笔记
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>with</span> sqlite3<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>db_path) <span style=color:#66d9ef>as</span> conn:
+</span></span><span style=display:flex><span>                cursor <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 检查笔记存在</span>
+</span></span><span style=display:flex><span>                cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#39;SELECT note_id FROM notes WHERE note_id = ?&#39;</span>, 
+</span></span><span style=display:flex><span>                             (note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;note_id&#39;</span>),))
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>if</span> cursor<span style=color:#f92672>.</span>fetchone():
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>  <span style=color:#75715e># 如果笔记存在，返回 False</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 添加新的笔记</span>
+</span></span><span style=display:flex><span>                cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#39;&#39;&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    INSERT INTO notes (
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                        note_id, user_id, title, discovered_time, type
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                    ) VALUES (?, ?, ?, ?, ?)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>                &#39;&#39;&#39;</span>, (
+</span></span><span style=display:flex><span>                    note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;note_id&#39;</span>),
+</span></span><span style=display:flex><span>                    note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;user&#39;</span>)<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;user_id&#39;</span>),
+</span></span><span style=display:flex><span>                    note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;display_title&#39;</span>, <span style=color:#e6db74>&#39;无标题&#39;</span>),
+</span></span><span style=display:flex><span>                    datetime<span style=color:#f92672>.</span>now()<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#39;</span>),
+</span></span><span style=display:flex><span>                    note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;type&#39;</span>, <span style=color:#e6db74>&#39;normal&#39;</span>)
+</span></span><span style=display:flex><span>                ))
+</span></span><span style=display:flex><span>                conn<span style=color:#f92672>.</span>commit()
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> sqlite3<span style=color:#f92672>.</span>DatabaseError <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;插入笔记失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_user_notes_count</span>(self, user_id: str) <span style=color:#f92672>-&gt;</span> int:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        获取数据库中某用户的笔记数量
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param user_id: 用户ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 笔记数量
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>with</span> sqlite3<span style=color:#f92672>.</span>connect(self<span style=color:#f92672>.</span>db_path) <span style=color:#66d9ef>as</span> conn:
+</span></span><span style=display:flex><span>                cursor <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span>                cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;SELECT COUNT(*) FROM notes WHERE user_id = ?&#34;</span>, (user_id,))
+</span></span><span style=display:flex><span>                count <span style=color:#f92672>=</span> cursor<span style=color:#f92672>.</span>fetchone()[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;用户 </span><span style=color:#e6db74>{</span>user_id<span style=color:#e6db74>}</span><span style=color:#e6db74> 的笔记数量: </span><span style=color:#e6db74>{</span>count<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> count <span style=color:#f92672>or</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> sqlite3<span style=color:#f92672>.</span>DatabaseError <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;获取笔记数量失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>
+</span></span></code></pre></div><p><code>get_history(user_id: str) -> list</code>: 获取指定用户的历史笔记数据。
+<code>save_history(note: dict)</code>: 保存新的笔记数据到数据库。</p><h2 id=工具模块>工具模块</h2><p>工具模块，提供一些辅助功能。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> playwright.sync_api <span style=color:#f92672>import</span> sync_playwright
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> time <span style=color:#f92672>import</span> sleep
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> logging
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>xhs_sign</span>(uri, data<span style=color:#f92672>=</span><span style=color:#66d9ef>None</span>, a1<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>, web_session<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>, stealth_js_path<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;public/stealth.min.js&#34;</span>):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    获取小红书签名参数
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :param uri: 请求的 URI
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :param data: 请求的数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :param a1: 用户的 cookies 信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :param web_session: 当前的 web 会话（暂未使用）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :param stealth_js_path: stealth.js 的路径
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    :return: 加密后的请求参数
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    retry_limit <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>  <span style=color:#75715e># 最大重试次数</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> attempt <span style=color:#f92672>in</span> range(retry_limit):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>with</span> sync_playwright() <span style=color:#66d9ef>as</span> playwright:
+</span></span><span style=display:flex><span>                chromium <span style=color:#f92672>=</span> playwright<span style=color:#f92672>.</span>chromium
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                browser <span style=color:#f92672>=</span> chromium<span style=color:#f92672>.</span>launch(headless<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                browser_context <span style=color:#f92672>=</span> browser<span style=color:#f92672>.</span>new_context()
+</span></span><span style=display:flex><span>                browser_context<span style=color:#f92672>.</span>add_init_script(path<span style=color:#f92672>=</span>stealth_js_path)  <span style=color:#75715e># 加载反爬虫脚本</span>
+</span></span><span style=display:flex><span>                context_page <span style=color:#f92672>=</span> browser_context<span style=color:#f92672>.</span>new_page()
+</span></span><span style=display:flex><span>                context_page<span style=color:#f92672>.</span>goto(<span style=color:#e6db74>&#34;https://www.xiaohongshu.com&#34;</span>)
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 设置 cookies</span>
+</span></span><span style=display:flex><span>                browser_context<span style=color:#f92672>.</span>add_cookies([
+</span></span><span style=display:flex><span>                    {<span style=color:#e6db74>&#39;name&#39;</span>: <span style=color:#e6db74>&#39;a1&#39;</span>, <span style=color:#e6db74>&#39;value&#39;</span>: a1, <span style=color:#e6db74>&#39;domain&#39;</span>: <span style=color:#e6db74>&#34;.xiaohongshu.com&#34;</span>, <span style=color:#e6db74>&#39;path&#39;</span>: <span style=color:#e6db74>&#34;/&#34;</span>}
+</span></span><span style=display:flex><span>                ])
+</span></span><span style=display:flex><span>                context_page<span style=color:#f92672>.</span>reload()  <span style=color:#75715e># 刷新页面</span>
+</span></span><span style=display:flex><span>                sleep(random<span style=color:#f92672>.</span>uniform(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>))  <span style=color:#75715e># 随机等待，模拟正常行为</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 加密参数获取</span>
+</span></span><span style=display:flex><span>                encrypt_params <span style=color:#f92672>=</span> context_page<span style=color:#f92672>.</span>evaluate(<span style=color:#e6db74>&#34;([url, data]) =&gt; window._webmsxyw(url, data)&#34;</span>, [uri, data])
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 返回加密后的签名参数</span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;x-s&#34;</span>: encrypt_params[<span style=color:#e6db74>&#34;X-s&#34;</span>],
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;x-t&#34;</span>: str(encrypt_params[<span style=color:#e6db74>&#34;X-t&#34;</span>])
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            logging<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;第 </span><span style=color:#e6db74>{</span>attempt <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#e6db74>}</span><span style=color:#e6db74> 次尝试失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            sleep(random<span style=color:#f92672>.</span>uniform(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>))  <span style=color:#75715e># 重试间隔随机化，避免频繁请求</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 重试多次失败，抛出异常</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>Exception</span>(<span style=color:#e6db74>&#34;签名失败，重试次数达到上限&#34;</span>)
+</span></span></code></pre></div><p><code>generate_sign(user_id: str)</code>: 生成用户的签名，用于标识该用户的唯一性。
+<code>parse_note_data(note_data: dict)</code>: 解析从小红书获取的笔记数据，提取出关键信息。</p><h2 id=自动点赞和评论>自动点赞和评论</h2><p>这个模块负责根据指定的用户笔记内容，生成个性化的评论。评论内容由预先定义的模板和大语言模型（LLM）动态生成。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> requests
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> logging
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> config <span style=color:#f92672>import</span> LLM_CONFIG, MONITOR_CONFIG
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 设置日志记录</span>
+</span></span><span style=display:flex><span>logging<span style=color:#f92672>.</span>basicConfig(level<span style=color:#f92672>=</span>logging<span style=color:#f92672>.</span>INFO)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CommentGenerator</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>api_key <span style=color:#f92672>=</span> LLM_CONFIG[<span style=color:#e6db74>&#34;API_KEY&#34;</span>]
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>api_base <span style=color:#f92672>=</span> LLM_CONFIG[<span style=color:#e6db74>&#34;API_BASE&#34;</span>]
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>model <span style=color:#f92672>=</span> LLM_CONFIG[<span style=color:#e6db74>&#34;MODEL&#34;</span>]
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>generate_comment</span>(self, title: str, content: str) <span style=color:#f92672>-&gt;</span> str:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        根据笔记标题和内容生成评论
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            response <span style=color:#f92672>=</span> requests<span style=color:#f92672>.</span>post(
+</span></span><span style=display:flex><span>                <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;</span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>api_base<span style=color:#e6db74>}</span><span style=color:#e6db74>/chat/completions&#34;</span>,
+</span></span><span style=display:flex><span>                headers<span style=color:#f92672>=</span>{
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;Authorization&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;Bearer </span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>api_key<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;Content-Type&#34;</span>: <span style=color:#e6db74>&#34;application/json&#34;</span>
+</span></span><span style=display:flex><span>                },
+</span></span><span style=display:flex><span>                json<span style=color:#f92672>=</span>{
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;model&#34;</span>: self<span style=color:#f92672>.</span>model,
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;messages&#34;</span>: [
+</span></span><span style=display:flex><span>                        {
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#34;role&#34;</span>: <span style=color:#e6db74>&#34;system&#34;</span>,
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#34;content&#34;</span>: LLM_CONFIG[<span style=color:#e6db74>&#34;SYSTEM_PROMPT&#34;</span>]
+</span></span><span style=display:flex><span>                        },
+</span></span><span style=display:flex><span>                        {
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#34;role&#34;</span>: <span style=color:#e6db74>&#34;user&#34;</span>,
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>&#34;content&#34;</span>: <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;请根据以下笔记生成一条评论:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>标题: </span><span style=color:#e6db74>{</span>title<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>内容: </span><span style=color:#e6db74>{</span>content<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                        }
+</span></span><span style=display:flex><span>                    ],
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;max_tokens&#34;</span>: LLM_CONFIG[<span style=color:#e6db74>&#34;MAX_TOKENS&#34;</span>],
+</span></span><span style=display:flex><span>                    <span style=color:#e6db74>&#34;temperature&#34;</span>: LLM_CONFIG[<span style=color:#e6db74>&#34;TEMPERATURE&#34;</span>]
+</span></span><span style=display:flex><span>                }
+</span></span><span style=display:flex><span>            )
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> response<span style=color:#f92672>.</span>status_code <span style=color:#f92672>==</span> <span style=color:#ae81ff>200</span>:
+</span></span><span style=display:flex><span>                comment <span style=color:#f92672>=</span> response<span style=color:#f92672>.</span>json()[<span style=color:#e6db74>&#34;choices&#34;</span>][<span style=color:#ae81ff>0</span>][<span style=color:#e6db74>&#34;message&#34;</span>][<span style=color:#e6db74>&#34;content&#34;</span>]<span style=color:#f92672>.</span>strip()
+</span></span><span style=display:flex><span>                logging<span style=color:#f92672>.</span>info(<span style=color:#e6db74>&#34;评论生成成功&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> comment
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                logging<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;API 请求失败: </span><span style=color:#e6db74>{</span>response<span style=color:#f92672>.</span>status_code<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                logging<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;错误信息: </span><span style=color:#e6db74>{</span>response<span style=color:#f92672>.</span>text<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_get_fallback_comment()
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> requests<span style=color:#f92672>.</span>exceptions<span style=color:#f92672>.</span>RequestException <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            logging<span style=color:#f92672>.</span>error(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;生成评论失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_get_fallback_comment()
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_get_fallback_comment</span>(self) <span style=color:#f92672>-&gt;</span> str:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        当 API 调用失败时的备用评论
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        fallback_comment <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>choice(MONITOR_CONFIG<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;FALLBACK_COMMENTS&#39;</span>, []))
+</span></span><span style=display:flex><span>        logging<span style=color:#f92672>.</span>warning(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;使用备用评论: </span><span style=color:#e6db74>{</span>fallback_comment<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> fallback_comment
+</span></span></code></pre></div><p><code>generate_comment(note: dict) -> str</code>: 根据用户的笔记内容生成个性化的评论。</p><h2 id=主程序>主程序</h2><p>该文件是项目的核心，负责监控小红书用户的笔记更新并执行互动操作。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> xhs <span style=color:#f92672>import</span> XhsClient
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> typing <span style=color:#f92672>import</span> List
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> config <span style=color:#f92672>import</span> XHS_CONFIG, WECOM_CONFIG, MONITOR_CONFIG
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> utils <span style=color:#f92672>import</span> xhs_sign
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> db <span style=color:#f92672>import</span> Database
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> wecom <span style=color:#f92672>import</span> WecomMessage
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> comment_generator <span style=color:#f92672>import</span> CommentGenerator
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> threading
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> concurrent.futures <span style=color:#f92672>import</span> ThreadPoolExecutor
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>XHSMonitor</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, cookie: str, webhook_url: str):
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 初始化小红书客户端，传入 Cookie 和签名</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>client <span style=color:#f92672>=</span> XhsClient(cookie<span style=color:#f92672>=</span>cookie, sign<span style=color:#f92672>=</span>xhs_sign)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>wecom <span style=color:#f92672>=</span> WecomMessage(webhook_url)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>db <span style=color:#f92672>=</span> Database()
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>error_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>comment_generator <span style=color:#f92672>=</span> CommentGenerator()
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>lock <span style=color:#f92672>=</span> threading<span style=color:#f92672>.</span>Lock()  <span style=color:#75715e># 用于保护数据库等共享资源</span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 创建线程池，最大同时运行5个线程</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>executor <span style=color:#f92672>=</span> ThreadPoolExecutor(max_workers<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>send_error_notification</span>(self, error_msg: str):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        发送错误通知
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param error_msg: 错误信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        time_str <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#39;</span>)
+</span></span><span style=display:flex><span>        content <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;小红书监控异常告警</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;错误信息：</span><span style=color:#e6db74>{</span>error_msg<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;告警时间：</span><span style=color:#e6db74>{</span>time_str<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>        )
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>wecom<span style=color:#f92672>.</span>send_text(content)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_latest_notes</span>(self, user_id: str) <span style=color:#f92672>-&gt;</span> List[dict]:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        获取用户最新笔记
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param user_id: 用户ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 笔记列表
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 请求获取用户笔记数据</span>
+</span></span><span style=display:flex><span>            res_data <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>client<span style=color:#f92672>.</span>get_user_notes(user_id)
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>error_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> res_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;notes&#39;</span>, [])
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 如果发生错误，记录日志并进行重试</span>
+</span></span><span style=display:flex><span>            error_msg <span style=color:#f92672>=</span> str(e)
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;获取用户笔记失败: </span><span style=color:#e6db74>{</span>error_msg<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>60</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>error_count <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 如果连续错误次数达到阈值，发送告警并终止程序</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>error_count <span style=color:#f92672>&gt;=</span> MONITOR_CONFIG[<span style=color:#e6db74>&#34;ERROR_COUNT&#34;</span>]:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>send_error_notification(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;API 请求失败</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>详细信息：</span><span style=color:#e6db74>{</span>error_msg<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                exit(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>like_note</span>(self, note_id: str) <span style=color:#f92672>-&gt;</span> bool:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        点赞笔记
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_id: 笔记ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 是否成功
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 添加点赞延迟，防止操作过快</span>
+</span></span><span style=display:flex><span>            time<span style=color:#f92672>.</span>sleep(MONITOR_CONFIG[<span style=color:#e6db74>&#34;LIKE_DELAY&#34;</span>])  <span style=color:#75715e># 添加延迟，避免操作过快</span>
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>client<span style=color:#f92672>.</span>like_note(note_id)
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;点赞成功: </span><span style=color:#e6db74>{</span>note_id<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;点赞失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_note_detail</span>(self, note_id: str, xsec: str) <span style=color:#f92672>-&gt;</span> dict:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        获取笔记详细信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_id: 笔记ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 笔记详细信息
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>             <span style=color:#75715e># 请求笔记详情</span>
+</span></span><span style=display:flex><span>            uri <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;/api/sns/web/v1/feed&#39;</span>
+</span></span><span style=display:flex><span>            data <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;source_note_id&#34;</span>: note_id, <span style=color:#e6db74>&#34;image_formats&#34;</span>: [<span style=color:#e6db74>&#34;jpg&#34;</span>, <span style=color:#e6db74>&#34;webp&#34;</span>, <span style=color:#e6db74>&#34;avif&#34;</span>], <span style=color:#e6db74>&#34;extra&#34;</span>: {<span style=color:#e6db74>&#34;need_body_topic&#34;</span>: <span style=color:#e6db74>&#34;1&#34;</span>}, <span style=color:#e6db74>&#34;xsec_source&#34;</span>: <span style=color:#e6db74>&#34;pc_search&#34;</span>, <span style=color:#e6db74>&#34;xsec_token&#34;</span>: xsec}
+</span></span><span style=display:flex><span>            res <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>client<span style=color:#f92672>.</span>post(uri, data<span style=color:#f92672>=</span>data)
+</span></span><span style=display:flex><span>            note_detail <span style=color:#f92672>=</span> res[<span style=color:#e6db74>&#34;items&#34;</span>][<span style=color:#ae81ff>0</span>][<span style=color:#e6db74>&#34;note_card&#34;</span>]
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> note_detail
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;获取笔记详情失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> {}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>comment_note</span>(self, note_id: str, note_data: dict) <span style=color:#f92672>-&gt;</span> dict:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        评论笔记
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_id: 笔记ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_data: 笔记数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 评论结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 添加评论延迟，防止操作过快</span>
+</span></span><span style=display:flex><span>            time<span style=color:#f92672>.</span>sleep(MONITOR_CONFIG[<span style=color:#e6db74>&#34;COMMENT_DELAY&#34;</span>])
+</span></span><span style=display:flex><span>            note_detail <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>get_note_detail(note_id, note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;xsec_token&#39;</span>, <span style=color:#e6db74>&#39;&#39;</span>))
+</span></span><span style=display:flex><span>            title <span style=color:#f92672>=</span> note_detail<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;title&#39;</span>, <span style=color:#e6db74>&#39;&#39;</span>)
+</span></span><span style=display:flex><span>            content <span style=color:#f92672>=</span> note_detail<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;desc&#39;</span>, <span style=color:#e6db74>&#39;&#39;</span>)
+</span></span><span style=display:flex><span>            note_type <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;视频&#39;</span> <span style=color:#66d9ef>if</span> note_detail<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;type&#39;</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;video&#39;</span> <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#39;图文&#39;</span>
+</span></span><span style=display:flex><span>            content <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;这是一个</span><span style=color:#e6db74>{</span>note_type<span style=color:#e6db74>}</span><span style=color:#e6db74>笔记。</span><span style=color:#e6db74>{</span>content<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>            comment <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>comment_generator<span style=color:#f92672>.</span>generate_comment(title, content)
+</span></span><span style=display:flex><span>            <span style=color:#75715e># 在评论生成成功后进行评论</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> comment:
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>client<span style=color:#f92672>.</span>comment_note(note_id, comment)
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论成功: </span><span style=color:#e6db74>{</span>note_id<span style=color:#e6db74>}</span><span style=color:#e6db74> - </span><span style=color:#e6db74>{</span>comment<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> { <span style=color:#e6db74>&#34;comment_status&#34;</span>: <span style=color:#66d9ef>True</span>, <span style=color:#e6db74>&#34;comment_content&#34;</span>: comment }
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论生成失败，未进行评论: </span><span style=color:#e6db74>{</span>note_id<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> { <span style=color:#e6db74>&#34;comment_status&#34;</span>: <span style=color:#66d9ef>False</span>, <span style=color:#e6db74>&#34;comment_content&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span> }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>            print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论失败: </span><span style=color:#e6db74>{</span>e<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> { <span style=color:#e6db74>&#34;comment_status&#34;</span>: <span style=color:#66d9ef>False</span>, <span style=color:#e6db74>&#34;comment_content&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>interact_with_note</span>(self, note_data: dict) <span style=color:#f92672>-&gt;</span> dict:
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        与笔记互动（点赞+评论）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_data: 笔记数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :return: 互动结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        result <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;like_status&#34;</span>: <span style=color:#66d9ef>False</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;comment_status&#34;</span>: <span style=color:#66d9ef>False</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;comment_content&#34;</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> MONITOR_CONFIG<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;AUTO_INTERACT&#34;</span>):
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> result
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        note_id <span style=color:#f92672>=</span> note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;note_id&#39;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#f92672>not</span> note_id:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> result
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 执行点赞操作</span>
+</span></span><span style=display:flex><span>        result[<span style=color:#e6db74>&#34;like_status&#34;</span>] <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>like_note(note_id)
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 执行评论操作</span>
+</span></span><span style=display:flex><span>        comment_result <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>comment_note(note_id, note_data)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        result[<span style=color:#e6db74>&#34;comment_status&#34;</span>] <span style=color:#f92672>=</span> comment_result[<span style=color:#e6db74>&#34;comment_status&#34;</span>]
+</span></span><span style=display:flex><span>        result[<span style=color:#e6db74>&#34;comment_content&#34;</span>] <span style=color:#f92672>=</span> comment_result[<span style=color:#e6db74>&#34;comment_content&#34;</span>]
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> result
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>send_note_notification</span>(self, note_data: dict, interact_result: dict <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        发送笔记通知
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param note_data: 笔记数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param interact_result: 互动结果
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        note_url <span style=color:#f92672>=</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;https://www.xiaohongshu.com/explore/</span><span style=color:#e6db74>{</span>note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;note_id&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>        user_name <span style=color:#f92672>=</span> note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;user&#39;</span>, {})<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;nickname&#39;</span>, <span style=color:#e6db74>&#39;未知用户&#39;</span>)
+</span></span><span style=display:flex><span>        title <span style=color:#f92672>=</span> note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;display_title&#39;</span>, <span style=color:#e6db74>&#39;无标题&#39;</span>)
+</span></span><span style=display:flex><span>        type <span style=color:#f92672>=</span> note_data<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;type&#39;</span>, <span style=color:#e6db74>&#39;未知类型&#39;</span>)
+</span></span><span style=display:flex><span>        time_str <span style=color:#f92672>=</span> time<span style=color:#f92672>.</span>strftime(<span style=color:#e6db74>&#39;%Y-%m-</span><span style=color:#e6db74>%d</span><span style=color:#e6db74> %H:%M:%S&#39;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 构造通知内容</span>
+</span></span><span style=display:flex><span>        content <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;小红书用户发布新笔记&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;用户：</span><span style=color:#e6db74>{</span>user_name<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;标题：</span><span style=color:#e6db74>{</span>title<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;链接：</span><span style=color:#e6db74>{</span>note_url<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;类型：</span><span style=color:#e6db74>{</span>type<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>,
+</span></span><span style=display:flex><span>        ]
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> interact_result <span style=color:#f92672>and</span> MONITOR_CONFIG<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#34;AUTO_INTERACT&#34;</span>):
+</span></span><span style=display:flex><span>            like_status <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;成功&#34;</span> <span style=color:#66d9ef>if</span> interact_result[<span style=color:#e6db74>&#34;like_status&#34;</span>] <span style=color:#66d9ef>else</span> <span style=color:#e6db74>&#34;失败&#34;</span>
+</span></span><span style=display:flex><span>            content<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;点赞：</span><span style=color:#e6db74>{</span>like_status<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> interact_result[<span style=color:#e6db74>&#34;comment_status&#34;</span>]:
+</span></span><span style=display:flex><span>                content<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论：成功&#34;</span>)
+</span></span><span style=display:flex><span>                content<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论内容：</span><span style=color:#e6db74>{</span>interact_result[<span style=color:#e6db74>&#39;comment_content&#39;</span>]<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                content<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;评论：失败&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        content<span style=color:#f92672>.</span>append(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;监控时间：</span><span style=color:#e6db74>{</span>time_str<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>wecom<span style=color:#f92672>.</span>send_text(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>join(content))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>monitor_multiple_users</span>(self, user_ids: List[str], interval: int):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        同时监控多个用户动态
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param user_ids: 用户ID列表
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param interval: 检查间隔(秒)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;开始监控多个用户: </span><span style=color:#e6db74>{</span>user_ids<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 提交每个用户的监控任务到线程池</span>
+</span></span><span style=display:flex><span>        futures <span style=color:#f92672>=</span> [self<span style=color:#f92672>.</span>executor<span style=color:#f92672>.</span>submit(self<span style=color:#f92672>.</span>monitor_user, user_id, interval) <span style=color:#66d9ef>for</span> user_id <span style=color:#f92672>in</span> user_ids]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e># 等待所有任务完成</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> future <span style=color:#f92672>in</span> futures:
+</span></span><span style=display:flex><span>            future<span style=color:#f92672>.</span>result()  <span style=color:#75715e># 如果任务失败，会抛出异常</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>monitor_user</span>(self, user_id: str, interval: int):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        监控单个用户动态
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param user_id: 用户ID
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        :param interval: 检查间隔(秒)
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;开始监控用户: </span><span style=color:#e6db74>{</span>user_id<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                latest_notes <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>get_latest_notes(user_id)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                <span style=color:#75715e># 使用锁来保护数据库操作</span>
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>with</span> self<span style=color:#f92672>.</span>lock:
+</span></span><span style=display:flex><span>                    existing_notes <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>db<span style=color:#f92672>.</span>get_user_notes_count(user_id)
+</span></span><span style=display:flex><span>                    is_first_monitor <span style=color:#f92672>=</span> existing_notes <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>and</span> len(latest_notes) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>if</span> is_first_monitor:
+</span></span><span style=display:flex><span>                        welcome_msg <span style=color:#f92672>=</span> (
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;欢迎使用小红书用户监控系统</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;监控用户：</span><span style=color:#e6db74>{</span>latest_notes[<span style=color:#ae81ff>0</span>]<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;user&#39;</span>, {})<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;nickname&#39;</span>, user_id)<span style=color:#e6db74>}</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;首次监控某用户时，不会对历史笔记进行自动点赞和评论，仅保存笔记记录</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span>                            <span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;以防止被系统以及用户发现&#34;</span>
+</span></span><span style=display:flex><span>                        )
+</span></span><span style=display:flex><span>                        self<span style=color:#f92672>.</span>wecom<span style=color:#f92672>.</span>send_text(welcome_msg)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                        <span style=color:#66d9ef>for</span> note <span style=color:#f92672>in</span> latest_notes:
+</span></span><span style=display:flex><span>                            self<span style=color:#f92672>.</span>db<span style=color:#f92672>.</span>add_note_if_not_exists(note)
+</span></span><span style=display:flex><span>                    <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                        <span style=color:#66d9ef>for</span> note <span style=color:#f92672>in</span> latest_notes:
+</span></span><span style=display:flex><span>                            <span style=color:#66d9ef>with</span> self<span style=color:#f92672>.</span>lock:
+</span></span><span style=display:flex><span>                                <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>db<span style=color:#f92672>.</span>add_note_if_not_exists(note):
+</span></span><span style=display:flex><span>                                    print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;发现新笔记: </span><span style=color:#e6db74>{</span>note<span style=color:#f92672>.</span>get(<span style=color:#e6db74>&#39;display_title&#39;</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>                                    interact_result <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>interact_with_note(note)
+</span></span><span style=display:flex><span>                                    self<span style=color:#f92672>.</span>send_note_notification(note, interact_result)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>                error_msg <span style=color:#f92672>=</span> str(e)
+</span></span><span style=display:flex><span>                print(<span style=color:#e6db74>f</span><span style=color:#e6db74>&#34;监控过程发生错误: </span><span style=color:#e6db74>{</span>error_msg<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            time<span style=color:#f92672>.</span>sleep(interval)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>main</span>():
+</span></span><span style=display:flex><span>    monitor <span style=color:#f92672>=</span> XHSMonitor(
+</span></span><span style=display:flex><span>        cookie<span style=color:#f92672>=</span>XHS_CONFIG[<span style=color:#e6db74>&#34;COOKIE&#34;</span>],
+</span></span><span style=display:flex><span>        webhook_url<span style=color:#f92672>=</span>WECOM_CONFIG[<span style=color:#e6db74>&#34;WEBHOOK_URL&#34;</span>]
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># 假设你要监控5个用户</span>
+</span></span><span style=display:flex><span>    user_ids <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        MONITOR_CONFIG[<span style=color:#e6db74>&#34;USER_ID_1&#34;</span>],
+</span></span><span style=display:flex><span>        MONITOR_CONFIG[<span style=color:#e6db74>&#34;USER_ID_2&#34;</span>],
+</span></span><span style=display:flex><span>        MONITOR_CONFIG[<span style=color:#e6db74>&#34;USER_ID_3&#34;</span>],
+</span></span><span style=display:flex><span>        MONITOR_CONFIG[<span style=color:#e6db74>&#34;USER_ID_4&#34;</span>],
+</span></span><span style=display:flex><span>        MONITOR_CONFIG[<span style=color:#e6db74>&#34;USER_ID_5&#34;</span>]
+</span></span><span style=display:flex><span>    ]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    monitor<span style=color:#f92672>.</span>monitor_multiple_users(
+</span></span><span style=display:flex><span>        user_ids<span style=color:#f92672>=</span>user_ids,
+</span></span><span style=display:flex><span>        interval<span style=color:#f92672>=</span>MONITOR_CONFIG[<span style=color:#e6db74>&#34;CHECK_INTERVAL&#34;</span>]
+</span></span><span style=display:flex><span>    )
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    main()
+</span></span></code></pre></div><p><code>start_monitoring(user_id: str)</code>: 开始监控某个用户的笔记动态。
+<code>handle_interaction(note: dict)</code>: 根据笔记内容执行点赞或评论等操作。
+<code>auto_interact(note: dict)</code>: 如果启用自动互动功能，自动进行点赞和评论。</p><h2 id=运行程序>运行程序</h2><ol><li>配置环境：确保安装了所需的依赖库。</li><li>配置文件：编辑 config.py，填写相关的 API 密钥和监控参数。</li><li>启动监控：运行 monitor.py，开始监控指定用户的笔记。
+<code>python monitor.py</code></li></ol><h2 id=运行结果>运行结果</h2><p><a href=/images/result01.jpg>result1</a>
+<a href=/images/result02.jpg>result2</a></p><h2 id=项目地址>项目地址</h2><p><a href=https://github.com/Merthon/xhs-monitor>https://github.com/Merthon/xhs-monitor</a></p></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><a href=#项目说明>项目说明</a></li><li><a href=#文件结构>文件结构</a></li><li><a href=#代码和功能详情>代码和功能详情</a><ul><li><a href=#配置文件configpy>配置文件config.py</a></li><li><a href=#企业微信群机器人通知wecompy>企业微信群机器人通知wecom.py</a></li><li><a href=#数据库文件>数据库文件</a></li><li><a href=#工具模块>工具模块</a></li><li><a href=#自动点赞和评论>自动点赞和评论</a></li><li><a href=#主程序>主程序</a></li><li><a href=#运行程序>运行程序</a></li><li><a href=#运行结果>运行结果</a></li><li><a href=#项目地址>项目地址</a></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

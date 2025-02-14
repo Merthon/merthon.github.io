@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>爬虫 on Merthon</title><link>https://merthon.github.io/tags/%E7%88%AC%E8%99%AB/</link><description>Recent content in 爬虫 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 14 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml"/><item><title>异步爬虫</title><link>https://merthon.github.io/posts/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</link><pubDate>Tue, 14 Jan 2025 02:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</guid><description>&lt;p>异步爬虫是通过异步编程技术来提升爬虫性能的一种方式。与传统的同步爬虫不同，异步爬虫能够在等待某些操作（如请求响应）时进行其他任务，从而避免了不必要的等待时间，提高了爬虫的效率。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>爬虫 on Merthon</title><link>https://merthon.github.io/tags/%E7%88%AC%E8%99%AB/</link><description>Recent content in 爬虫 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 11 Feb 2025 21:59:09 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml"/><item><title>Python构建小红书用户动态监控系统</title><link>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</link><pubDate>Tue, 11 Feb 2025 21:59:09 +0800</pubDate><guid>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</guid><description>&lt;h1 id="项目说明">项目说明&lt;/h1>
+&lt;p>该项目的目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互动，提高用户参与度和互动效果。&lt;/p>
+&lt;h1 id="文件结构">文件结构&lt;/h1>
+&lt;p>本项目主要包含以下几个文件：
+comment_generator.py：生成评论的模块。
+config.py：配置文件，存储项目运行时的配置项。
+db.py：数据库操作文件，负责笔记历史数据的存储与读取。
+monitor.py：主程序文件，负责监控和执行互动操作。
+wecom.py：与企业微信接口对接的模块，发送通知消息。
+utils.py：工具模块，提供一些辅助功能。&lt;/p>
+&lt;h1 id="代码和功能详情">代码和功能详情&lt;/h1>
+&lt;h2 id="配置文件configpy">配置文件config.py&lt;/h2>
+&lt;p>该文件包含项目的配置信息，包括监控行为、LLM 配置等&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 配置小红书，企业微信通知以及监控相关信息&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 小红书config&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>XHS_CONFIG &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;COOKIE&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;登录后小红书的cookie&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 这里使用企业微信 Webhook&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 机器人 Webhook 是最简单的方法，无需 API 认证，也没有 IP 限制&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WECOM_CONFIG &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;WEBHOOK_URL&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;自己获取的Webhook URL&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>MONITOR_CONFIG &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;USER_ID_1&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;被监控用户的小红书id&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;USER_ID_2&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;被监控用户的小红书id&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;USER_ID_3&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;被监控用户的小红书id&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;USER_ID_4&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;被监控用户的小红书id&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;USER_ID_5&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;被监控用户的小红书id&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># &amp;#34;USER_ID&amp;#34;: &amp;#34;被监控用户的小红书id&amp;#34;,&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CHECK_INTERVAL&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#75715e"># 检查笔记更新时间（秒）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ERROR_COUNT&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;AUTO_INTERACT&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">True&lt;/span>, &lt;span style="color:#75715e"># 是否开启自动互动&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;FALLBACK_COMMENTS&amp;#34;&lt;/span>: [ &lt;span style="color:#75715e"># 随机选择一条评论&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;太棒了！&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;喜欢这篇笔记&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;我来啦~&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;路过~&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;感谢分享&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;期待更新~&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;支持支持！&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;LIKE_DELAY&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#75715e"># 点赞延迟(秒)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;COMMENT_DELAY&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>, &lt;span style="color:#75715e"># 评论延迟(秒)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># LLM配置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>LLM_CONFIG &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;OpenAI API Key&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_BASE&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;API代理地址&amp;#34;&lt;/span>, 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;MODEL&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;gpt-3.5-turbo&amp;#34;&lt;/span>, 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;MAX_TOKENS&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">150&lt;/span>, &lt;span style="color:#75715e"># 生成的评论最大字数&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;TEMPERATURE&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">0.7&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;SYSTEM_PROMPT&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;你是一个正在追求心仪女生的人，需要对她的小红书笔记进行评论。
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">请根据笔记内容生成一条甜蜜、真诚但不过分的评论。评论要：
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">1. 体现你在认真看她的内容
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">2. 表达适度的赞美和支持
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">3. 语气要自然、真诚
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">4. 避免过分讨好或低声下气
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">5. 根据内容类型（图文/视频）采用合适的表达
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">6. 字数控制在100字以内
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">7. 避免过于模板化的表达
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">8. 评论内容要符合小红书平台规则&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>该文件包含项目的配置信息，包括监控行为、LLM 配置等。主要的配置项有：
+MONITOR_CONFIG: 包含是否开启自动互动（AUTO_INTERACT）、评论延迟（COMMENT_DELAY）、点赞延迟（LIKE_DELAY）等。
+LLM_CONFIG: 包含用于生成评论的大语言模型的配置，如 API_KEY、API_BASE、MODEL、TEMPERATURE 等。&lt;/p></description></item><item><title>异步爬虫</title><link>https://merthon.github.io/posts/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</link><pubDate>Tue, 14 Jan 2025 02:23:25 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB/</guid><description>&lt;p>异步爬虫是通过异步编程技术来提升爬虫性能的一种方式。与传统的同步爬虫不同，异步爬虫能够在等待某些操作（如请求响应）时进行其他任务，从而避免了不必要的等待时间，提高了爬虫的效率。&lt;/p>
 &lt;h1 id="同步与异步的区别">同步与异步的区别&lt;/h1>
 &lt;ul>
 &lt;li>&lt;strong>同步爬虫&lt;/strong>：在执行过程中，每发出一次请求，程序会等待该请求的响应完成后才能继续执行下一个任务。由于请求-响应时间不稳定，导致整个爬虫的运行效率较低。&lt;/li>
