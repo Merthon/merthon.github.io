@@ -1,4 +1,74 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 11 Feb 2025 21:59:09 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Python构建小红书用户动态监控系统</title><link>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</link><pubDate>Tue, 11 Feb 2025 21:59:09 +0800</pubDate><guid>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</guid><description>&lt;h1 id="项目说明">项目说明&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 21 Feb 2025 21:36:29 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Django_Part_3</title><link>https://merthon.github.io/posts/django_part_3/</link><pubDate>Fri, 21 Feb 2025 21:36:29 +0800</pubDate><guid>https://merthon.github.io/posts/django_part_3/</guid><description>&lt;p>从 2 结束的地方开始。继续开发 Web 投票应用程序，并将专注于创建公共界面 – “视图”。&lt;/p>
+&lt;h2 id="概述"> 概述&lt;/h2>
+&lt;p>视图是 Django 应用程序中的一种 “类型” 网页，通常提供特定功能并具有特定模板。例如，在博客应用程序中，您可能有以下视图：&lt;/p>
+&lt;ul>
+&lt;li>Blog homepage （博客主页） – 显示最新的几个条目。&lt;/li>
+&lt;li>条目 “详细信息” 页面 – 单个条目的永久链接页面。&lt;/li>
+&lt;li>Comment action （评论作） – 处理向给定条目发布评论
+在我们的 poll 应用程序中，我们将有以下四个视图：&lt;/li>
+&lt;li>问题 “index” 页面 – 显示最新的几个问题。&lt;/li>
+&lt;li>问题 “详细信息” 页面） – 显示问题文本，没有结果，但有一个用于投票的表单。&lt;/li>
+&lt;li>问题 “results” 页面 – 显示特定问题的结果。&lt;/li>
+&lt;li>Vote action （投票作） – 处理对特定问题中特定选项的投票。
+在 Django 中，网页和其他内容由视图交付。每个视图都由一个 Python 函数（或方法，在基于类的视图的情况下）表示。Django 将通过检查请求的 URL 来选择一个视图（准确地说，是 URL 在域名后面的部分）。&lt;/li>
+&lt;/ul>
+&lt;h2 id="编写更多视图">编写更多视图&lt;/h2>
+&lt;p>现在让我们向 polls/views.py 添加更多视图。这些观点略有不同，因为它们需要一个论点：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">detail&lt;/span>(request, question_id):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> HttpResponse(&lt;span style="color:#e6db74">&amp;#34;You&amp;#39;re looking at question &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">.&amp;#34;&lt;/span> &lt;span style="color:#f92672">%&lt;/span> question_id)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">results&lt;/span>(request, question_id):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> response &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;You&amp;#39;re looking at the results of question &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> HttpResponse(response &lt;span style="color:#f92672">%&lt;/span> question_id)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">vote&lt;/span>(request, question_id):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> HttpResponse(&lt;span style="color:#e6db74">&amp;#34;You&amp;#39;re voting on question &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">.&amp;#34;&lt;/span> &lt;span style="color:#f92672">%&lt;/span> question_id)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>通过添加以下 path（） 调用，将这些新视图连接到 polls.urls 模块中：&lt;/p></description></item><item><title>Django_Part_2</title><link>https://merthon.github.io/posts/django_part_2/</link><pubDate>Fri, 21 Feb 2025 21:36:24 +0800</pubDate><guid>https://merthon.github.io/posts/django_part_2/</guid><description>&lt;p> 1 结束的地方开始。我们将设置数据库，创建您的第一个模型，并快速介绍 Django 自动生成的管理站点。&lt;/p>
+&lt;h2 id="数据库设置">数据库设置&lt;/h2>
+&lt;p>打开 mysite/settings.py。它是一个普通的 Python 模块，带有代表 Django 设置的模块级变量。
+在编辑 mysite/settings.py 时，将 TIME_ZONE 设置为您的时区。
+注意文件顶部的 INSTALLED_APPS 设置。它包含此 Django 实例中激活的所有 Django 应用程序的名称。应用程序可以在多个项目中使用，您可以打包和分发它们，以供其他人在其项目中使用。
+默认情况下，INSTALLED_APPS 包含以下应用程序，所有这些应用程序都附带在 Django 中：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>django.contrib.admin&lt;/code> – 管理站点。您很快就会使用它。&lt;/li>
+&lt;li>&lt;code>django.contrib.auth&lt;/code> – 一个身份验证系统。&lt;/li>
+&lt;li>&lt;code>django.contrib.contenttypes&lt;/code> – 内容类型的框架。&lt;/li>
+&lt;li>&lt;code>django.contrib.sessions&lt;/code> – 会话框架。&lt;/li>
+&lt;li>&lt;code>django.contrib.messages&lt;/code> – 一个消息传递框架&lt;/li>
+&lt;li>&lt;code>django.contrib.staticfiles&lt;/code> – 用于管理静态文件的框架。
+其中一些应用程序至少使用了一个数据库表，因此我们需要先在数据库中创建表，然后才能使用它们。为此，请运行以下命令：
+&lt;code>python manage.py migrate&lt;/code>
+migrate 命令会查看 INSTALLED_APPS 设置，并根据 mysite/settings.py 文件中的数据库设置和应用程序附带的数据库迁移创建任何必要的数据库表&lt;/li>
+&lt;/ul>
+&lt;h2 id="创建模型">创建模型&lt;/h2>
+&lt;p>现在，我们将定义您的模型 – 本质上是您的数据库布局，以及额外的元数据。
+在我们的投票应用程序中，我们将创建两个模型：Question 和 Choice。Question 具有问题和发布日期。Choice 有两个字段：Choice 的文本和投票计数。每个 Choice 都与一个 Question 相关联。
+这些概念由 Python 类表示。编辑 polls/models.py 文件，使其如下所示：&lt;/p></description></item><item><title>Django_Part_1</title><link>https://merthon.github.io/posts/django_part_1/</link><pubDate>Fri, 21 Feb 2025 21:36:00 +0800</pubDate><guid>https://merthon.github.io/posts/django_part_1/</guid><description>&lt;h2 id="创建项目">创建项目&lt;/h2>
+&lt;p>建立一个 Django 项目 —— Django 实例的设置集合，包括数据库配置、Django 特定的选项和应用程序特定的设置。
+&lt;code>django-admin startproject mysite&lt;/code>
+让我们看看startproject创建了什么：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>djangotutorial/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> manage.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> mysite/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> __init__.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> settings.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> urls.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> asgi.py
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> wsgi.py
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>manage.py：一个命令行工具，让你以各种方式与这个 Django 项目交互。你可以在 django-admin 和 manage.py 中阅读有关 manage.py 的所有详细信息。&lt;/li>
+&lt;li>mysite/：一个目录，该目录是项目的实际 Python 包。它的名称是导入其中任何内容（例如 mysite.urls）时需要使用的 Python 包名称。&lt;/li>
+&lt;li>mysite/&lt;strong>init&lt;/strong>.py：一个空文件，告诉 Python 这个目录应该被视为一个 Python 包。&lt;/li>
+&lt;li>mysite/settings.py： 这个 Django 项目的设置/配置。Django 设置将告诉你所有关于设置是如何工作的。&lt;/li>
+&lt;li>mysite/urls.py： 这个 Django 项目的 URL 声明;你的 Django 驱动的网站的 “目录”。&lt;/li>
+&lt;li>mysite/urls.py： 这个 Django 项目的 URL 声明;你的 Django 驱动的网站的 “目录”。&lt;/li>
+&lt;li>mysite/wsgi.py：与 WSGI 兼容的 Web 服务器为您的项目提供服务的入口点。&lt;/li>
+&lt;/ul>
+&lt;h2 id="运行">运行&lt;/h2>
+&lt;p>&lt;code>python manage.py runserver&lt;/code>
+服务器正在运行，请使用 Web 浏览器访问http://120.0.0.1:8000/你会看到一个 “Congratulations！” 页面，火箭起飞了。成功了！&lt;/p></description></item><item><title>Python构建小红书用户动态监控系统</title><link>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</link><pubDate>Tue, 11 Feb 2025 21:59:09 +0800</pubDate><guid>https://merthon.github.io/posts/python%E6%9E%84%E5%BB%BA%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F/</guid><description>&lt;h1 id="项目说明">项目说明&lt;/h1>
 &lt;p>该项目的目的是监控小红书用户的动态笔记，自动进行点赞和评论互动。通过配置灵活的参数，可以对不同的用户进行实时互动，同时利用大语言模型（LLM）生成个性化的高情商评论。该项目主要面向开发者，帮助他们实现自动化的社交互动，提高用户参与度和互动效果。&lt;/p>
 &lt;h1 id="文件结构">文件结构&lt;/h1>
 &lt;p>本项目主要包含以下几个文件：

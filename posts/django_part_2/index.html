@@ -1,0 +1,103 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>Django_Part_2</title>
+<meta name=description content=" 1 结束的地方开始。我们将设置数据库，创建您的第一个模型，并快速介绍 Django 自动生成的管理站点。
+数据库设置 打开 mysite/settings.py。它是一个普通的 Python 模块，带有代表 Django 设置的模块级变量。 在编辑 mysite/settings.py 时，将 TIME_ZONE 设 …"><meta name=keywords content='blog,hugo,python,Django'><meta property="og:url" content="https://merthon.github.io/posts/django_part_2/"><meta property="og:type" content="website"><meta property="og:title" content="Django_Part_2"><meta property="og:description" content=" 1 结束的地方开始。我们将设置数据库，创建您的第一个模型，并快速介绍 Django 自动生成的管理站点。
+数据库设置 打开 mysite/settings.py。它是一个普通的 Python 模块，带有代表 Django 设置的模块级变量。 在编辑 mysite/settings.py 时，将 TIME_ZONE 设 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Django_Part_2"><meta name=twitter:description content=" 1 结束的地方开始。我们将设置数据库，创建您的第一个模型，并快速介绍 Django 自动生成的管理站点。
+数据库设置 打开 mysite/settings.py。它是一个普通的 Python 模块，带有代表 Django 设置的模块级变量。 在编辑 mysite/settings.py 时，将 TIME_ZONE 设 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/django_part_2/"><meta property="twitter:url" content="https://merthon.github.io/posts/django_part_2/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/django_part_2/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>Django_Part_2</h1><small role=doc-subtitle></small><p class=post-date>February 21, 2025</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/python>python</a></li><li class=post-tag><a href=https://merthon.github.io/tags/django>Django</a></li></ul></div><div class=post-content><p> 1 结束的地方开始。我们将设置数据库，创建您的第一个模型，并快速介绍 Django 自动生成的管理站点。</p><h2 id=数据库设置>数据库设置</h2><p>打开 mysite/settings.py。它是一个普通的 Python 模块，带有代表 Django 设置的模块级变量。
+在编辑 mysite/settings.py 时，将 TIME_ZONE 设置为您的时区。
+注意文件顶部的 INSTALLED_APPS 设置。它包含此 Django 实例中激活的所有 Django 应用程序的名称。应用程序可以在多个项目中使用，您可以打包和分发它们，以供其他人在其项目中使用。
+默认情况下，INSTALLED_APPS 包含以下应用程序，所有这些应用程序都附带在 Django 中：</p><ul><li><code>django.contrib.admin</code> – 管理站点。您很快就会使用它。</li><li><code>django.contrib.auth</code> – 一个身份验证系统。</li><li><code>django.contrib.contenttypes</code> – 内容类型的框架。</li><li><code>django.contrib.sessions</code> – 会话框架。</li><li><code>django.contrib.messages</code> – 一个消息传递框架</li><li><code>django.contrib.staticfiles</code> – 用于管理静态文件的框架。
+其中一些应用程序至少使用了一个数据库表，因此我们需要先在数据库中创建表，然后才能使用它们。为此，请运行以下命令：
+<code>python manage.py migrate</code>
+migrate 命令会查看 INSTALLED_APPS 设置，并根据 mysite/settings.py 文件中的数据库设置和应用程序附带的数据库迁移创建任何必要的数据库表</li></ul><h2 id=创建模型>创建模型</h2><p>现在，我们将定义您的模型 – 本质上是您的数据库布局，以及额外的元数据。
+在我们的投票应用程序中，我们将创建两个模型：Question 和 Choice。Question 具有问题和发布日期。Choice 有两个字段：Choice 的文本和投票计数。每个 Choice 都与一个 Question 相关联。
+这些概念由 Python 类表示。编辑 polls/models.py 文件，使其如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.db <span style=color:#f92672>import</span> models
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Question</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>    question_text <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>CharField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>)
+</span></span><span style=display:flex><span>    pub_date <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>DateTimeField(<span style=color:#e6db74>&#34;date published&#34;</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Choice</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>    question <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>ForeignKey(Question, on_delete<span style=color:#f92672>=</span>models<span style=color:#f92672>.</span>CASCADE)
+</span></span><span style=display:flex><span>    choice_text <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>CharField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>)
+</span></span><span style=display:flex><span>    votes <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>IntegerField(default<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>)
+</span></span></code></pre></div><p>在这里，每个模型都由一个子类化 django.db.models.Model 的类表示。每个模型都有许多类变量，每个类变量都表示模型中的一个数据库字段。每个字段都由 Field 类的一个实例表示，例如，CharField 用于字符字段，DateTimeField 用于日期时间。这告诉 Django 每个字段包含什么类型的数据。
+每个 Field 实例的名称（例如 question_text 或 pub_date）是字段的名称，采用计算机友好的格式。您将在 Python 代码中使用此值，并且您的数据库将使用它作为列名。
+您可以使用 Field 的可选第一个位置参数来指定人类可读的名称。它被用于 Django 的几个内省部分，它兼作文档。如果没有提供这个字段，Django 将使用机器可读的名称。在此示例中，我们只为 Question.pub_date 定义了一个人类可读的名称。对于此模型中的所有其他字段，字段的机器可读名称将足以作为其人类可读名称。
+某些 Field 类具有必需的参数。例如，CharField 要求您为其设置一个 max_length。这不仅用于数据库架构，还用于验证，我们很快就会看到。
+Field 还可以具有各种可选参数;在本例中，我们已将 votes 的默认值设置为 0。
+最后，请注意，使用 ForeignKey 定义了一个关系。这告诉 Django 每个 Choice 都与一个 Question 相关。Django 支持所有常见的数据库关系：多对一、多对多和一对一。</p><h2 id=激活模型>激活模型</h2><p>那一小段模型代码为 Django 提供了大量信息。有了它，Django 能够：</p><ul><li>为此应用程序创建数据库架构（<code>CREATE TABLE</code> 语句）。</li><li>创建一个 Python 数据库访问 API，用于访问 <code>Question</code> 和 <code>Choice</code> 对象。
+要将应用程序包含在我们的项目中，我们需要在 INSTALLED_APPS 设置中添加对其配置类的引用。PollsConfig 类位于 polls/apps.py 文件中，因此其虚线路径为 &lsquo;polls.apps.PollsConfig&rsquo;。编辑 mysite/settings.py 文件，并将该点路径添加到 INSTALLED_APPS 设置中。它看起来像这样：</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>INSTALLED_APPS <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;polls.apps.PollsConfig&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.admin&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.auth&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.contenttypes&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.sessions&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.messages&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;django.contrib.staticfiles&#34;</span>,
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></div><p>现在 Django 知道要包含 <code>polls</code> 应用程序。让我们运行另一个命令：
+<code>python manage.py makemigrations polls</code>
+通过运行 makemigrations，你告诉 Django 你已经对你的模型做了一些更改（在本例中，你做了新的更改），并且你希望这些更改作为迁移存储。
+有一个命令可以为您运行迁移并自动管理您的数据库架构 - 称为 migrate，我们稍后会介绍它 - 但首先，让我们看看该迁移将运行什么 SQL。sqlmigrate 命令获取迁移名称并返回其 SQL：
+<code>python manage.py sqlmigrate polls 0001</code>
+sqlmigrate 命令实际上并没有在你的数据库上运行迁移 - 相反，它会将其打印到屏幕上，以便你可以看到 Django 认为需要的 SQL。它对于检查 Django 将要做什么，或者如果你的数据库管理员需要 SQL 脚本来更改很有用。
+如果您有兴趣，您还可以运行 python manage.py check;这将检查项目中的任何问题，而无需进行迁移或接触数据库。
+现在，再次运行 <code>migrate</code>以在数据库中创建这些模型表
+migrate 命令获取所有尚未应用的迁移（Django 使用数据库中一个名为 django_migrations 的特殊表来跟踪哪些迁移已应用），并针对你的数据库运行它们 - 本质上，将你对模型所做的更改与数据库中的架构同步。
+模型更改的三步指南：</p><ul><li>更改模型（<code>models.py</code>）。</li><li>运行 python manage.py makemigrations 为这些更改创建迁移.</li><li>运行 python manage.py migrate 以将这些更改应用于数据库。</li></ul><h2 id=使用api>使用API</h2><p> Django 为提供的免费 API。要调用 Python shell，请使用以下命令：
+ <code>python manage.py shell</code>
+ 我们使用它来而不是简单地键入 “python”，因为 manage.py 设置了 DJANGO_SETTINGS_MODULE 环境变量，这会为 Django 提供 mysite/settings.py 文件的 Python 导入路径。
+ 进入 shell 后，探索数据库 API:
+ ```shell
+ &#187;> from polls.models import Choice, Question # Import the model classes we just wrote.</p><h1 id=no-questions-are-in-the-system-yet>No questions are in the system yet.</h1><blockquote><blockquote><blockquote><p>Question.objects.all()
+&lt;QuerySet []></p></blockquote></blockquote></blockquote><h1 id=create-a-new-question>Create a new Question.</h1><h1 id=support-for-time-zones-is-enabled-in-the-default-settings-file-so>Support for time zones is enabled in the default settings file, so</h1><h1 id=django-expects-a-datetime-with-tzinfo-for-pub_date-use-timezonenow>Django expects a datetime with tzinfo for pub_date. Use timezone.now()</h1><h1 id=instead-of-datetimedatetimenow-and-it-will-do-the-right-thing>instead of datetime.datetime.now() and it will do the right thing.</h1><blockquote><blockquote><blockquote><p>from django.utils import timezone
+q = Question(question_text=&ldquo;What&rsquo;s new?&rdquo;, pub_date=timezone.now())</p></blockquote></blockquote></blockquote><h1 id=save-the-object-into-the-database-you-have-to-call-save-explicitly>Save the object into the database. You have to call save() explicitly.</h1><blockquote><blockquote><blockquote><p>q.save()</p></blockquote></blockquote></blockquote><h1 id=now-it-has-an-id>Now it has an ID.</h1><blockquote><blockquote><blockquote><p>q.id
+1</p></blockquote></blockquote></blockquote><h1 id=access-model-field-values-via-python-attributes>Access model field values via Python attributes.</h1><blockquote><blockquote><blockquote><p>q.question_text
+&ldquo;What&rsquo;s new?&rdquo;
+q.pub_date
+datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=datetime.timezone.utc)</p></blockquote></blockquote></blockquote><h1 id=change-values-by-changing-the-attributes-then-calling-save>Change values by changing the attributes, then calling save().</h1><blockquote><blockquote><blockquote><p>q.question_text = &ldquo;What&rsquo;s up?&rdquo;
+q.save()</p></blockquote></blockquote></blockquote><h1 id=objectsall-displays-all-the-questions-in-the-database>objects.all() displays all the questions in the database.</h1><blockquote><blockquote><blockquote><p>Question.objects.all()
+&lt;QuerySet [&lt;Question: Question object (1)>]></p></blockquote></blockquote></blockquote><pre tabindex=0><code>&lt;Question: Question object (1)&gt;不是此对象的有用表示形式。让我们通过编辑 Question 模型（在 polls/models.py 文件中）并向 Question 和 Choice 添加 __str__（） 方法来解决这个问题：
+```python
+from django.db import models
+
+
+class Question(models.Model):
+    # ...
+    def __str__(self):
+        return self.question_text
+
+
+class Choice(models.Model):
+    # ...
+    def __str__(self):
+        return self.choice_text
+</code></pre><p>向你的模型添加 <strong>str</strong>（） 方法很重要，不仅是为了你自己在处理交互式提示符时的方便，还因为对象的表示形式在整个 Django 自动生成的 admin 中被使用。
+我们还向此模型添加一个自定义方法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> django.db <span style=color:#f92672>import</span> models
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> django.utils <span style=color:#f92672>import</span> timezone
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Question</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>    <span style=color:#75715e># ...</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>was_published_recently</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>pub_date <span style=color:#f92672>&gt;=</span> timezone<span style=color:#f92672>.</span>now() <span style=color:#f92672>-</span> datetime<span style=color:#f92672>.</span>timedelta(days<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span></code></pre></div><p>添加了 import datetime 和 from django.utils import timezone，以分别引用 Python 的标准日期时间模块和 Django 的时区相关实用程序 django.utils.timezone。
+并通过再次运行 python manage.py shell 来启动新的 Python 交互式 shell</p><h2 id=django-admin-简介>Django Admin 简介</h2><h3 id=创建-admin-用户>创建 admin 用户</h3><p>首先，我们需要创建一个可以登录到 admin 站点的用户。运行以下命令：
+<code>python manage.py createsuperuser</code>
+输入所需的用户名，然后按 Enter。
+然后，系统将提示您输入所需的电子邮件地址
+最后一步是输入您的密码。您将被要求输入密码两次，第二次作为第一次的确认。</p><h3 id=启动开发服务器>启动开发服务器</h3><p><code>python manage.py runserver</code>
+现在，打开一个 Web 浏览器并转到本地域上的“/admin/”——例如，http://127.0.0.1:8000/admin/。您应该会看到管理员的登录屏幕.</p><h3 id=进入管理站点>进入管理站点</h3><p>现在，尝试使用您在上一步中创建的超级用户帐户登录。你应该看到 Django admin index 页面
+您应该看到几种类型的可编辑内容：组和用户。它们由 Django 提供的身份验证框架 django.contrib.auth 提供。</p><h3 id=应用程序在-admin-中可修改>应用程序在 admin 中可修改</h3><p>它不会显示在 admin index 页面上。
+还有一件事要做：我们需要告诉管理员 Question 对象有一个管理界面。为此，请打开 polls/admin.py 文件，并将其编辑为如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.contrib <span style=color:#f92672>import</span> admin
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .models <span style=color:#f92672>import</span> Question
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>admin<span style=color:#f92672>.</span>site<span style=color:#f92672>.</span>register(Question)
+</span></span></code></pre></div><h3 id=探索免费的管理功能>探索免费的管理功能</h3><p>现在我们已经注册了 Question，Django 知道它应该显示在 admin 索引页面上,
+点击“问题”。现在你来到了 “change list” 页面的问题。此页面显示数据库中的所有问题，并允许您选择一个问题进行更改。我们之前创建了 “What&rsquo;s up？” 问题：</p></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><a href=#数据库设置>数据库设置</a></li><li><a href=#创建模型>创建模型</a></li><li><a href=#激活模型>激活模型</a></li><li><a href=#使用api>使用API</a></li></ul></li><li><a href=#no-questions-are-in-the-system-yet>No questions are in the system yet.</a></li><li><a href=#create-a-new-question>Create a new Question.</a></li><li><a href=#support-for-time-zones-is-enabled-in-the-default-settings-file-so>Support for time zones is enabled in the default settings file, so</a></li><li><a href=#django-expects-a-datetime-with-tzinfo-for-pub_date-use-timezonenow>Django expects a datetime with tzinfo for pub_date. Use timezone.now()</a></li><li><a href=#instead-of-datetimedatetimenow-and-it-will-do-the-right-thing>instead of datetime.datetime.now() and it will do the right thing.</a></li><li><a href=#save-the-object-into-the-database-you-have-to-call-save-explicitly>Save the object into the database. You have to call save() explicitly.</a></li><li><a href=#now-it-has-an-id>Now it has an ID.</a></li><li><a href=#access-model-field-values-via-python-attributes>Access model field values via Python attributes.</a></li><li><a href=#change-values-by-changing-the-attributes-then-calling-save>Change values by changing the attributes, then calling save().</a></li><li><a href=#objectsall-displays-all-the-questions-in-the-database>objects.all() displays all the questions in the database.</a><ul><li><a href=#django-admin-简介>Django Admin 简介</a><ul><li><a href=#创建-admin-用户>创建 admin 用户</a></li><li><a href=#启动开发服务器>启动开发服务器</a></li><li><a href=#进入管理站点>进入管理站点</a></li><li><a href=#应用程序在-admin-中可修改>应用程序在 admin 中可修改</a></li><li><a href=#探索免费的管理功能>探索免费的管理功能</a></li></ul></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>
