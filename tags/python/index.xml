@@ -1,4 +1,42 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>https://merthon.github.io/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 21 Feb 2025 21:36:29 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Django_Part_3</title><link>https://merthon.github.io/posts/django_part_3/</link><pubDate>Fri, 21 Feb 2025 21:36:29 +0800</pubDate><guid>https://merthon.github.io/posts/django_part_3/</guid><description>&lt;p>从 2 结束的地方开始。继续开发 Web 投票应用程序，并将专注于创建公共界面 – “视图”。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>https://merthon.github.io/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 23 Feb 2025 23:22:28 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Django笔记</title><link>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</link><pubDate>Sun, 23 Feb 2025 23:22:28 +0800</pubDate><guid>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</guid><description>&lt;h1 id="什么是-django">什么是 Django？&lt;/h1>
+&lt;p>Django 是一个用 Python 写的 &lt;strong>开源 Web 框架&lt;/strong>，它的作用是帮你快速构建网站或 Web 应用。想象一下，你要盖一栋房子，如果每块砖、每扇门都自己造，那得多累啊！Django 就像一个“装修公司”，它提供了很多现成的工具（比如数据库操作、网页模板等），让你专注于设计房子的核心功能，而不是从头造工具。
+Django 的口号是 &lt;strong>“不要重复发明轮子”&lt;/strong>，意思是它已经把 Web 开发中常见的麻烦事都搞定了，你只要学会用这些工具就行。&lt;/p>
+&lt;h1 id="django-的优点有哪些">Django 的优点有哪些？&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>ORM（对象关系映射）&lt;/strong>：可以用 Python 代码操作数据库，不用写复杂的 SQL。&lt;/li>
+&lt;li>&lt;strong>自带管理后台&lt;/strong>：Django 提供一个现成的界面，方便你管理数据（比如添加、删除、修改）。&lt;/li>
+&lt;li>&lt;strong>灵活的 URL 路由&lt;/strong>：能轻松把网页地址（URL）和功能代码连接起来。&lt;/li>
+&lt;li>&lt;strong>模板系统&lt;/strong>：让网页设计（HTML）和逻辑代码（Python）分开，维护更方便。&lt;/li>
+&lt;li>&lt;strong>安全性强&lt;/strong>：内置保护，防止黑客攻击（比如 SQL 注入、跨站脚本攻击）。&lt;/li>
+&lt;li>&lt;strong>可扩展&lt;/strong>：可以用插件或中间件增加功能，满足各种需求。&lt;/li>
+&lt;/ul>
+&lt;h1 id="django">Django&lt;/h1>
+&lt;h2 id="第一步安装">第一步：安装&lt;/h2>
+&lt;p>我们先把 Django 装到你的电脑上。假设你已经会用 Python 和 pip（Python 的包管理工具），打开终端，输入：
+&lt;code>pip3 install django&lt;/code>
+然后检查版本：
+&lt;code>django-admin --version&lt;/code>&lt;/p>
+&lt;h2 id="第二步创建一个-django-项目">第二步：创建一个 Django 项目&lt;/h2>
+&lt;p>安装好后，我们来创建一个项目。项目就像一个网站的“大本营”，里面可以包含多个功能模块。运行下面这条命令：
+&lt;code>django-admin startproject myproject&lt;/code>
+这会在当前目录下生成一个叫 myproject 的文件夹，里面是这样的结构：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>manage.py&lt;/strong>：一个命令行工具，用来管理项目。&lt;/li>
+&lt;li>&lt;strong>myproject/&lt;/strong>（子目录）：
+&lt;ul>
+&lt;li>&lt;strong>settings.py&lt;/strong>：配置文件，设置数据库、时区等。&lt;/li>
+&lt;li>&lt;strong>urls.py&lt;/strong>：URL 路由表，决定哪个地址显示什么内容。&lt;/li>
+&lt;li>&lt;strong>wsgi.py&lt;/strong>：部署时用的文件（暂时不用管）。
+现在，进入项目目录并启动服务器试试：
+&lt;code>cd myproject &lt;/code>python manage.py runserver`
+打开浏览器，访问http://127.0.0.1:8000/ 你会看到 Django 的欢迎页面，说明项目跑起来了！&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="第三步创建你的第一个应用">第三步：创建你的第一个应用&lt;/h2>
+&lt;p>在 Django 中，&lt;strong>项目&lt;/strong>是一个大容器，里面可以有多个 &lt;strong>应用&lt;/strong>（App）。每个应用负责一个独立功能，比如博客、商店等。我们创建一个叫 myapp 的应用：
+&lt;code>python manage.py startapp myapp&lt;/code>
+这会生成一个 myapp 文件夹，结构如下：&lt;/p></description></item><item><title>Django_Part_3</title><link>https://merthon.github.io/posts/django_part_3/</link><pubDate>Fri, 21 Feb 2025 21:36:29 +0800</pubDate><guid>https://merthon.github.io/posts/django_part_3/</guid><description>&lt;p>从 2 结束的地方开始。继续开发 Web 投票应用程序，并将专注于创建公共界面 – “视图”。&lt;/p>
 &lt;h2 id="概述"> 概述&lt;/h2>
 &lt;p>视图是 Django 应用程序中的一种 “类型” 网页，通常提供特定功能并具有特定模板。例如，在博客应用程序中，您可能有以下视图：&lt;/p>
 &lt;ul>
