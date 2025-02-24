@@ -1,0 +1,567 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>Django 博客系统</title>
+<meta name=description content="Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板
+项目目录结构 建议将项目组织为多个应用模块，这里我们用一个主项目（例如 blog_project）和一个博客应 …"><meta name=keywords content='blog,hugo,Django,python,博客'><meta property="og:url" content="https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><meta property="og:type" content="website"><meta property="og:title" content="Django 博客系统"><meta property="og:description" content="Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板
+项目目录结构 建议将项目组织为多个应用模块，这里我们用一个主项目（例如 blog_project）和一个博客应 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Django 博客系统"><meta name=twitter:description content="Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板
+项目目录结构 建议将项目组织为多个应用模块，这里我们用一个主项目（例如 blog_project）和一个博客应 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><meta property="twitter:url" content="https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>Django 博客系统</h1><small role=doc-subtitle></small><p class=post-date>February 24, 2025</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/django>Django</a></li><li class=post-tag><a href=https://merthon.github.io/tags/python>python</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E5%8D%9A%E5%AE%A2>博客</a></li></ul></div><div class=post-content><p>Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板</p><h2 id=项目目录结构>项目目录结构</h2><p>建议将项目组织为多个应用模块，这里我们用一个主项目（例如 <code>blog_project</code>）和一个博客应用（<code>blog</code>）一个用户管理(<code>accounts</code>)
+<code>django-admin startproject blog_project</code>
+<code>python manage.py startapp blog</code>
+<code>python manage.py startapp accounts</code></p><h2 id=项目配置>项目配置</h2><p>下面是 <code>blog_project/settings.py</code> 中的主要配置，重点在于 MySQL 数据库配置以及一些常用配置项。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> os
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> pathlib <span style=color:#f92672>import</span> Path
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># BASE_DIR 用于构建相对于项目根目录的路径</span>
+</span></span><span style=display:flex><span>BASE_DIR <span style=color:#f92672>=</span> Path(__file__)<span style=color:#f92672>.</span>resolve()<span style=color:#f92672>.</span>parent<span style=color:#f92672>.</span>parent
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># SECURITY WARNING: 请确保保密此密钥，在生产环境中使用环境变量管理</span>
+</span></span><span style=display:flex><span>SECRET_KEY <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;your-secret-key-here&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># DEBUG 设置：生产环境下应设为 False</span>
+</span></span><span style=display:flex><span>DEBUG <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>ALLOWED_HOSTS <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;localhost&#39;</span>, <span style=color:#e6db74>&#39;127.0.0.1&#39;</span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 应用注册：包含 Django 内置应用和我们自定义的 blog 应用</span>
+</span></span><span style=display:flex><span>INSTALLED_APPS <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.admin&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.auth&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.contenttypes&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.sessions&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.messages&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.staticfiles&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;blog&#39;</span>, <span style=color:#75715e># 注册博客应用</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;accounts&#39;</span>,
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>MIDDLEWARE <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.middleware.security.SecurityMiddleware&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.sessions.middleware.SessionMiddleware&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.middleware.common.CommonMiddleware&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.middleware.csrf.CsrfViewMiddleware&#39;</span>, <span style=color:#75715e># CSRF 防护中间件</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.auth.middleware.AuthenticationMiddleware&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.messages.middleware.MessageMiddleware&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.middleware.clickjacking.XFrameOptionsMiddleware&#39;</span>,
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>ROOT_URLCONF <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;blog_project.urls&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 模板配置：自动寻找各应用中的 templates 目录</span>
+</span></span><span style=display:flex><span>TEMPLATES <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;BACKEND&#39;</span>: <span style=color:#e6db74>&#39;django.template.backends.django.DjangoTemplates&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;DIRS&#39;</span>: [os<span style=color:#f92672>.</span>path<span style=color:#f92672>.</span>join(BASE_DIR, <span style=color:#e6db74>&#39;templates&#39;</span>)], <span style=color:#75715e># 全局模板目录（可选）</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;APP_DIRS&#39;</span>: <span style=color:#66d9ef>True</span>, <span style=color:#75715e># 自动搜索各应用下的 templates 目录</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;OPTIONS&#39;</span>: {
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;context_processors&#39;</span>: [
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.template.context_processors.debug&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.template.context_processors.request&#39;</span>, <span style=color:#75715e># 使 request 对象在模板中可用</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.auth.context_processors.auth&#39;</span>,
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;django.contrib.messages.context_processors.messages&#39;</span>,
+</span></span><span style=display:flex><span>],
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>WSGI_APPLICATION <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;blog_project.wsgi.application&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 数据库配置：使用 MySQL 数据库</span>
+</span></span><span style=display:flex><span>DATABASES <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;default&#39;</span>: {
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;ENGINE&#39;</span>: <span style=color:#e6db74>&#39;django.db.backends.mysql&#39;</span>, <span style=color:#75715e># 指定使用 MySQL 数据库引擎</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;NAME&#39;</span>: <span style=color:#e6db74>&#39;blog_db&#39;</span>, <span style=color:#75715e># 数据库名称</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;USER&#39;</span>: <span style=color:#e6db74>&#39;root&#39;</span>, <span style=color:#75715e># 数据库用户名</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;PASSWORD&#39;</span>: <span style=color:#e6db74>&#39;你的数据库密码&#39;</span>, <span style=color:#75715e># 数据库密码</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;HOST&#39;</span>: <span style=color:#e6db74>&#39;localhost&#39;</span>, <span style=color:#75715e># 数据库服务器地址</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;PORT&#39;</span>: <span style=color:#e6db74>&#39;3306&#39;</span>, <span style=color:#75715e># 数据库端口</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e># 密码验证配置</span>
+</span></span><span style=display:flex><span>AUTH_PASSWORD_VALIDATORS <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;NAME&#39;</span>: <span style=color:#e6db74>&#39;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&#39;</span>,
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;NAME&#39;</span>: <span style=color:#e6db74>&#39;django.contrib.auth.password_validation.MinimumLengthValidator&#39;</span>,
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;NAME&#39;</span>: <span style=color:#e6db74>&#39;django.contrib.auth.password_validation.CommonPasswordValidator&#39;</span>,
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;NAME&#39;</span>: <span style=color:#e6db74>&#39;django.contrib.auth.password_validation.NumericPasswordValidator&#39;</span>,
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span><span style=color:#75715e># 国际化配置</span>
+</span></span><span style=display:flex><span>LANGUAGE_CODE <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;zh-hans&#39;</span>
+</span></span><span style=display:flex><span>TIME_ZONE <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;Asia/Shanghai&#39;</span>
+</span></span><span style=display:flex><span>USE_I18N <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>USE_L10N <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>USE_TZ <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 静态文件配置（CSS、JavaScript、图片等）</span>
+</span></span><span style=display:flex><span>STATIC_URL <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;/static/&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 默认主键字段类型</span>
+</span></span><span style=display:flex><span>DEFAULT_AUTO_FIELD <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;django.db.models.BigAutoField&#39;</span>
+</span></span></code></pre></div><h2 id=数据模型设计modelspy>数据模型设计（models.py）</h2><p>在 <code>blog/models.py</code> 中设计文章、分类以及评论的数据模型。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.db <span style=color:#f92672>import</span> models
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> django.contrib.auth.models <span style=color:#f92672>import</span> User
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 分类模型，用于对文章进行分类管理</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Category</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>name <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>CharField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>100</span>, unique<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;分类名称，必须唯一&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>description <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>TextField(blank<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, null<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;分类描述，可选&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> __str__(self):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>name
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 文章模型，包含文章标题、作者、内容、分类、发布时间等字段</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Post</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>title <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>CharField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章标题&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>slug <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>SlugField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>200</span>, unique<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章唯一标识（用于 URL 中）&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>author <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>ForeignKey(
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>User,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>on_delete<span style=color:#f92672>=</span>models<span style=color:#f92672>.</span>CASCADE,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>related_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;blog_posts&#39;</span>,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章作者，关联 Django 内置用户模型&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>content <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>TextField(help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章正文内容&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>category <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>ForeignKey(
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Category,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>on_delete<span style=color:#f92672>=</span>models<span style=color:#f92672>.</span>SET_NULL,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>null<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>blank<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章所属分类，可为空&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>created <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>DateTimeField(auto_now_add<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章创建时间，自动记录&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>updated <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>DateTimeField(auto_now<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;文章更新时间，自动更新&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Meta</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>ordering <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;-created&#39;</span>,) <span style=color:#75715e># 默认按创建时间倒序排列</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>verbose_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;文章&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>verbose_name_plural <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;文章列表&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> __str__(self):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>title
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 评论模型，用于对文章进行评论管理</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Comment</span>(models<span style=color:#f92672>.</span>Model):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>post <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>ForeignKey(
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Post,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>on_delete<span style=color:#f92672>=</span>models<span style=color:#f92672>.</span>CASCADE,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>related_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;comments&#39;</span>,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;关联的文章&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>author <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>CharField(max_length<span style=color:#f92672>=</span><span style=color:#ae81ff>80</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;评论作者名称&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>email <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>EmailField(help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;评论作者邮箱&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>body <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>TextField(help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;评论内容&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>created <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>DateTimeField(auto_now_add<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;评论创建时间&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>active <span style=color:#f92672>=</span> models<span style=color:#f92672>.</span>BooleanField(default<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>, help_text<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;评论是否激活（过滤垃圾评论）&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Meta</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>ordering <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;created&#39;</span>,)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>verbose_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;评论&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>verbose_name_plural <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;评论列表&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> __str__(self):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> <span style=color:#e6db74>f</span><span style=color:#e6db74>&#39;Comment by </span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>author<span style=color:#e6db74>}</span><span style=color:#e6db74> on </span><span style=color:#e6db74>{</span>self<span style=color:#f92672>.</span>post<span style=color:#e6db74>}</span><span style=color:#e6db74>&#39;</span>
+</span></span></code></pre></div><h2 id=表单定义formspy>表单定义（forms.py）</h2><p>使用 Django 的表单模块定义一个用于提交评论的表单。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django <span style=color:#f92672>import</span> forms
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .models <span style=color:#f92672>import</span> Comment
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span><span style=color:#75715e># 定义评论表单，基于 Comment 模型创建</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CommentForm</span>(forms<span style=color:#f92672>.</span>ModelForm):
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Meta</span>:
+</span></span><span style=display:flex><span>model <span style=color:#f92672>=</span> Comment
+</span></span><span style=display:flex><span><span style=color:#75715e># 指定表单包含的字段</span>
+</span></span><span style=display:flex><span>fields <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;author&#39;</span>, <span style=color:#e6db74>&#39;email&#39;</span>, <span style=color:#e6db74>&#39;body&#39;</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e># 可添加字段的 widgets 或验证规则</span>
+</span></span><span style=display:flex><span>widgets <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;body&#39;</span>: forms<span style=color:#f92672>.</span>Textarea(attrs<span style=color:#f92672>=</span>{<span style=color:#e6db74>&#39;rows&#39;</span>: <span style=color:#ae81ff>4</span>, <span style=color:#e6db74>&#39;placeholder&#39;</span>: <span style=color:#e6db74>&#39;请输入评论内容&#39;</span>}),
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=视图函数viewspy>视图函数（views.py）</h2><p>在 <code>blog/views.py</code> 中定义两个主要视图：</p><ul><li><strong>文章列表视图</strong>：展示所有文章（可扩展为分页、分类筛选等）</li><li><strong>文章详情视图</strong>：展示单篇文章的详细内容，并处理评论表单提交</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.shortcuts <span style=color:#f92672>import</span> render, get_object_or_404
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .models <span style=color:#f92672>import</span> Post
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .forms <span style=color:#f92672>import</span> CommentForm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>post_list</span>(request):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>文章列表视图：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 获取所有文章（企业项目中可考虑只显示已发布文章）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 渲染模板，并传递文章列表数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>posts <span style=color:#f92672>=</span> Post<span style=color:#f92672>.</span>objects<span style=color:#f92672>.</span>all()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>context <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;posts&#39;</span>: posts,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> render(request, <span style=color:#e6db74>&#39;blog/post_list.html&#39;</span>, context)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>post_detail</span>(request, slug):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>文章详情视图：
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 根据 slug 获取对应文章
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 处理评论表单提交（POST 请求）
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 获取文章所有激活状态的评论
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>- 渲染详情模板并传递文章、评论、以及评论表单数据
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>post <span style=color:#f92672>=</span> get_object_or_404(Post, slug<span style=color:#f92672>=</span>slug)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>comments <span style=color:#f92672>=</span> post<span style=color:#f92672>.</span>comments<span style=color:#f92672>.</span>filter(active<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>new_comment <span style=color:#f92672>=</span> <span style=color:#66d9ef>None</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> request<span style=color:#f92672>.</span>method <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;POST&#39;</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 如果是提交评论的表单</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>comment_form <span style=color:#f92672>=</span> CommentForm(data<span style=color:#f92672>=</span>request<span style=color:#f92672>.</span>POST)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> comment_form<span style=color:#f92672>.</span>is_valid():
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 生成 Comment 对象但暂不提交数据库</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>new_comment <span style=color:#f92672>=</span> comment_form<span style=color:#f92672>.</span>save(commit<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>new_comment<span style=color:#f92672>.</span>post <span style=color:#f92672>=</span> post <span style=color:#75715e># 将评论与当前文章关联</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>new_comment<span style=color:#f92672>.</span>save() <span style=color:#75715e># 保存评论到数据库</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>comment_form <span style=color:#f92672>=</span> CommentForm()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>context <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;post&#39;</span>: post,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;comments&#39;</span>: comments,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;new_comment&#39;</span>: new_comment,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;comment_form&#39;</span>: comment_form,
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>return</span> render(request, <span style=color:#e6db74>&#39;blog/post_detail.html&#39;</span>, context)
+</span></span></code></pre></div><h2 id=url-路由配置>URL 路由配置</h2><h3 id=应用级>应用级</h3><p>在博客应用内部配置 URL 路由，定义文章列表和详情页的访问路径。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.urls <span style=color:#f92672>import</span> path
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> . <span style=color:#f92672>import</span> views
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>app_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;blog&#39;</span> <span style=color:#75715e># 设置命名空间，方便模板中反向解析 URL</span>
+</span></span><span style=display:flex><span>urlpatterns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;&#39;</span>, views<span style=color:#f92672>.</span>post_list, name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;post_list&#39;</span>), <span style=color:#75715e># 文章列表页，根路径</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;&lt;slug:slug&gt;/&#39;</span>, views<span style=color:#f92672>.</span>post_detail, name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;post_detail&#39;</span>), <span style=color:#75715e># 文章详情页，根据 slug 匹配</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></div><p>在用户管理应用内部配置 URL 路由，定义登陆和注册的访问路径。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.urls <span style=color:#f92672>import</span> path
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> django.contrib.auth <span style=color:#f92672>import</span> views <span style=color:#66d9ef>as</span> auth_views
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> . <span style=color:#f92672>import</span> views
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>app_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;accounts&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>urlpatterns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;register/&#39;</span>, views<span style=color:#f92672>.</span>register_view, name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;register&#39;</span>),
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;login/&#39;</span>, auth_views<span style=color:#f92672>.</span>LoginView<span style=color:#f92672>.</span>as_view(template_name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;accounts/login.html&#39;</span>), name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;login&#39;</span>),
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;logout/&#39;</span>, auth_views<span style=color:#f92672>.</span>LogoutView<span style=color:#f92672>.</span>as_view(next_page<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;/&#39;</span>), name<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;logout&#39;</span>),
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></div><h3 id=项目级-url>项目级 URL</h3><p>在项目的主 URL 文件中包含博客应用的 URL 配置，同时也配置后台管理路径。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.contrib <span style=color:#f92672>import</span> admin
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> django.urls <span style=color:#f92672>import</span> path, include
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>urlpatterns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;admin/&#39;</span>, admin<span style=color:#f92672>.</span>site<span style=color:#f92672>.</span>urls), <span style=color:#75715e># 后台管理路径</span>
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;&#39;</span>, include(<span style=color:#e6db74>&#39;blog.urls&#39;</span>, namespace<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;blog&#39;</span>)), <span style=color:#75715e># 包含博客应用的 URL 路由</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 包含 accounts 应用的 URL，访问前缀为 accounts/</span>
+</span></span><span style=display:flex><span>path(<span style=color:#e6db74>&#39;accounts/&#39;</span>, include(<span style=color:#e6db74>&#39;accounts.urls&#39;</span>, namespace<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;accounts&#39;</span>)),
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>]
+</span></span></code></pre></div><h2 id=后台管理配置>后台管理配置</h2><p>为了方便管理文章、分类和评论，在 <code>blog/admin.py</code> 中进行注册，并添加定制化配置。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> django.contrib <span style=color:#f92672>import</span> admin
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> .models <span style=color:#f92672>import</span> Post, Category, Comment
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 定义文章后台管理显示配置</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PostAdmin</span>(admin<span style=color:#f92672>.</span>ModelAdmin):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>list_display <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;title&#39;</span>, <span style=color:#e6db74>&#39;author&#39;</span>, <span style=color:#e6db74>&#39;created&#39;</span>, <span style=color:#e6db74>&#39;updated&#39;</span>) <span style=color:#75715e># 后台列表页显示的字段</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>prepopulated_fields <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#39;slug&#39;</span>: (<span style=color:#e6db74>&#39;title&#39;</span>,)} <span style=color:#75715e># 自动根据标题生成 slug</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 定义分类后台管理显示配置</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CategoryAdmin</span>(admin<span style=color:#f92672>.</span>ModelAdmin):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>list_display <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;name&#39;</span>, <span style=color:#e6db74>&#39;description&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 定义评论后台管理显示配置</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CommentAdmin</span>(admin<span style=color:#f92672>.</span>ModelAdmin):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>list_display <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;post&#39;</span>, <span style=color:#e6db74>&#39;author&#39;</span>, <span style=color:#e6db74>&#39;created&#39;</span>, <span style=color:#e6db74>&#39;active&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>list_filter <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;active&#39;</span>, <span style=color:#e6db74>&#39;created&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>search_fields <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;author&#39;</span>, <span style=color:#e6db74>&#39;email&#39;</span>, <span style=color:#e6db74>&#39;body&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 注册模型到后台管理系统</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>admin<span style=color:#f92672>.</span>site<span style=color:#f92672>.</span>register(Post, PostAdmin)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>admin<span style=color:#f92672>.</span>site<span style=color:#f92672>.</span>register(Category, CategoryAdmin)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>admin<span style=color:#f92672>.</span>site<span style=color:#f92672>.</span>register(Comment, CommentAdmin)
+</span></span></code></pre></div><h2 id=模板示例>模板示例</h2><h3 id=基础模板basehtml>基础模板：base.html</h3><p>该模板定义了网站的基本页面结构（头部、尾部、导航等），其他模板都将继承该模板。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-HTML data-lang=HTML><span style=display:flex><span>{% load static %}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>html</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;zh-CN&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>charset</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;UTF-8&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>title</span>&gt;{% block title %}我的博客{% endblock %}&lt;/<span style=color:#f92672>title</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- Bootstrap CSS --&gt;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- 自定义 CSS --&gt;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% static &#39;blog/css/styles.css&#39; %}&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>nav</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbar navbar-expand-lg navbar-dark bg-dark&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;container&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbar-brand&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;blog:post_list&#39; %}&#34;</span>&gt;我的博客&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbar-toggler&#34;</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;button&#34;</span> <span style=color:#a6e22e>data-bs-toggle</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;collapse&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>data-bs-target</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;#navbarSupportedContent&#34;</span> <span style=color:#a6e22e>aria-controls</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbarSupportedContent&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>aria-expanded</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;false&#34;</span> <span style=color:#a6e22e>aria-label</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Toggle navigation&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>span</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbar-toggler-icon&#34;</span>&gt;&lt;/<span style=color:#f92672>span</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;collapse navbar-collapse&#34;</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbarSupportedContent&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>ul</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;navbar-nav ms-auto&#34;</span>&gt;
+</span></span><span style=display:flex><span>{% if request.user.is_authenticated %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>li</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-item&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-link&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;accounts:logout&#39; %}&#34;</span>&gt;退出登录&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>{% else %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>li</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-item&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-link&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;accounts:login&#39; %}&#34;</span>&gt;登录&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>li</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-item&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nav-link&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;accounts:register&#39; %}&#34;</span>&gt;注册&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>li</span>&gt;
+</span></span><span style=display:flex><span>{% endif %}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>ul</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>nav</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;container mt-4&#34;</span>&gt;
+</span></span><span style=display:flex><span>{% block content %}
+</span></span><span style=display:flex><span>{% endblock %}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>footer</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;bg-dark text-white text-center py-3 mt-4&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mb-0&#34;</span>&gt;&amp;copy; 2025 我的博客系统&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>footer</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- Bootstrap JS --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>html</span>&gt;
+</span></span></code></pre></div><h3 id=文章列表模板post_listhtml>文章列表模板：post_list.html</h3><p>展示所有文章的标题、摘要等，并提供链接跳转到详情页。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-HTML data-lang=HTML><span style=display:flex><span>{% extends &#34;blog/base.html&#34; %}
+</span></span><span style=display:flex><span>{% block title %}文章列表{% endblock %}
+</span></span><span style=display:flex><span>{% block content %}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h2</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mb-4&#34;</span>&gt;文章列表&lt;/<span style=color:#f92672>h2</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;row&#34;</span>&gt;
+</span></span><span style=display:flex><span>{% for post in posts %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;col-md-6&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card mb-3&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-body&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h3</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-title&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>a</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{% url &#39;blog:post_detail&#39; post.slug %}&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text-decoration-none&#34;</span>&gt;
+</span></span><span style=display:flex><span>{{ post.title }}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>a</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>h3</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-subtitle text-muted&#34;</span>&gt;
+</span></span><span style=display:flex><span>作者：{{ post.author.username }} | 发布时间：{{ post.created|date:&#34;Y-m-d H:i&#34; }}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-text mt-2&#34;</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- 截取前 200 个字符作为摘要 --&gt;</span>
+</span></span><span style=display:flex><span>{{ post.content|truncatechars:200 }}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>{% empty %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span>&gt;暂无文章。&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>{% endfor %}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>{% endblock %}
+</span></span></code></pre></div><h3 id=文章详情模板post_detailhtml>文章详情模板：post_detail.html</h3><p>展示单篇文章的详细内容以及评论列表和评论表单。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-HTML data-lang=HTML><span style=display:flex><span>{% extends &#34;blog/base.html&#34; %}
+</span></span><span style=display:flex><span>{% block title %}{{ post.title }}{% endblock %}
+</span></span><span style=display:flex><span>{% block content %}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- 文章详情卡片 --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card mb-4&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-body&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h2</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-title&#34;</span>&gt;{{ post.title }}&lt;/<span style=color:#f92672>h2</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-subtitle text-muted mb-3&#34;</span>&gt;
+</span></span><span style=display:flex><span>作者：{{ post.author.username }} | 发布时间：{{ post.created|date:&#34;Y-m-d H:i&#34; }}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-text&#34;</span>&gt;
+</span></span><span style=display:flex><span>{{ post.content|linebreaks }}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- 评论列表 --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>section</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;comments&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mb-4&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h3</span>&gt;评论&lt;/<span style=color:#f92672>h3</span>&gt;
+</span></span><span style=display:flex><span>{% for comment in comments %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card mb-2&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;card-body&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>strong</span>&gt;{{ comment.author }}&lt;/<span style=color:#f92672>strong</span>&gt; 说：
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span>&gt;{{ comment.body|linebreaks }}&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;text-muted&#34;</span>&gt;评论时间：{{ comment.created|date:&#34;Y-m-d H:i&#34; }}&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>{% empty %}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>p</span>&gt;暂无评论，欢迎抢沙发！&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>{% endfor %}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>section</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>&lt;!-- 评论表单 --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>section</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;add-comment&#34;</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>h3</span>&gt;添加评论&lt;/<span style=color:#f92672>h3</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>form</span> <span style=color:#a6e22e>method</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;post&#34;</span>&gt;
+</span></span><span style=display:flex><span>{% csrf_token %}
+</span></span><span style=display:flex><span>{{ comment_form.as_p }}
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>type</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;submit&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;btn btn-primary&#34;</span>&gt;提交评论&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>form</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>section</span>&gt;
+</span></span><span style=display:flex><span>{% endblock %}
+</span></span></code></pre></div><h2 id=django-的静态文件功能>Django 的静态文件功能</h2><p>在你的 <code>blog</code> 应用下创建一个 <code>static/blog/css</code> 目录,在 <code>blog/static/blog/css/styles.css</code> 中编写一些基础样式，例如全局背景色、字体、文章卡片样式等：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-CSS data-lang=CSS><span style=display:flex><span><span style=color:#75715e>/* 全局基础样式 */</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>body</span> {
+</span></span><span style=display:flex><span><span style=color:#66d9ef>font-family</span>: <span style=color:#e6db74>&#34;Helvetica Neue&#34;</span>, Helvetica, Arial, <span style=color:#66d9ef>sans-serif</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>background-color</span>: <span style=color:#ae81ff>#f8f9fa</span>; <span style=color:#75715e>/* 淡灰背景 */</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>/* 让文章卡片与页面分离，显得更干净 */</span>
+</span></span><span style=display:flex><span>.<span style=color:#a6e22e>card</span> {
+</span></span><span style=display:flex><span><span style=color:#66d9ef>margin-bottom</span>: <span style=color:#ae81ff>1</span><span style=color:#66d9ef>rem</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>border-radius</span>: <span style=color:#ae81ff>6</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>box-shadow</span>: <span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span><span style=color:#66d9ef>px</span> <span style=color:#ae81ff>3</span><span style=color:#66d9ef>px</span> rgba(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0.1</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=创建超级管理员>创建超级管理员</h2><p>在完成以上配置后，运行以下命令即可创建超级管理员账号：
+`python manage.py createsuperuser
+系统会提示你输入用户名、邮箱（可选）和密码。创建成功后，你就可以通过http://127.0.0.1:8000/admin/ 进入 Django 后台管理系统，并使用超级管理员账号进行管理。</p><h2 id=本地运行和测试>本地运行和测试</h2><h3 id=执行数据库迁移>执行数据库迁移</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>python manage.py makemigrations
+</span></span><span style=display:flex><span>python manage.py migrate
+</span></span></code></pre></div><h3 id=启动>启动</h3><p>`python manage.py runserver
+分别访问：</p><ul><li>博客首页（例如：http://127.0.0.1:8000/）</li><li>用户注册页：http://127.0.0.1:8000/accounts/register/</li><li>用户登录页：http://127.0.0.1:8000/accounts/login/</li></ul><h2 id=具体效果图>具体效果图</h2><p><img src=/images/xg1.png alt=xg1>
+<img src=/images/xg2.png alt=xg2>
+<img src=/images/xg3.png alt=xg3>
+<img src=/images/xg4.png alt=xg4></p><h2 id=项目地址>项目地址</h2><p><a href=https://github.com/Merthon/DjangoProject>https://github.com/Merthon/DjangoProject</a></p></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><ul><li><a href=#项目目录结构>项目目录结构</a></li><li><a href=#项目配置>项目配置</a></li><li><a href=#数据模型设计modelspy>数据模型设计（models.py）</a></li><li><a href=#表单定义formspy>表单定义（forms.py）</a></li><li><a href=#视图函数viewspy>视图函数（views.py）</a></li><li><a href=#url-路由配置>URL 路由配置</a><ul><li><a href=#应用级>应用级</a></li><li><a href=#项目级-url>项目级 URL</a></li></ul></li><li><a href=#后台管理配置>后台管理配置</a></li><li><a href=#模板示例>模板示例</a><ul><li><a href=#基础模板basehtml>基础模板：base.html</a></li><li><a href=#文章列表模板post_listhtml>文章列表模板：post_list.html</a></li><li><a href=#文章详情模板post_detailhtml>文章详情模板：post_detail.html</a></li></ul></li><li><a href=#django-的静态文件功能>Django 的静态文件功能</a></li><li><a href=#创建超级管理员>创建超级管理员</a></li><li><a href=#本地运行和测试>本地运行和测试</a><ul><li><a href=#执行数据库迁移>执行数据库迁移</a></li><li><a href=#启动>启动</a></li></ul></li><li><a href=#具体效果图>具体效果图</a></li><li><a href=#项目地址>项目地址</a></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

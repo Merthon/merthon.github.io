@@ -1,4 +1,103 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>https://merthon.github.io/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 23 Feb 2025 23:22:28 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Django笔记</title><link>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</link><pubDate>Sun, 23 Feb 2025 23:22:28 +0800</pubDate><guid>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</guid><description>&lt;h1 id="什么是-django">什么是 Django？&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Merthon</title><link>https://merthon.github.io/tags/python/</link><description>Recent content in Python on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 24 Feb 2025 22:19:03 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Django 博客系统</title><link>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</link><pubDate>Mon, 24 Feb 2025 22:19:03 +0800</pubDate><guid>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</guid><description>&lt;p>Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板&lt;/p>
+&lt;h2 id="项目目录结构">项目目录结构&lt;/h2>
+&lt;p>建议将项目组织为多个应用模块，这里我们用一个主项目（例如 &lt;code>blog_project&lt;/code>）和一个博客应用（&lt;code>blog&lt;/code>）一个用户管理(&lt;code>accounts&lt;/code>)
+&lt;code>django-admin startproject blog_project&lt;/code>
+&lt;code>python manage.py startapp blog&lt;/code>
+&lt;code>python manage.py startapp accounts&lt;/code>&lt;/p>
+&lt;h2 id="项目配置">项目配置&lt;/h2>
+&lt;p>下面是 &lt;code>blog_project/settings.py&lt;/code> 中的主要配置，重点在于 MySQL 数据库配置以及一些常用配置项。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> os
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> pathlib &lt;span style="color:#f92672">import&lt;/span> Path
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># BASE_DIR 用于构建相对于项目根目录的路径&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>BASE_DIR &lt;span style="color:#f92672">=&lt;/span> Path(__file__)&lt;span style="color:#f92672">.&lt;/span>resolve()&lt;span style="color:#f92672">.&lt;/span>parent&lt;span style="color:#f92672">.&lt;/span>parent
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># SECURITY WARNING: 请确保保密此密钥，在生产环境中使用环境变量管理&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>SECRET_KEY &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;your-secret-key-here&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># DEBUG 设置：生产环境下应设为 False&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DEBUG &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ALLOWED_HOSTS &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#e6db74">&amp;#39;localhost&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;127.0.0.1&amp;#39;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 应用注册：包含 Django 内置应用和我们自定义的 blog 应用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>INSTALLED_APPS &lt;span style="color:#f92672">=&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.admin&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.auth&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.contenttypes&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.sessions&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.messages&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.staticfiles&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;blog&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 注册博客应用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;accounts&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>MIDDLEWARE &lt;span style="color:#f92672">=&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.middleware.security.SecurityMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.sessions.middleware.SessionMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.middleware.common.CommonMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.middleware.csrf.CsrfViewMiddleware&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># CSRF 防护中间件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.middleware.AuthenticationMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.messages.middleware.MessageMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.middleware.clickjacking.XFrameOptionsMiddleware&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ROOT_URLCONF &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;blog_project.urls&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 模板配置：自动寻找各应用中的 templates 目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TEMPLATES &lt;span style="color:#f92672">=&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;BACKEND&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.template.backends.django.DjangoTemplates&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;DIRS&amp;#39;&lt;/span>: [os&lt;span style="color:#f92672">.&lt;/span>path&lt;span style="color:#f92672">.&lt;/span>join(BASE_DIR, &lt;span style="color:#e6db74">&amp;#39;templates&amp;#39;&lt;/span>)], &lt;span style="color:#75715e"># 全局模板目录（可选）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;APP_DIRS&amp;#39;&lt;/span>: &lt;span style="color:#66d9ef">True&lt;/span>, &lt;span style="color:#75715e"># 自动搜索各应用下的 templates 目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;OPTIONS&amp;#39;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;context_processors&amp;#39;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.template.context_processors.debug&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.template.context_processors.request&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 使 request 对象在模板中可用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.context_processors.auth&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;django.contrib.messages.context_processors.messages&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>],
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>WSGI_APPLICATION &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;blog_project.wsgi.application&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 数据库配置：使用 MySQL 数据库&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DATABASES &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;default&amp;#39;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;ENGINE&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.db.backends.mysql&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 指定使用 MySQL 数据库引擎&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;NAME&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;blog_db&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 数据库名称&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;USER&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;root&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 数据库用户名&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;PASSWORD&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;你的数据库密码&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 数据库密码&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;HOST&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;localhost&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 数据库服务器地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;PORT&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3306&amp;#39;&lt;/span>, &lt;span style="color:#75715e"># 数据库端口&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 密码验证配置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>AUTH_PASSWORD_VALIDATORS &lt;span style="color:#f92672">=&lt;/span> [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;NAME&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;NAME&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.password_validation.MinimumLengthValidator&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;NAME&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.password_validation.CommonPasswordValidator&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#39;NAME&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;django.contrib.auth.password_validation.NumericPasswordValidator&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>},
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 国际化配置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>LANGUAGE_CODE &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;zh-hans&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TIME_ZONE &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;Asia/Shanghai&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USE_I18N &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USE_L10N &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>USE_TZ &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 静态文件配置（CSS、JavaScript、图片等）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>STATIC_URL &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;/static/&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 默认主键字段类型&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DEFAULT_AUTO_FIELD &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;django.db.models.BigAutoField&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="数据模型设计modelspy">数据模型设计（models.py）&lt;/h2>
+&lt;p>在 &lt;code>blog/models.py&lt;/code> 中设计文章、分类以及评论的数据模型。&lt;/p></description></item><item><title>Django笔记</title><link>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</link><pubDate>Sun, 23 Feb 2025 23:22:28 +0800</pubDate><guid>https://merthon.github.io/posts/django%E7%AC%94%E8%AE%B0/</guid><description>&lt;h1 id="什么是-django">什么是 Django？&lt;/h1>
 &lt;p>Django 是一个用 Python 写的 &lt;strong>开源 Web 框架&lt;/strong>，它的作用是帮你快速构建网站或 Web 应用。想象一下，你要盖一栋房子，如果每块砖、每扇门都自己造，那得多累啊！Django 就像一个“装修公司”，它提供了很多现成的工具（比如数据库操作、网页模板等），让你专注于设计房子的核心功能，而不是从头造工具。
 Django 的口号是 &lt;strong>“不要重复发明轮子”&lt;/strong>，意思是它已经把 Web 开发中常见的麻烦事都搞定了，你只要学会用这些工具就行。&lt;/p>
 &lt;h1 id="django-的优点有哪些">Django 的优点有哪些？&lt;/h1>
