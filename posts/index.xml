@@ -1,4 +1,188 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 24 Feb 2025 22:19:03 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Django 博客系统</title><link>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</link><pubDate>Mon, 24 Feb 2025 22:19:03 +0800</pubDate><guid>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</guid><description>&lt;p>Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 11 Mar 2025 23:31:04 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Python连接数据库</title><link>https://merthon.github.io/posts/python%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</link><pubDate>Tue, 11 Mar 2025 23:31:04 +0800</pubDate><guid>https://merthon.github.io/posts/python%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93/</guid><description>&lt;h1 id="pymysql">pymysql&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>简介&lt;/strong>&lt;br>
+pymysql 是一个纯 Python 实现的 MySQL 客户端库，支持 Python 2 和 Python 3。它是 MySQLdb 的替代品，提供了简单直接的方式来操作 MySQL 数据库。&lt;/li>
+&lt;li>&lt;strong>安装&lt;/strong>&lt;br>
+pip install pymysql&lt;/li>
+&lt;li>&lt;strong>用法&lt;/strong>
+&lt;ol>
+&lt;li>建立连接。&lt;/li>
+&lt;li>创建游标（支持普通游标或字典游标）。&lt;/li>
+&lt;li>执行 SQL（查询、插入、更新等）。&lt;/li>
+&lt;li>提交事务（对于写操作）。&lt;/li>
+&lt;li>关闭连接。
+具体代码：&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> pymysql
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 建立连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db &lt;span style="color:#f92672">=&lt;/span> pymysql&lt;span style="color:#f92672">.&lt;/span>connect(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> host&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> user&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> password&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;your_password&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> database&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;test_db&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> charset&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf8mb4&amp;#34;&lt;/span> &lt;span style="color:#75715e"># 支持中文等字符集&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 创建游标（可选：cursorclass=pymysql.cursors.DictCursor 返回字典格式）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> db&lt;span style="color:#f92672">.&lt;/span>cursor()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 创建表&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS users (
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> id INT AUTO_INCREMENT PRIMARY KEY,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> name VARCHAR(50),
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> age INT
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> )
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;#34;&amp;#34;&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 插入数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;INSERT INTO users (name, age) VALUES (&lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">, &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">)&amp;#34;&lt;/span>, (&lt;span style="color:#e6db74">&amp;#34;Alice&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">25&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>commit() &lt;span style="color:#75715e"># 提交事务&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 查询数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM users WHERE age &amp;gt; &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>, (&lt;span style="color:#ae81ff">20&lt;/span>,))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> results &lt;span style="color:#f92672">=&lt;/span> cursor&lt;span style="color:#f92672">.&lt;/span>fetchall()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> row &lt;span style="color:#f92672">in&lt;/span> results:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(row) &lt;span style="color:#75715e"># 输出元组：(1, &amp;#39;Alice&amp;#39;, 25)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">except&lt;/span> &lt;span style="color:#a6e22e">Exception&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> e:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Error: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>e&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>rollback() &lt;span style="color:#75715e"># 出错时回滚&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">finally&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 关闭游标和连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="mysql-connector-python">mysql-connector-python&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>简介&lt;/strong>&lt;br>
+mysql-connector-python 是 MySQL 官方提供的 Python 连接库，由 Oracle 开发，纯 Python 实现，支持 Python 3。&lt;/li>
+&lt;li>&lt;strong>安装&lt;/strong>&lt;br>
+pip install mysql-connector-python
+代码演示：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> mysql.connector
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> mysql.connector &lt;span style="color:#f92672">import&lt;/span> Error
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 建立连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db &lt;span style="color:#f92672">=&lt;/span> mysql&lt;span style="color:#f92672">.&lt;/span>connector&lt;span style="color:#f92672">.&lt;/span>connect(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> host&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> user&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> password&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;your_password&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> database&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;test_db&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> charset&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf8mb4&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 创建游标（可选：buffered=True 预加载结果）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> db&lt;span style="color:#f92672">.&lt;/span>cursor()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 创建表&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS employees (
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> id INT AUTO_INCREMENT PRIMARY KEY,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> name VARCHAR(50),
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> salary INT
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> )
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;#34;&amp;#34;&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 插入数据（使用参数化查询）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;INSERT INTO employees (name, salary) VALUES (&lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">, &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">)&amp;#34;&lt;/span>, (&lt;span style="color:#e6db74">&amp;#34;Bob&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">50000&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>commit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 查询数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM employees WHERE salary &amp;gt; &lt;/span>&lt;span style="color:#e6db74">%s&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>, (&lt;span style="color:#ae81ff">40000&lt;/span>,))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> results &lt;span style="color:#f92672">=&lt;/span> cursor&lt;span style="color:#f92672">.&lt;/span>fetchall()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> row &lt;span style="color:#f92672">in&lt;/span> results:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(row) &lt;span style="color:#75715e"># 输出元组：(1, &amp;#39;Bob&amp;#39;, 50000)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">except&lt;/span> Error &lt;span style="color:#66d9ef">as&lt;/span> e:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Error: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>e&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>rollback()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">finally&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> db&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>连接池
+代码展示：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> mysql.connector &lt;span style="color:#f92672">import&lt;/span> pooling
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 配置连接池&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>config &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;pool_name&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;mypool&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;pool_size&amp;#34;&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;host&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;user&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;password&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;your_password&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;database&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;test_db&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pool &lt;span style="color:#f92672">=&lt;/span> pooling&lt;span style="color:#f92672">.&lt;/span>MySQLConnectionPool(&lt;span style="color:#f92672">**&lt;/span>config)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 从池中获取连接&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db &lt;span style="color:#f92672">=&lt;/span> pool&lt;span style="color:#f92672">.&lt;/span>get_connection()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cursor &lt;span style="color:#f92672">=&lt;/span> db&lt;span style="color:#f92672">.&lt;/span>cursor()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM employees&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>print(cursor&lt;span style="color:#f92672">.&lt;/span>fetchall())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cursor&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="sqlalchemy">SQLAlchemy&lt;/h1>
+&lt;ul>
+&lt;li>&lt;strong>简介&lt;/strong>&lt;br>
+SQLAlchemy 是一个功能强大的 ORM（对象关系映射）库，支持 MySQL 等多种数据库，提供从低级 SQL 操作到高级 ORM 的多种方式。&lt;/li>
+&lt;li>&lt;strong>安装&lt;/strong>&lt;br>
+pip install sqlalchemy pymysql（需要 pymysql 作为 MySQL 驱动）。&lt;/li>
+&lt;li>&lt;strong>用法&lt;/strong>
+&lt;ol>
+&lt;li>创建引擎。&lt;/li>
+&lt;li>定义模型（表结构）。&lt;/li>
+&lt;li>创建会话。&lt;/li>
+&lt;li>执行增删改查。
+代码展示：&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> sqlalchemy &lt;span style="color:#f92672">import&lt;/span> create_engine, Column, Integer, String
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> sqlalchemy.ext.declarative &lt;span style="color:#f92672">import&lt;/span> declarative_base
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> sqlalchemy.orm &lt;span style="color:#f92672">import&lt;/span> sessionmaker
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建引擎&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>engine &lt;span style="color:#f92672">=&lt;/span> create_engine(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;mysql+pymysql://root:your_password@localhost/test_db&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> echo&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span> &lt;span style="color:#75715e"># 打印 SQL 日志，可选&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 定义基类&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Base &lt;span style="color:#f92672">=&lt;/span> declarative_base()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 定义模型&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>(Base):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> __tablename__ &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;students&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> id &lt;span style="color:#f92672">=&lt;/span> Column(Integer, primary_key&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> name &lt;span style="color:#f92672">=&lt;/span> Column(String(&lt;span style="color:#ae81ff">50&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> grade &lt;span style="color:#f92672">=&lt;/span> Column(Integer)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建表&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Base&lt;span style="color:#f92672">.&lt;/span>metadata&lt;span style="color:#f92672">.&lt;/span>create_all(engine)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 创建会话&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Session &lt;span style="color:#f92672">=&lt;/span> sessionmaker(bind&lt;span style="color:#f92672">=&lt;/span>engine)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>session &lt;span style="color:#f92672">=&lt;/span> Session()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 插入数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> new_student &lt;span style="color:#f92672">=&lt;/span> Student(name&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Charlie&amp;#34;&lt;/span>, grade&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">85&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>add(new_student)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>commit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 查询数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> students &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>query(Student)&lt;span style="color:#f92672">.&lt;/span>filter(Student&lt;span style="color:#f92672">.&lt;/span>grade &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>)&lt;span style="color:#f92672">.&lt;/span>all()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> student &lt;span style="color:#f92672">in&lt;/span> students:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(student&lt;span style="color:#f92672">.&lt;/span>id, student&lt;span style="color:#f92672">.&lt;/span>name, student&lt;span style="color:#f92672">.&lt;/span>grade)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 更新数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> student &lt;span style="color:#f92672">=&lt;/span> session&lt;span style="color:#f92672">.&lt;/span>query(Student)&lt;span style="color:#f92672">.&lt;/span>filter_by(name&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Charlie&amp;#34;&lt;/span>)&lt;span style="color:#f92672">.&lt;/span>first()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> student&lt;span style="color:#f92672">.&lt;/span>grade &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">90&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>commit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 删除数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>delete(student)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>commit()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">except&lt;/span> &lt;span style="color:#a6e22e">Exception&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> e:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Error: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>e&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>rollback()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">finally&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> session&lt;span style="color:#f92672">.&lt;/span>close()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Django 博客系统</title><link>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</link><pubDate>Mon, 24 Feb 2025 22:19:03 +0800</pubDate><guid>https://merthon.github.io/posts/django-%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</guid><description>&lt;p>Django 博客系统示例，该示例基于 Django 5.1.5（假设你已经安装了该版本）以及 MySQL 数据库。整个示例会涵盖项目目录结构、详细的配置、模型、视图、URL 路由、表单、管理后台以及模板&lt;/p>
 &lt;h2 id="项目目录结构">项目目录结构&lt;/h2>
 &lt;p>建议将项目组织为多个应用模块，这里我们用一个主项目（例如 &lt;code>blog_project&lt;/code>）和一个博客应用（&lt;code>blog&lt;/code>）一个用户管理(&lt;code>accounts&lt;/code>)
 &lt;code>django-admin startproject blog_project&lt;/code>
