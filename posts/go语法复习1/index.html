@@ -1,0 +1,171 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>Go语法复习1</title>
+<meta name=description content='一个简单的mian函数 package main import "fmt" func main() { fmt.Println("Hello World") } go run: 是指直接编译go语言并执行应用程序，一步完成 go build: 先编译，后执行
+变量的声明 单个变量 声明变 …'><meta name=keywords content='blog,hugo,Go,基础语法'><meta property="og:url" content="https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/"><meta property="og:type" content="website"><meta property="og:title" content="Go语法复习1"><meta property="og:description" content='一个简单的mian函数 package main import "fmt" func main() { fmt.Println("Hello World") } go run: 是指直接编译go语言并执行应用程序，一步完成 go build: 先编译，后执行
+变量的声明 单个变量 声明变 …'><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Go语法复习1"><meta name=twitter:description content='一个简单的mian函数 package main import "fmt" func main() { fmt.Println("Hello World") } go run: 是指直接编译go语言并执行应用程序，一步完成 go build: 先编译，后执行
+变量的声明 单个变量 声明变 …'><meta property="twitter:domain" content="https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/"><meta property="twitter:url" content="https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>Go语法复习1</h1><small role=doc-subtitle></small><p class=post-date>July 21, 2025</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/go>Go</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95>基础语法</a></li></ul></div><div class=post-content><h1 id=一个简单的mian函数>一个简单的mian函数</h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>     <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Hello World&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>go run: 是指直接编译go语言并执行应用程序，一步完成
+go build: 先编译，后执行</p><h1 id=变量的声明>变量的声明</h1><h4 id=单个变量>单个变量</h4><p>声明变量一般是使用关键字var</p><ul><li>第一种： 制定变量类型，声明后若不赋值，使用默认值0
+var v_name v_type
+v_name = value</li><li>第二种：根据值自行判定来变量类型
+var v_name = value</li><li>第三种：省去var，使用 := 来
+v_name := value</li></ul><h5 id=多变量声明>多变量声明</h5><p>示例代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> (  <span style=color:#75715e>//这种分解的写法，一般用于声明全局变量
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>       <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>       <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>d</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>e</span>, <span style=color:#a6e22e>f</span> = <span style=color:#ae81ff>123</span>, <span style=color:#e6db74>&#34;merthon&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 不带声明格式的只能在函数体里面实现
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>mian</span>() {
+</span></span><span style=display:flex><span>       <span style=color:#a6e22e>g</span>, <span style=color:#a6e22e>h</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>123</span>, <span style=color:#e6db74>&#34;这种在func函数体里实现&#34;</span>
+</span></span><span style=display:flex><span>       <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>d</span>, <span style=color:#a6e22e>e</span>, <span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>g</span>, <span style=color:#a6e22e>h</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>       <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>value</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>5</span> <span style=color:#75715e>//7的赋值被废弃，_不具备读特性
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>       <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>value</span>) <span style=color:#75715e>//5
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><h1 id=常量>常量</h1><p>常量是一个简单值的标识符，在程序运行时，不会被修改的值
+常量的数据类型只可以是布尔型，数字型，和字符串型
+定义格式：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>indentifier</span> [<span style=color:#66d9ef>type</span>] = <span style=color:#a6e22e>value</span>
+</span></span></code></pre></div><p>可以省去类型说明符[type]</p><ul><li>显式类型定义</li><li>隐式类型定义</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>LENGTH</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>WIDTH</span> = <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>area</span> <span style=color:#66d9ef>int</span> 
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>c</span> = <span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>false</span>, <span style=color:#e6db74>&#34;str&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>area</span> = <span style=color:#a6e22e>LENGTH</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>WIDTH</span> 
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;面积为：%d\n&#34;</span>, <span style=color:#a6e22e>area</span>)
+</span></span><span style=display:flex><span>	println(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>c</span>) 
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>常量还可以拿来做枚举</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Unknow</span> = <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Female</span> = <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Male</span> = <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><p>常量可以用len(),cap(), unsafe.Sizeof()常量计算表达式的值，常量表达式中，函数必须是内置函数，否则编译不过：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;unsafe&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> = <span style=color:#e6db74>&#34;abc&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>b</span> = len(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>c</span> = <span style=color:#a6e22e>unsafe</span>.<span style=color:#a6e22e>Sizeof</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    println(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>//输出结果为abc, 3, 16
+</span></span></span></code></pre></div><p>unsafe.Sizeof(a)输出是16，字符串类型在go里面是个结构，包含指向底层数组的指针和长度，这两部分每部分都是8个字节，所以字符串大小为16个字节。</p><h1 id=函数>函数</h1><h4 id=函数返回多个值>函数返回多个值</h4><p>Go函数可以返回多个值，例如：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>swap</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>string</span>) (<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>y</span>, <span style=color:#a6e22e>x</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span> = <span style=color:#a6e22e>swap</span>(<span style=color:#e6db74>&#34;Mahesh&#34;</span>, <span style=color:#e6db74>&#34;Kumer&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.println(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>//Kumer Mahesh
+</span></span></span></code></pre></div><h4 id=init函数与import>init函数与import</h4><p>init函数：可以在package main中，也可以在其他的package中，同一个中可以出现多次。
+main函数：只能在package main中。</p><h4 id=函数参数>函数参数</h4><p>函数如果使用参数，该变量可以称为函数的形参，就像是定义在函数体里的局部变量。
+调用函数，可以使用2种方式来传递参数：</p><h5 id=值传递>值传递</h5><p>值传递是指在调用函数的时候将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。
+默认情况，Go使用的就是值传递，在调用过程中不会影响到实际参数。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>swap</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>temp</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>temp</span> = <span style=color:#a6e22e>x</span> <span style=color:#75715e>//保存x
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>x</span> = <span style=color:#a6e22e>y</span>  <span style=color:#75715e>//将y赋值给x
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>y</span> = <span style=color:#a6e22e>temp</span> <span style=color:#75715e>//将temp 赋值给y
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>temp</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>使用值传递：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>200</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换前a：%d\n&#34;</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换前b：%d\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>swap</span>(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换后a：%d\n&#34;</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换后b：%d\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h5 id=引用传递指针传递>引用传递（指针传递）</h5><h6 id=指针>指针</h6><p>Go语言的取地址符是& ，放到一个变量之前使用就会返回相应变量的内存地址。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;变量的地址：%d\n&#34;</span><span style=color:#960050;background-color:#1e0010>，</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>//变量的地址：10818a220
+</span></span></span></code></pre></div><p>引用传递是指在调用函数时将实际参数的地址传递到函数中，那么函数中对参数所进行的修改，将影响到实际参数。
+引用传递指针参数传递到函数内，比如：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>swap</span>(<span style=color:#a6e22e>x</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>y</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>int</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>temp</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>temp</span> = <span style=color:#f92672>*</span><span style=color:#a6e22e>x</span> <span style=color:#75715e>//保存x地址上的值
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#f92672>*</span><span style=color:#a6e22e>x</span> = <span style=color:#f92672>*</span><span style=color:#a6e22e>y</span>  <span style=color:#75715e>//将y赋值给x
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#f92672>*</span><span style=color:#a6e22e>y</span> = <span style=color:#a6e22e>temp</span> <span style=color:#75715e>//将temp 赋值给y
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>temp</span>
+</span></span></code></pre></div><p>使用引用传递：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>200</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换前a：%d\n&#34;</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换前b：%d\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e>    &amp;a 指向a指针，a变量的地址
+</span></span></span><span style=display:flex><span><span style=color:#75715e>    &amp;b 指向b指针，b变量的地址
+</span></span></span><span style=display:flex><span><span style=color:#75715e>    */</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>swap</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>a</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换后a：%d\n&#34;</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;交换后b：%d\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h1 id=defer>defer</h1><p>defer被用于预定对一个函数的调用，可以把这类被defer语句调用的函数称为延迟函数。
+defer的作用：</p><ul><li>释放占用的资源</li><li>捕捉处理异常</li><li>输出日志
+如果一个函数中有多个defer语句，会以后进先出的顺序执行。</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Demo</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;2&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;3&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;4&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;5&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Demo</span>()
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h5 id=recover错误拦截>recover错误拦截</h5></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><a href=#一个简单的mian函数>一个简单的mian函数</a></li><li><a href=#变量的声明>变量的声明</a><ul><li><ul><li></li></ul></li></ul></li><li><a href=#常量>常量</a></li><li><a href=#函数>函数</a><ul><li><ul><li></li></ul></li></ul></li><li><a href=#defer>defer</a><ul><li><ul><li></li></ul></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>

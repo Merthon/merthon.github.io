@@ -1,4 +1,52 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 14 Mar 2025 00:31:47 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>分布式微博爬虫+API</title><link>https://merthon.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BE%AE%E5%8D%9A%E7%88%AC%E8%99%AB+api/</link><pubDate>Fri, 14 Mar 2025 00:31:47 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BE%AE%E5%8D%9A%E7%88%AC%E8%99%AB+api/</guid><description>&lt;h1 id="前言">前言&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 21 Jul 2025 17:07:37 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Go语法复习1</title><link>https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/</link><pubDate>Mon, 21 Jul 2025 17:07:37 +0800</pubDate><guid>https://merthon.github.io/posts/go%E8%AF%AD%E6%B3%95%E5%A4%8D%E4%B9%A01/</guid><description>&lt;h1 id="一个简单的mian函数">一个简单的mian函数&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Hello World&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>go run: 是指直接编译go语言并执行应用程序，一步完成
+go build: 先编译，后执行&lt;/p>
+&lt;h1 id="变量的声明">变量的声明&lt;/h1>
+&lt;h4 id="单个变量">单个变量&lt;/h4>
+&lt;p>声明变量一般是使用关键字var&lt;/p>
+&lt;ul>
+&lt;li>第一种： 制定变量类型，声明后若不赋值，使用默认值0
+var v_name v_type
+v_name = value&lt;/li>
+&lt;li>第二种：根据值自行判定来变量类型
+var v_name = value&lt;/li>
+&lt;li>第三种：省去var，使用 := 来
+v_name := value&lt;/li>
+&lt;/ul>
+&lt;h5 id="多变量声明">多变量声明&lt;/h5>
+&lt;p>示例代码：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span>, &lt;span style="color:#a6e22e">y&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> ( &lt;span style="color:#75715e">//这种分解的写法，一般用于声明全局变量
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">b&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>, &lt;span style="color:#a6e22e">d&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> = &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span> = &lt;span style="color:#ae81ff">123&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;merthon&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 不带声明格式的只能在函数体里面实现
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">mian&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">g&lt;/span>, &lt;span style="color:#a6e22e">h&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">123&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;这种在func函数体里实现&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">a&lt;/span>, &lt;span style="color:#a6e22e">b&lt;/span>, &lt;span style="color:#a6e22e">c&lt;/span>, &lt;span style="color:#a6e22e">d&lt;/span>, &lt;span style="color:#a6e22e">e&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">g&lt;/span>, &lt;span style="color:#a6e22e">h&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span> &lt;span style="color:#75715e">//7的赋值被废弃，_不具备读特性
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>) &lt;span style="color:#75715e">//5
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="常量">常量&lt;/h1>
+&lt;p>常量是一个简单值的标识符，在程序运行时，不会被修改的值
+常量的数据类型只可以是布尔型，数字型，和字符串型
+定义格式：&lt;/p></description></item><item><title>Python服务器探针</title><link>https://merthon.github.io/posts/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/</link><pubDate>Thu, 17 Jul 2025 15:27:34 +0800</pubDate><guid>https://merthon.github.io/posts/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/</guid><description/></item><item><title>分布式微博爬虫+API</title><link>https://merthon.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BE%AE%E5%8D%9A%E7%88%AC%E8%99%AB+api/</link><pubDate>Fri, 14 Mar 2025 00:31:47 +0800</pubDate><guid>https://merthon.github.io/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BE%AE%E5%8D%9A%E7%88%AC%E8%99%AB+api/</guid><description>&lt;h1 id="前言">前言&lt;/h1>
 &lt;p>WeiboScraper是采用Python后端开发和爬虫能力设计的一个项目，目标是爬取微博公开的话题数据，存下来做简单分析，再通过API提供查询功能。&lt;/p>
 &lt;h1 id="需求分析">需求分析&lt;/h1>
 &lt;h2 id="目标需求">目标需求&lt;/h2>
