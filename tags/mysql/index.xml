@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mysql on Merthon</title><link>http://localhost:1313/tags/mysql/</link><description>Recent content in Mysql on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL数据库安装</title><link>http://localhost:1313/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Sun, 05 Jan 2025 13:55:51 +0800</pubDate><guid>http://localhost:1313/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="1安装">1.安装&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mysql on Merthon</title><link>https://merthon.github.io/tags/mysql/</link><description>Recent content in Mysql on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL数据库安装</title><link>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Sun, 05 Jan 2025 13:55:51 +0800</pubDate><guid>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="1安装">1.安装&lt;/h1>
 &lt;p>首先，确保你在 OrbStack 上安装了 Docker，然后拉取 MySQL 镜像。&lt;/p>
 &lt;ol>
 &lt;li>打开 OrbStack，进入终端。&lt;/li>
@@ -23,7 +23,7 @@
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>abcd1234efgh mysql:latest &lt;span style="color:#e6db74">&amp;#34;docker-entrypoint.s…&amp;#34;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> seconds ago Up &lt;span style="color:#ae81ff">3&lt;/span> seconds 0.0.0.0:3306-&amp;gt;3306/tcp mysql-container
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="4进入-mysql-容器并连接数据库">4.进入 MySQL 容器并连接数据库&lt;/h1>
-&lt;p>接下来，进入容器并连接 MySQL。&lt;/p></description></item><item><title>JDBC_02</title><link>http://localhost:1313/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+&lt;p>接下来，进入容器并连接 MySQL。&lt;/p></description></item><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
 &lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
 &lt;p>在 src 下创建 config.properties 文件&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>
@@ -130,7 +130,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-sql-注入攻击">2. SQL 注入攻击&lt;/h4>
 &lt;h5 id="21-什么是-sql-注入攻击">2.1 什么是 sql 注入攻击&lt;/h5>
-&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>http://localhost:1313/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
+&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>https://merthon.github.io/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
 &lt;h4 id="1-概念和本质">1. 概念和本质&lt;/h4>
 &lt;p>JDBC（Java DataBase Connectivity）java 数据库连接，是一种用于执行 SQL 语句的 Java API，可以为多种关系型数据库提供统一访问，由一组用 Java 语言编写的类和接口组成的。本质上是 java 官方提供的一套规范（接口），用于快速实现不同关系型的数据库的连接。&lt;/p>
 &lt;h4 id="2-功能类详解">2. 功能类详解&lt;/h4>

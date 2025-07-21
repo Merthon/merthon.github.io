@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Merthon</title><link>http://localhost:1313/tags/docker/</link><description>Recent content in Docker on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL数据库安装</title><link>http://localhost:1313/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Sun, 05 Jan 2025 13:55:51 +0800</pubDate><guid>http://localhost:1313/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="1安装">1.安装&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Merthon</title><link>https://merthon.github.io/tags/docker/</link><description>Recent content in Docker on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL数据库安装</title><link>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Sun, 05 Jan 2025 13:55:51 +0800</pubDate><guid>https://merthon.github.io/posts/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="1安装">1.安装&lt;/h1>
 &lt;p>首先，确保你在 OrbStack 上安装了 Docker，然后拉取 MySQL 镜像。&lt;/p>
 &lt;ol>
 &lt;li>打开 OrbStack，进入终端。&lt;/li>
@@ -23,7 +23,7 @@
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>abcd1234efgh mysql:latest &lt;span style="color:#e6db74">&amp;#34;docker-entrypoint.s…&amp;#34;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> seconds ago Up &lt;span style="color:#ae81ff">3&lt;/span> seconds 0.0.0.0:3306-&amp;gt;3306/tcp mysql-container
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="4进入-mysql-容器并连接数据库">4.进入 MySQL 容器并连接数据库&lt;/h1>
-&lt;p>接下来，进入容器并连接 MySQL。&lt;/p></description></item><item><title>RabbitMQ安装</title><link>http://localhost:1313/posts/rabbitmq%E5%AE%89%E8%A3%85/</link><pubDate>Sat, 04 Jan 2025 11:01:01 +0800</pubDate><guid>http://localhost:1313/posts/rabbitmq%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-rabbitmq-镜像">拉取 RabbitMQ 镜像&lt;/h1>
+&lt;p>接下来，进入容器并连接 MySQL。&lt;/p></description></item><item><title>RabbitMQ安装</title><link>https://merthon.github.io/posts/rabbitmq%E5%AE%89%E8%A3%85/</link><pubDate>Sat, 04 Jan 2025 11:01:01 +0800</pubDate><guid>https://merthon.github.io/posts/rabbitmq%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-rabbitmq-镜像">拉取 RabbitMQ 镜像&lt;/h1>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull rabbitmq:management
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>rabbitmq:management&lt;/code> 镜像包含 RabbitMQ 和一个基于浏览器的管理界面，推荐使用。&lt;/p>
 &lt;h1 id="启动-rabbitmq-容器">启动 RabbitMQ 容器&lt;/h1>
@@ -52,7 +52,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker exec rabbitmq rabbitmqctl set_user_tags &amp;lt;username&amp;gt; administrator
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker exec rabbitmq rabbitmqctl set_permissions -p / &amp;lt;username&amp;gt; &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.*&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="注意事项">注意事项&lt;/h1>
-&lt;p>&lt;strong>删除默认用户&lt;/strong>&lt;/p></description></item><item><title>Redis安装</title><link>http://localhost:1313/posts/redis%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 14:11:27 +0800</pubDate><guid>http://localhost:1313/posts/redis%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="安装">安装&lt;/h1>
+&lt;p>&lt;strong>删除默认用户&lt;/strong>&lt;/p></description></item><item><title>Redis安装</title><link>https://merthon.github.io/posts/redis%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 14:11:27 +0800</pubDate><guid>https://merthon.github.io/posts/redis%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="安装">安装&lt;/h1>
 &lt;p>运行以下命令从 Docker Hub 获取最新的 Redis 镜像：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker pull redis:latest
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="创建-redis-容器">创建 Redis 容器&lt;/h1>
@@ -76,7 +76,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="进入-redis-容器使用-redis-cli">进入 Redis 容器使用 &lt;code>redis-cli&lt;/code>&lt;/h2>
 &lt;p>Redis 容器自带 &lt;code>redis-cli&lt;/code> 工具，你可以直接进入容器运行：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>docker exec -it redis sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在容器内，运行以下命令：&lt;/p></description></item><item><title>MongoDB数据库安装</title><link>http://localhost:1313/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 01:55:51 +0800</pubDate><guid>http://localhost:1313/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-mongodb-镜像">拉取 MongoDB 镜像&lt;/h1>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在容器内，运行以下命令：&lt;/p></description></item><item><title>MongoDB数据库安装</title><link>https://merthon.github.io/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</link><pubDate>Fri, 03 Jan 2025 01:55:51 +0800</pubDate><guid>https://merthon.github.io/posts/mongodb%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E8%A3%85/</guid><description>&lt;h1 id="拉取-mongodb-镜像">拉取 MongoDB 镜像&lt;/h1>
 &lt;ol>
 &lt;li>打开终端，拉取官方 MongoDB Docker 镜像：&lt;/li>
 &lt;/ol>
