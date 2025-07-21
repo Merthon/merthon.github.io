@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on Merthon</title><link>https://merthon.github.io/tags/java/</link><description>Recent content in Java on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 27 Jul 2022 20:52:38 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on Merthon</title><link>http://localhost:1313/tags/java/</link><description>Recent content in Java on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 27 Jul 2022 20:52:38 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>JDBC_02</title><link>http://localhost:1313/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
 &lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
 &lt;p>在 src 下创建 config.properties 文件&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>
@@ -105,7 +105,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-sql-注入攻击">2. SQL 注入攻击&lt;/h4>
 &lt;h5 id="21-什么是-sql-注入攻击">2.1 什么是 sql 注入攻击&lt;/h5>
-&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>https://merthon.github.io/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
+&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>http://localhost:1313/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
 &lt;h4 id="1-概念和本质">1. 概念和本质&lt;/h4>
 &lt;p>JDBC（Java DataBase Connectivity）java 数据库连接，是一种用于执行 SQL 语句的 Java API，可以为多种关系型数据库提供统一访问，由一组用 Java 语言编写的类和接口组成的。本质上是 java 官方提供的一套规范（接口），用于快速实现不同关系型的数据库的连接。&lt;/p>
 &lt;h4 id="2-功能类详解">2. 功能类详解&lt;/h4>
@@ -153,7 +153,7 @@
 &lt;/ul>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Connection con &lt;span style="color:#f92672">=&lt;/span> DriverManager.&lt;span style="color:#a6e22e">getConnection&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;jdbc:mysql://localhost:3306/db2&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="22-connection">2.2 Connection&lt;/h5>
-&lt;p>Connection：数据库连接对象&lt;/p></description></item><item><title>Java高级：反射（Reflect）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
+&lt;p>Connection：数据库连接对象&lt;/p></description></item><item><title>Java高级：反射（Reflect）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
 &lt;h3 id="1-反射的概述">1. 反射的概述&lt;/h3>
 &lt;p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
 对于任意一个对象，都能够调用它的任意属性和方法；
@@ -340,11 +340,11 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5反射获取成员变量">5.反射获取成员变量&lt;/h3>
 &lt;h4 id="51-class-类获取成员变量对象的方法">5.1 Class 类获取成员变量对象的方法&lt;/h4>
-&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
+&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
 &lt;p>类加载器就是负责将.class 文件（实际存储到硬盘上的一些理文件）加载到内存中&lt;/p>
 &lt;p>关于类加载时机，用到就加载，不用就不加载&lt;/p>
 &lt;h3 id="2类加载器的过程">2.类加载器的过程&lt;/h3>
-&lt;p>&lt;img src="https://merthon.github.io/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
+&lt;p>&lt;img src="http://localhost:1313/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
 &lt;!-- raw HTML omitted -->
 &lt;h5 id="加载">加载：&lt;/h5>
 &lt;ul>

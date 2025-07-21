@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java高级 on Merthon</title><link>https://merthon.github.io/tags/java%E9%AB%98%E7%BA%A7/</link><description>Recent content in Java高级 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 08 Jul 2022 19:28:51 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/java%E9%AB%98%E7%BA%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>Java高级：反射（Reflect）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java高级 on Merthon</title><link>http://localhost:1313/tags/java%E9%AB%98%E7%BA%A7/</link><description>Recent content in Java高级 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 08 Jul 2022 19:28:51 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/java%E9%AB%98%E7%BA%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>Java高级：反射（Reflect）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
 &lt;h3 id="1-反射的概述">1. 反射的概述&lt;/h3>
 &lt;p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
 对于任意一个对象，都能够调用它的任意属性和方法；
@@ -185,11 +185,11 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5反射获取成员变量">5.反射获取成员变量&lt;/h3>
 &lt;h4 id="51-class-类获取成员变量对象的方法">5.1 Class 类获取成员变量对象的方法&lt;/h4>
-&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
+&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
 &lt;p>类加载器就是负责将.class 文件（实际存储到硬盘上的一些理文件）加载到内存中&lt;/p>
 &lt;p>关于类加载时机，用到就加载，不用就不加载&lt;/p>
 &lt;h3 id="2类加载器的过程">2.类加载器的过程&lt;/h3>
-&lt;p>&lt;img src="https://merthon.github.io/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
+&lt;p>&lt;img src="http://localhost:1313/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
 &lt;!-- raw HTML omitted -->
 &lt;h5 id="加载">加载：&lt;/h5>
 &lt;ul>
