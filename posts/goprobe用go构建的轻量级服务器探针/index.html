@@ -1,0 +1,190 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{--accent-color:#FF4D4D;--font-size:17.5px}</style><title>GoProbe: 用Go构建的轻量级服务器探针</title>
+<meta name=description content="GoProbe：用 Go 构建的轻量级服务器探针 项目地址：https://github.com/Merthon/Go-projects 技术栈：Go 1.23 + HTML 模板继承 + 标准库 功能：系统信息收集 / 内存磁盘监控 / 客户端信息展示 介绍 GoProbe 是一个使用 Go 编写的简易服务器探针，目 …"><meta name=keywords content='blog,hugo,Go,练习项目'><meta property="og:url" content="https://merthon.github.io/posts/goprobe%E7%94%A8go%E6%9E%84%E5%BB%BA%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/"><meta property="og:type" content="website"><meta property="og:title" content="GoProbe: 用Go构建的轻量级服务器探针"><meta property="og:description" content="GoProbe：用 Go 构建的轻量级服务器探针 项目地址：https://github.com/Merthon/Go-projects 技术栈：Go 1.23 + HTML 模板继承 + 标准库 功能：系统信息收集 / 内存磁盘监控 / 客户端信息展示 介绍 GoProbe 是一个使用 Go 编写的简易服务器探针，目 …"><meta property="og:image" content="https://merthon.github.io/images/cat.webp"><meta property="og:image:secure_url" content="https://merthon.github.io/images/cat.webp"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="GoProbe: 用Go构建的轻量级服务器探针"><meta name=twitter:description content="GoProbe：用 Go 构建的轻量级服务器探针 项目地址：https://github.com/Merthon/Go-projects 技术栈：Go 1.23 + HTML 模板继承 + 标准库 功能：系统信息收集 / 内存磁盘监控 / 客户端信息展示 介绍 GoProbe 是一个使用 Go 编写的简易服务器探针，目 …"><meta property="twitter:domain" content="https://merthon.github.io/posts/goprobe%E7%94%A8go%E6%9E%84%E5%BB%BA%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/"><meta property="twitter:url" content="https://merthon.github.io/posts/goprobe%E7%94%A8go%E6%9E%84%E5%BB%BA%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/"><meta name=twitter:image content="https://merthon.github.io/images/cat.webp"><link rel=canonical href=https://merthon.github.io/posts/goprobe%E7%94%A8go%E6%9E%84%E5%BB%BA%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A2%E9%92%88/><link rel=stylesheet type=text/css href=/css/normalize.min.css media=print><link rel=stylesheet type=text/css href=/css/main.min.css><link id=dark-theme rel=stylesheet href=/css/dark.min.css><script src=/js/bundle.min.275fedb6f364c8865658bae576d82b514ace973f6a13ed63503a85b20c697453.js integrity="sha256-J1/ttvNkyIZWWLrldtgrUUrOlz9qE+1jUDqFsgxpdFM="></script></head><body><script>setThemeByUserPref()</script><header class=header><nav class=header-nav><div class=avatar><a href=https://merthon.github.io/><img src=/images/cat.webp alt=cat></a></div><div class=nav-title><a class=nav-brand href=https://merthon.github.io/>Merthon</a></div><div class=nav-links><div class=nav-link><a href=https://merthon.github.io/ aria-label><span data-feather=home></span> Home</a></div><div class=nav-link><a href=https://merthon.github.io/posts/ aria-label><span data-feather=book></span> Posts</a></div><div class=nav-link><a href=https://merthon.github.io/projects/ aria-label><span data-feather=code></span> Projects</a></div><div class=nav-link><a href=https://merthon.github.io/tags/ aria-label><span data-feather=tag></span> Tags</a></div><div class=nav-link><a href=https://github.com/Merthon aria-label=github><span data-feather=github></span></a></div><span class=nav-icons-divider></span><div class="nav-link dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a aria-hidden=true role=switch><span class=theme-toggle-icon data-feather=moon></span></a></div><div class=nav-link id=hamburger-menu-toggle><span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+<a aria-checked=false aria-labelledby=hamburger-menu-toggle id=hamburger-menu-toggle-target role=switch><span data-feather=menu></span></a></div><ul class="nav-hamburger-list visibility-hidden"><li class=nav-item><a href=https://merthon.github.io/><span data-feather=home></span> Home</a></li><li class=nav-item><a href=https://merthon.github.io/posts/><span data-feather=book></span> Posts</a></li><li class=nav-item><a href=https://merthon.github.io/projects/><span data-feather=code></span> Projects</a></li><li class=nav-item><a href=https://merthon.github.io/tags/><span data-feather=tag></span> Tags</a></li><li class=nav-item><a href=https://github.com/Merthon><span data-feather=github></span></a></li><li class="nav-item dark-theme-toggle"><span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+<a role=switch><span class=theme-toggle-icon data-feather=moon></span></a></li></ul></div></nav></header><main id=content><div class="post container"><div class=post-header-section><h1>GoProbe: 用Go构建的轻量级服务器探针</h1><small role=doc-subtitle></small><p class=post-date>July 28, 2025</p><ul class=post-tags><li class=post-tag><a href=https://merthon.github.io/tags/go>Go</a></li><li class=post-tag><a href=https://merthon.github.io/tags/%E7%BB%83%E4%B9%A0%E9%A1%B9%E7%9B%AE>练习项目</a></li></ul></div><div class=post-content><h1 id=goprobe用-go-构建的轻量级服务器探针>GoProbe：用 Go 构建的轻量级服务器探针</h1><ul><li>项目地址：https://github.com/Merthon/Go-projects</li><li>技术栈：Go 1.23 + HTML 模板继承 + 标准库</li><li>功能：系统信息收集 / 内存磁盘监控 / 客户端信息展示</li></ul><h1 id=介绍>介绍</h1><p>GoProbe 是一个使用 Go 编写的简易服务器探针，目标是通过 Web 界面实时展示服务器状态，包括系统信息、内存使用、磁盘使用和运行时信息等，适合作为个人服务器状态面板或学习 Golang 项目的结构化开发入门。</p><h1 id=项目结构>项目结构</h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>goprobe/
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> go.mod
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> main.go
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> probe/
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> system.go     <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>收集操作系统、</span>CPU<span style=color:#960050;background-color:#1e0010>、主机信息</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> memory.go     <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>收集内存使用情况</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> disk.go       <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>收集磁盘容量和使用率</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>├──</span> templates/
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>├──</span> <span style=color:#66d9ef>base</span>.html     <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>公共布局模板</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>│</span>   <span style=color:#960050;background-color:#1e0010>└──</span> index.html    <span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>内容模板</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>└──</span> <span style=color:#66d9ef>static</span>/
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>└──</span> (CSS <span style=color:#960050;background-color:#1e0010>或图片资源</span>)
+</span></span></code></pre></div><h1 id=功能实现>功能实现</h1><h2 id=系统信息收集probesystemgo>系统信息收集（probe/system.go）</h2><p>收集操作系统、架构、Go版本、主机名、CPU核心数、进程 PID 等运行环境信息。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>probe</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;runtime&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//SystemInfo 封装服务器基础信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>SystemInfo</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>OS</span> <span style=color:#66d9ef>string</span>  <span style=color:#75715e>//操作系统
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Arch</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//架构
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>GoVersion</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//Go版本
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>NumCPU</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//CPU核心数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Hostname</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//主机名
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>ProcessID</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//当前进程
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GetSystemInfo 获取系统信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>GetSystemInfo</span>() (<span style=color:#f92672>*</span><span style=color:#a6e22e>SystemInfo</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>hostname</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Hostname</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>info</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>SystemInfo</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>OS</span>:        <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOOS</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Arch</span>:      <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOARCH</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>GoVersion</span>: <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>Version</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>NumCPU</span>:    <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>NumCPU</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Hostname</span>:  <span style=color:#a6e22e>hostname</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ProcessID</span>: <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Getpid</span>(),
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>info</span>, <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=内存使用监控probememorygo>内存使用监控（probe/memory.go）</h2><ul><li>当前分配内存</li><li>总共分配量</li><li>系统申请内存</li><li>GC 执行次数</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>probe</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;runtime&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//SystemInfo 封装服务器基础信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>SystemInfo</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>OS</span> <span style=color:#66d9ef>string</span>  <span style=color:#75715e>//操作系统
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Arch</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//架构
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>GoVersion</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//Go版本
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>NumCPU</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//CPU核心数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Hostname</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//主机名
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>ProcessID</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//当前进程
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GetSystemInfo 获取系统信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>GetSystemInfo</span>() (<span style=color:#f92672>*</span><span style=color:#a6e22e>SystemInfo</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>hostname</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Hostname</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>info</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>SystemInfo</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>OS</span>:        <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOOS</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Arch</span>:      <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOARCH</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>GoVersion</span>: <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>Version</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>NumCPU</span>:    <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>NumCPU</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Hostname</span>:  <span style=color:#a6e22e>hostname</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ProcessID</span>: <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Getpid</span>(),
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>info</span>, <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=磁盘使用监控probediskgo>磁盘使用监控（probe/disk.go）</h2><ul><li>总容量 / 已使用 / 可用容量</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>probe</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;runtime&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//SystemInfo 封装服务器基础信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>SystemInfo</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>OS</span> <span style=color:#66d9ef>string</span>  <span style=color:#75715e>//操作系统
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Arch</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//架构
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>GoVersion</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//Go版本
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>NumCPU</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//CPU核心数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Hostname</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//主机名
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>ProcessID</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//当前进程
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GetSystemInfo 获取系统信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>GetSystemInfo</span>() (<span style=color:#f92672>*</span><span style=color:#a6e22e>SystemInfo</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>hostname</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Hostname</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>info</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>SystemInfo</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>OS</span>:        <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOOS</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Arch</span>:      <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOARCH</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>GoVersion</span>: <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>Version</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>NumCPU</span>:    <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>NumCPU</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Hostname</span>:  <span style=color:#a6e22e>hostname</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ProcessID</span>: <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Getpid</span>(),
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>info</span>, <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=路由管理routergo>路由管理：router.go</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>probe</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;runtime&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//SystemInfo 封装服务器基础信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>SystemInfo</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>OS</span> <span style=color:#66d9ef>string</span>  <span style=color:#75715e>//操作系统
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Arch</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//架构
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>GoVersion</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//Go版本
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>NumCPU</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//CPU核心数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Hostname</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//主机名
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>ProcessID</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//当前进程
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GetSystemInfo 获取系统信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>GetSystemInfo</span>() (<span style=color:#f92672>*</span><span style=color:#a6e22e>SystemInfo</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>hostname</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Hostname</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>info</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>SystemInfo</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>OS</span>:        <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOOS</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Arch</span>:      <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOARCH</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>GoVersion</span>: <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>Version</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>NumCPU</span>:    <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>NumCPU</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Hostname</span>:  <span style=color:#a6e22e>hostname</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ProcessID</span>: <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Getpid</span>(),
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>info</span>, <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=程序主入口maingo>程序主入口：main.go</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>probe</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;runtime&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>//SystemInfo 封装服务器基础信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>SystemInfo</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>OS</span> <span style=color:#66d9ef>string</span>  <span style=color:#75715e>//操作系统
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Arch</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//架构
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>GoVersion</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//Go版本
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>NumCPU</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//CPU核心数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>Hostname</span> <span style=color:#66d9ef>string</span> <span style=color:#75715e>//主机名
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>ProcessID</span> <span style=color:#66d9ef>int</span> <span style=color:#75715e>//当前进程
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// GetSystemInfo 获取系统信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>GetSystemInfo</span>() (<span style=color:#f92672>*</span><span style=color:#a6e22e>SystemInfo</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>hostname</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Hostname</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>info</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>SystemInfo</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>OS</span>:        <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOOS</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Arch</span>:      <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>GOARCH</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>GoVersion</span>: <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>Version</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>NumCPU</span>:    <span style=color:#a6e22e>runtime</span>.<span style=color:#a6e22e>NumCPU</span>(),
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Hostname</span>:  <span style=color:#a6e22e>hostname</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ProcessID</span>: <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Getpid</span>(),
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>info</span>, <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=启动方式>启动方式</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>go run main.go
+</span></span></code></pre></div></div><div class=prev-next></div><svg id="btt-button" class="arrow-logo" height="1em" viewBox="0 0 384 512" onclick="scrollToTop()" title="Go to top"><path d="M177 159.7l136 136c9.4 9.4 9.4 24.6.0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9.0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9.0L7 329.7c-9.4-9.4-9.4-24.6.0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"/></svg>
+<script>let backToTopButton=document.getElementById("btt-button");window.onscroll=function(){scrollFunction()};function scrollFunction(){document.body.scrollTop>20||document.documentElement.scrollTop>20?backToTopButton.style.display="block":backToTopButton.style.display="none"}function scrollToTop(){window.scrollTo(0,0)}</script></div><aside class=post-toc><nav id=toc><nav id=TableOfContents><ul><li><a href=#goprobe用-go-构建的轻量级服务器探针>GoProbe：用 Go 构建的轻量级服务器探针</a></li><li><a href=#介绍>介绍</a></li><li><a href=#项目结构>项目结构</a></li><li><a href=#功能实现>功能实现</a><ul><li><a href=#系统信息收集probesystemgo>系统信息收集（probe/system.go）</a></li><li><a href=#内存使用监控probememorygo>内存使用监控（probe/memory.go）</a></li><li><a href=#磁盘使用监控probediskgo>磁盘使用监控（probe/disk.go）</a></li><li><a href=#路由管理routergo>路由管理：router.go</a></li><li><a href=#程序主入口maingo>程序主入口：main.go</a></li><li><a href=#启动方式>启动方式</a></li></ul></li></ul></nav></nav></aside></main><footer class=footer><span>&copy; 2025 Merthon</span>
+<span>Made with &#10084;&#65039; Hugo</span></footer></body></html>
