@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GoWeb on Merthon</title><link>http://localhost:1313/tags/goweb/</link><description>Recent content in GoWeb on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 28 Jul 2025 23:11:53 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/goweb/index.xml" rel="self" type="application/rss+xml"/><item><title>GoWeb开发：Gin框架笔记</title><link>http://localhost:1313/posts/goweb%E5%BC%80%E5%8F%91gin%E6%A1%86%E6%9E%B6%E7%AC%94%E8%AE%B0/</link><pubDate>Mon, 28 Jul 2025 23:11:53 +0800</pubDate><guid>http://localhost:1313/posts/goweb%E5%BC%80%E5%8F%91gin%E6%A1%86%E6%9E%B6%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="gin框架入门">Gin框架入门&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>作者：&lt;/strong> Merthon Chen 2025-07-28
+这是一篇系统的 Gin 框架入门教程，以项目驱动的方式，涵盖环境搭建、核心概念、路由、参数绑定、中间件、模板渲染等内容。&lt;/p>
+&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="环境搭建与模块初始化">环境搭建与模块初始化&lt;/h2>
+&lt;h3 id="创建项目目录并初始化模块">创建项目目录并初始化模块&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir myginapp &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> cd myginapp
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 使用你的 GitHub 地址或自定义模块名&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go mod init github.com/merthon/myginapp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="安装-gin">安装 Gin&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>go get github.com/gin-gonic/gin@latest
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>go.mod&lt;/code> 与 &lt;code>go.sum&lt;/code> 会自动更新。&lt;/p>
+&lt;h3 id="快速示例">快速示例&lt;/h3>
+&lt;p>在 &lt;code>main.go&lt;/code> 中：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/gin-gonic/gin&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">r&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">gin&lt;/span>.&lt;span style="color:#a6e22e">Default&lt;/span>() &lt;span style="color:#75715e">// 默认包含 Logger 和 Recovery 中间件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">GET&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;/ping&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">c&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">gin&lt;/span>.&lt;span style="color:#a6e22e">Context&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">JSON&lt;/span>(&lt;span style="color:#ae81ff">200&lt;/span>, &lt;span style="color:#a6e22e">gin&lt;/span>.&lt;span style="color:#a6e22e">H&lt;/span>{&lt;span style="color:#e6db74">&amp;#34;message&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;pong&amp;#34;&lt;/span>})
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">r&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>() &lt;span style="color:#75715e">// 监听 :8080
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>go run main.go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl http://localhost:8080/ping
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 返回 {&amp;#34;message&amp;#34;:&amp;#34;pong&amp;#34;}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Gin.Default()：创建引擎并注册了日志和 panic 恢复中间件。&lt;/p>
+&lt;hr>
+&lt;h2 id="项目结构与核心概念">项目结构与核心概念&lt;/h2>
+&lt;h3 id="目录结构">目录结构&lt;/h3>
+&lt;p>我们先在 &lt;code>myginapp&lt;/code> 目录下创建以下文件夹和文件，形成一个清晰的分层：&lt;/p></description></item></channel></rss>

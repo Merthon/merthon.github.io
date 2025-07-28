@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>笔记 on Merthon</title><link>https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/</link><description>Recent content in 笔记 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://merthon.github.io/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>Python笔记03</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</link><pubDate>Sat, 28 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B003/</guid><description>&lt;h1 id="模块和包">模块和包&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>笔记 on Merthon</title><link>http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/</link><description>Recent content in 笔记 on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>Python笔记03</title><link>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B003/</link><pubDate>Sat, 28 Dec 2024 09:03:44 +0800</pubDate><guid>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B003/</guid><description>&lt;h1 id="模块和包">模块和包&lt;/h1>
 &lt;h2 id="什么是模块模块化编程">什么是模块？模块化编程&lt;/h2>
 &lt;p>python提供了强大的模块支持，主要体现在，不仅 Python 标准库中包含了大量的模块（称为标准模块），还有大量的第三方模块。
 模块就是 Python 程序。换句话说，任何 Python 程序都可以作为模块。
@@ -26,7 +26,7 @@ foo()
 &lt;/ol>
 &lt;h2 id="包">包&lt;/h2>
 &lt;h3 id="创建包">创建包&lt;/h3>
-&lt;p>包其实就是文件夹，更确切的说，是一个包含“&lt;strong>init&lt;/strong>.py”文件的文件夹。因此，如果我们想手动创建一个包，只需进行以下 2 步操作：&lt;/p></description></item><item><title>Python笔记02</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</link><pubDate>Fri, 27 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B002/</guid><description>&lt;h1 id="流程控制">流程控制&lt;/h1>
+&lt;p>包其实就是文件夹，更确切的说，是一个包含“&lt;strong>init&lt;/strong>.py”文件的文件夹。因此，如果我们想手动创建一个包，只需进行以下 2 步操作：&lt;/p></description></item><item><title>Python笔记02</title><link>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B002/</link><pubDate>Fri, 27 Dec 2024 09:03:44 +0800</pubDate><guid>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B002/</guid><description>&lt;h1 id="流程控制">流程控制&lt;/h1>
 &lt;h2 id="if-else">if-else&lt;/h2>
 &lt;p>Python 中的 if else 语句可以细分为三种形式，分别是 if 语句、if else 语句和 if elif else 语句
 对语法格式的说明：&lt;/p>
@@ -58,7 +58,7 @@ foo()
 for 循环的语法格式如下：&lt;br>
 for 迭代变量 in 字符串|列表|元组|字典|集合：&lt;br>
     代码块
-格式中，迭代变量用于存放从序列类型变量中读取出来的元素，所以一般不会在循环中对迭代变量手动赋值；代码块指的是具有相同缩进格式的多行代码（和 while 一样），由于和循环结构联用，因此代码块又称为循环体。&lt;/p></description></item><item><title>Python笔记01</title><link>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</link><pubDate>Thu, 26 Dec 2024 09:03:44 +0800</pubDate><guid>https://merthon.github.io/posts/python%E7%AC%94%E8%AE%B001/</guid><description>&lt;h1 id="基础知识">基础知识&lt;/h1>
+格式中，迭代变量用于存放从序列类型变量中读取出来的元素，所以一般不会在循环中对迭代变量手动赋值；代码块指的是具有相同缩进格式的多行代码（和 while 一样），由于和循环结构联用，因此代码块又称为循环体。&lt;/p></description></item><item><title>Python笔记01</title><link>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B001/</link><pubDate>Thu, 26 Dec 2024 09:03:44 +0800</pubDate><guid>http://localhost:1313/posts/python%E7%AC%94%E8%AE%B001/</guid><description>&lt;h1 id="基础知识">基础知识&lt;/h1>
 &lt;h2 id="变量">变量&lt;/h2>
 &lt;p>变量（Variable）可以看成一个小箱子，专门用来“盛装”程序中的数据。底层看，程序中的数据最终都要放到内存（内存条）中，变量其实就是这块内存的名字。
 和变量相对应的是常量（Constant），它们都是用来“盛装”数据的小箱子，不同的是：变量保存的数据可以被多次修改，而常量一旦保存某个数据之后就不能修改了。&lt;/p>
@@ -96,7 +96,7 @@ for 迭代变量 in 字符串|列表|元组|字典|集合：&lt;br>
 &lt;p>复数（Complex）是 python的内置类型，直接书写即可。换句话说，Python 语言本身就支持复数，而不依赖于标准库或者第三方库。&lt;br>
 复数由实部（real）和虚部（imag）构成，在 Python 中，复数的虚部以&lt;code>j&lt;/code>或者&lt;code>J&lt;/code>作为后缀，具体格式为：
 a + bj
-a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_02</title><link>https://merthon.github.io/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
+a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_02</title><link>http://localhost:1313/posts/jdbc_02/</link><pubDate>Wed, 27 Jul 2022 20:52:38 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_02/</guid><description>&lt;h4 id="1-jdbc-工具类的抽取">1. JDBC 工具类的抽取&lt;/h4>
 &lt;h5 id="11-配置文件">1.1 配置文件&lt;/h5>
 &lt;p>在 src 下创建 config.properties 文件&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-properties" data-lang="properties">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">driverClass&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">com.mysql.jdbc.Driver&lt;/span>
@@ -203,7 +203,7 @@ a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="2-sql-注入攻击">2. SQL 注入攻击&lt;/h4>
 &lt;h5 id="21-什么是-sql-注入攻击">2.1 什么是 sql 注入攻击&lt;/h5>
-&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>https://merthon.github.io/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>https://merthon.github.io/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
+&lt;p>就是利用 sql 语句的漏洞来进行对系统攻击，比如说在一个登录界面，输入一个错误的用户名或密码，也可以登录成功&lt;/p></description></item><item><title>JDBC_01</title><link>http://localhost:1313/posts/jdbc_01/</link><pubDate>Mon, 25 Jul 2022 11:21:33 +0800</pubDate><guid>http://localhost:1313/posts/jdbc_01/</guid><description>&lt;h2 id="jdbc_01">JDBC_01&lt;/h2>
 &lt;h4 id="1-概念和本质">1. 概念和本质&lt;/h4>
 &lt;p>JDBC（Java DataBase Connectivity）java 数据库连接，是一种用于执行 SQL 语句的 Java API，可以为多种关系型数据库提供统一访问，由一组用 Java 语言编写的类和接口组成的。本质上是 java 官方提供的一套规范（接口），用于快速实现不同关系型的数据库的连接。&lt;/p>
 &lt;h4 id="2-功能类详解">2. 功能类详解&lt;/h4>
@@ -251,7 +251,7 @@ a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_
 &lt;/ul>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>Connection con &lt;span style="color:#f92672">=&lt;/span> DriverManager.&lt;span style="color:#a6e22e">getConnection&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;jdbc:mysql://localhost:3306/db2&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span>);
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="22-connection">2.2 Connection&lt;/h5>
-&lt;p>Connection：数据库连接对象&lt;/p></description></item><item><title>Java高级：反射（Reflect）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
+&lt;p>Connection：数据库连接对象&lt;/p></description></item><item><title>Java高级：反射（Reflect）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</link><pubDate>Fri, 08 Jul 2022 19:28:51 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E5%8F%8D%E5%B0%84reflect%E7%AC%94%E8%AE%B0/</guid><description>&lt;h2 id="java-高级反射reflect笔记">Java 高级：反射(reflect)笔记&lt;/h2>
 &lt;h3 id="1-反射的概述">1. 反射的概述&lt;/h3>
 &lt;p>是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；
 对于任意一个对象，都能够调用它的任意属性和方法；
@@ -438,11 +438,11 @@ a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5反射获取成员变量">5.反射获取成员变量&lt;/h3>
 &lt;h4 id="51-class-类获取成员变量对象的方法">5.1 Class 类获取成员变量对象的方法&lt;/h4>
-&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>https://merthon.github.io/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
+&lt;p>方法分类&lt;/p></description></item><item><title>Java高级：类加载器（ClassLoader）笔记</title><link>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</link><pubDate>Wed, 06 Jul 2022 19:09:39 +0800</pubDate><guid>http://localhost:1313/posts/java%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%AC%94%E8%AE%B0/</guid><description>&lt;h3 id="1什么是类加载器">1.什么是类加载器&lt;/h3>
 &lt;p>类加载器就是负责将.class 文件（实际存储到硬盘上的一些理文件）加载到内存中&lt;/p>
 &lt;p>关于类加载时机，用到就加载，不用就不加载&lt;/p>
 &lt;h3 id="2类加载器的过程">2.类加载器的过程&lt;/h3>
-&lt;p>&lt;img src="https://merthon.github.io/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
+&lt;p>&lt;img src="http://localhost:1313/C:/Users/KevinWilliams/Desktop/blog/img/%E8%BF%87%E7%A8%8B.jpg" alt="类加载过程">&lt;/p>
 &lt;!-- raw HTML omitted -->
 &lt;h5 id="加载">加载：&lt;/h5>
 &lt;ul>
@@ -507,7 +507,7 @@ a 表示实部，b 表示虚部。&lt;/p></description></item><item><title>JDBC_
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> is.&lt;span style="color:#a6e22e">close&lt;/span>();
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Linux下dpkg，apt Get，yum和rpm命令的区别</title><link>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</link><pubDate>Wed, 13 Apr 2022 09:56:02 +0800</pubDate><guid>https://merthon.github.io/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</guid><description>&lt;h3 id="1linux-派系">1.Linux 派系&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Linux下dpkg，apt Get，yum和rpm命令的区别</title><link>http://localhost:1313/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</link><pubDate>Wed, 13 Apr 2022 09:56:02 +0800</pubDate><guid>http://localhost:1313/posts/linux%E4%B8%8Bdpkgapt-getyum%E5%92%8Crpm%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</guid><description>&lt;h3 id="1linux-派系">1.Linux 派系&lt;/h3>
 &lt;ul>
 &lt;li>RedHat 系列：RedHat，CentOS，Fedora 等&lt;/li>
 &lt;li>Debian 系列：Debian，Ubuntu 等&lt;/li>
