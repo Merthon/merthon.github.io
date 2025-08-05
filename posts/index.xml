@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Merthon</title><link>https://merthon.github.io/posts/</link><description>Recent content in Posts on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 05 Aug 2025 12:08:31 +0800</lastBuildDate><atom:link href="https://merthon.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>网站技术分析</title><link>https://merthon.github.io/posts/%E7%BD%91%E7%AB%99%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/</link><pubDate>Tue, 05 Aug 2025 12:08:31 +0800</pubDate><guid>https://merthon.github.io/posts/%E7%BD%91%E7%AB%99%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/</guid><description>&lt;p>使用Python爬取网站信息，主要是查看网站使用了那些技术栈，用到requests，bs4。效果就是将爬取下来的数据放到SQLite（此举是进行缓存，比如之前搜索过的会直接出现），然后在以表格的格式存取数据，方便查阅。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-Python" data-lang="Python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-Python" data-lang="Python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">from&lt;/span> genericpath &lt;span style="color:#f92672">import&lt;/span> exists
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> requests
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> json
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> re
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> sys
@@ -12,15 +13,15 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> argparse
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">TechDetectorWithCache&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> __init__(self, cache_file&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;tech_cache.db&amp;#39;&lt;/span>, cache_hours&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">24&lt;/span>):
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> __init__(self, cache_file&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;web_info.db&amp;#39;&lt;/span>, cache_hours&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">24&lt;/span>):
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> self&lt;span style="color:#f92672">.&lt;/span>headers &lt;span style="color:#f92672">=&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;User-Agent&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;User-Agent&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> self&lt;span style="color:#f92672">.&lt;/span>cache_file &lt;span style="color:#f92672">=&lt;/span> cache_file
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> self&lt;span style="color:#f92672">.&lt;/span>cache_hours &lt;span style="color:#f92672">=&lt;/span> cache_hours
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> self&lt;span style="color:#f92672">.&lt;/span>init_cache()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 检测规则（保持原有规则不变）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 检测规则&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> self&lt;span style="color:#f92672">.&lt;/span>rules &lt;span style="color:#f92672">=&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># JavaScript 框架/库&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;JavaScript 框架/库&amp;#39;&lt;/span>: {
@@ -258,7 +259,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn &lt;span style="color:#f92672">=&lt;/span> sqlite3&lt;span style="color:#f92672">.&lt;/span>connect(self&lt;span style="color:#f92672">.&lt;/span>cache_file)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> conn&lt;span style="color:#f92672">.&lt;/span>cursor()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&amp;#39;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS tech_cache (
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS web_info (
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> url TEXT PRIMARY KEY,
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> data TEXT,
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> timestamp TEXT
@@ -271,7 +272,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;从缓存获取数据&amp;#34;&amp;#34;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn &lt;span style="color:#f92672">=&lt;/span> sqlite3&lt;span style="color:#f92672">.&lt;/span>connect(self&lt;span style="color:#f92672">.&lt;/span>cache_file)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> conn&lt;span style="color:#f92672">.&lt;/span>cursor()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;SELECT data, timestamp FROM tech_cache WHERE url = ?&amp;#39;&lt;/span>, (url,))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;SELECT data, timestamp FROM web_info WHERE url = ?&amp;#39;&lt;/span>, (url,))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> result &lt;span style="color:#f92672">=&lt;/span> cursor&lt;span style="color:#f92672">.&lt;/span>fetchone()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn&lt;span style="color:#f92672">.&lt;/span>close()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
@@ -287,7 +288,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn &lt;span style="color:#f92672">=&lt;/span> sqlite3&lt;span style="color:#f92672">.&lt;/span>connect(self&lt;span style="color:#f92672">.&lt;/span>cache_file)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> conn&lt;span style="color:#f92672">.&lt;/span>cursor()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&amp;#39;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> INSERT OR REPLACE INTO tech_cache (url, data, timestamp)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> INSERT OR REPLACE INTO web_info (url, data, timestamp)
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> VALUES (?, ?, ?)
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &amp;#39;&amp;#39;&amp;#39;&lt;/span>, (url, json&lt;span style="color:#f92672">.&lt;/span>dumps(data), datetime&lt;span style="color:#f92672">.&lt;/span>now()&lt;span style="color:#f92672">.&lt;/span>isoformat()))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn&lt;span style="color:#f92672">.&lt;/span>commit()
@@ -394,41 +395,57 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">False&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">save_to_csv&lt;/span>(self, results, filename&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">None&lt;/span>):
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;保存结果到CSV文件&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;保存结果到CSV文件，追加新数据并保留自定义列&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 使用固定文件名，除非通过 --output 指定&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">not&lt;/span> filename:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> timestamp &lt;span style="color:#f92672">=&lt;/span> datetime&lt;span style="color:#f92672">.&lt;/span>now()&lt;span style="color:#f92672">.&lt;/span>strftime(&lt;span style="color:#e6db74">&amp;#39;%Y%m&lt;/span>&lt;span style="color:#e6db74">%d&lt;/span>&lt;span style="color:#e6db74">_%H%M%S&amp;#39;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> filename &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#39;tech_detection_&lt;/span>&lt;span style="color:#e6db74">{&lt;/span>timestamp&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">.csv&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> filename &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;tech_detection.csv&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 定义CSV列&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fieldnames &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;状态&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;JavaScript框架/库&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;CSS框架&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;UI组件库&amp;#39;&lt;/span>, 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 核心字段&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> core_fieldnames &lt;span style="color:#f92672">=&lt;/span> [&lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;状态&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;JavaScript框架/库&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;CSS框架&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;UI组件库&amp;#39;&lt;/span>, 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;CMS&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;后端技术&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;服务器&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;分析工具&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;其他工具&amp;#39;&lt;/span>, 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;检测时间&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;缓存状态&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;错误信息&amp;#39;&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(filename, &lt;span style="color:#e6db74">&amp;#39;w&amp;#39;&lt;/span>, newline&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>, encoding&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">as&lt;/span> csvfile:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer &lt;span style="color:#f92672">=&lt;/span> csv&lt;span style="color:#f92672">.&lt;/span>DictWriter(csvfile, fieldnames&lt;span style="color:#f92672">=&lt;/span>fieldnames)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 检查文件是否存在并获取现有字段和数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> existing_urls &lt;span style="color:#f92672">=&lt;/span> set()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> existing_data &lt;span style="color:#f92672">=&lt;/span> []
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> all_fieldnames &lt;span style="color:#f92672">=&lt;/span> core_fieldnames&lt;span style="color:#f92672">.&lt;/span>copy() &lt;span style="color:#75715e"># 默认使用核心字段&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> file_exists &lt;span style="color:#f92672">=&lt;/span> os&lt;span style="color:#f92672">.&lt;/span>path&lt;span style="color:#f92672">.&lt;/span>exists(filename)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> file_exists:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(filename, &lt;span style="color:#e6db74">&amp;#39;r&amp;#39;&lt;/span>, encoding&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">as&lt;/span> csvfile:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> reader &lt;span style="color:#f92672">=&lt;/span> csv&lt;span style="color:#f92672">.&lt;/span>DictReader(csvfile)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 获取现有字段（包括自定义列）&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> all_fieldnames &lt;span style="color:#f92672">=&lt;/span> reader&lt;span style="color:#f92672">.&lt;/span>fieldnames &lt;span style="color:#f92672">or&lt;/span> core_fieldnames
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 确保核心字段都在&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> field &lt;span style="color:#f92672">in&lt;/span> core_fieldnames:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> field &lt;span style="color:#f92672">not&lt;/span> &lt;span style="color:#f92672">in&lt;/span> all_fieldnames:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> all_fieldnames&lt;span style="color:#f92672">.&lt;/span>append(field)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 读取现有数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> existing_data &lt;span style="color:#f92672">=&lt;/span> list(reader)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> existing_urls &lt;span style="color:#f92672">=&lt;/span> {row[&lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span>] &lt;span style="color:#66d9ef">for&lt;/span> row &lt;span style="color:#f92672">in&lt;/span> existing_data &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span> &lt;span style="color:#f92672">in&lt;/span> row}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">except&lt;/span> &lt;span style="color:#a6e22e">Exception&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> e:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;检查文件 &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>filename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74"> 时出错: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>e&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 如果文件损坏，保留核心字段继续写入&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 准备写入数据&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> new_results &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">with&lt;/span> open(filename, &lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> file_exists &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#e6db74">&amp;#39;w&amp;#39;&lt;/span>, newline&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>, encoding&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;utf-8&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">as&lt;/span> csvfile:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer &lt;span style="color:#f92672">=&lt;/span> csv&lt;span style="color:#f92672">.&lt;/span>DictWriter(csvfile, fieldnames&lt;span style="color:#f92672">=&lt;/span>all_fieldnames, extrasaction&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;ignore&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 如果文件不存在，写入表头&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">not&lt;/span> file_exists:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer&lt;span style="color:#f92672">.&lt;/span>writeheader()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 写入未重复的URL结果&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> result &lt;span style="color:#f92672">in&lt;/span> results:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> result[&lt;span style="color:#e6db74">&amp;#39;status&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> row &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> result[&lt;span style="color:#e6db74">&amp;#39;url&amp;#39;&lt;/span>] &lt;span style="color:#f92672">in&lt;/span> existing_urls:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;URL &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>result[&lt;span style="color:#e6db74">&amp;#39;url&amp;#39;&lt;/span>]&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74"> 已存在，跳过保存。&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 构建新行，保留现有字段的默认值&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> row &lt;span style="color:#f92672">=&lt;/span> {field: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> field &lt;span style="color:#f92672">in&lt;/span> all_fieldnames} &lt;span style="color:#75715e"># 初始化所有字段为空&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> row&lt;span style="color:#f92672">.&lt;/span>update({
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span>: result[&lt;span style="color:#e6db74">&amp;#39;url&amp;#39;&lt;/span>],
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;状态&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;检测失败&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;JavaScript框架/库&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;CSS框架&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;UI组件库&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;CMS&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;后端技术&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;服务器&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;分析工具&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;其他工具&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;检测时间&amp;#39;&lt;/span>: result[&lt;span style="color:#e6db74">&amp;#39;timestamp&amp;#39;&lt;/span>],
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;缓存状态&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;缓存&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;from_cache&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#e6db74">&amp;#39;实时&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;错误信息&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> row &lt;span style="color:#f92672">=&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;URL&amp;#39;&lt;/span>: result[&lt;span style="color:#e6db74">&amp;#39;url&amp;#39;&lt;/span>],
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;状态&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;成功&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;状态&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;检测失败&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> result[&lt;span style="color:#e6db74">&amp;#39;status&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#e6db74">&amp;#39;成功&amp;#39;&lt;/span>,
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;JavaScript框架/库&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;JavaScript 框架/库&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>),
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;CSS框架&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;CSS 框架&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>),
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;UI组件库&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;UI 组件库&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>),
@@ -439,11 +456,15 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;其他工具&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;其他工具&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>),
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;检测时间&amp;#39;&lt;/span>: result[&lt;span style="color:#e6db74">&amp;#39;timestamp&amp;#39;&lt;/span>],
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;缓存状态&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;缓存&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;from_cache&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#e6db74">&amp;#39;实时&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;错误信息&amp;#39;&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#39;错误信息&amp;#39;&lt;/span>: result&lt;span style="color:#f92672">.&lt;/span>get(&lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>) &lt;span style="color:#66d9ef">if&lt;/span> result[&lt;span style="color:#e6db74">&amp;#39;status&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;error&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer&lt;span style="color:#f92672">.&lt;/span>writerow(row)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;结果已保存到: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>filename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> existing_urls&lt;span style="color:#f92672">.&lt;/span>add(result[&lt;span style="color:#e6db74">&amp;#39;url&amp;#39;&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> new_results &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> new_results &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;已保存 &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>new_results&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74"> 条新结果到: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>filename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;没有新结果保存到: &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>filename&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> filename
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">def&lt;/span> &lt;span style="color:#a6e22e">display_console&lt;/span>(self, results):
@@ -488,7 +509,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&amp;#34;显示缓存统计&amp;#34;&amp;#34;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn &lt;span style="color:#f92672">=&lt;/span> sqlite3&lt;span style="color:#f92672">.&lt;/span>connect(self&lt;span style="color:#f92672">.&lt;/span>cache_file)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor &lt;span style="color:#f92672">=&lt;/span> conn&lt;span style="color:#f92672">.&lt;/span>cursor()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;SELECT COUNT(*) FROM tech_cache&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cursor&lt;span style="color:#f92672">.&lt;/span>execute(&lt;span style="color:#e6db74">&amp;#39;SELECT COUNT(*) FROM web_info&amp;#39;&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> count &lt;span style="color:#f92672">=&lt;/span> cursor&lt;span style="color:#f92672">.&lt;/span>fetchone()[&lt;span style="color:#ae81ff">0&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> conn&lt;span style="color:#f92672">.&lt;/span>close()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> print(&lt;span style="color:#e6db74">f&lt;/span>&lt;span style="color:#e6db74">&amp;#34;缓存中共有 &lt;/span>&lt;span style="color:#e6db74">{&lt;/span>count&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74"> 条记录&amp;#34;&lt;/span>)
