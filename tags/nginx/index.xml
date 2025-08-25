@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on Merthon</title><link>https://merthon.github.io/tags/nginx/</link><description>Recent content in Nginx on Merthon</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 25 Aug 2025 13:40:07 +0800</lastBuildDate><atom:link href="https://merthon.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>Nginx使用及注意事项</title><link>https://merthon.github.io/posts/nginx%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</link><pubDate>Mon, 25 Aug 2025 13:40:07 +0800</pubDate><guid>https://merthon.github.io/posts/nginx%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</guid><description>&lt;p>Nginx是一款高性能的 Web 服务器和反向代理服务器，常用于静态资源服务、负载均衡、反向代理、HTTPS 部署等场景。相比 Apache，Nginx 更轻量、更高效，并且在大规模并发场景下表现优秀。&lt;/p>
+&lt;h2 id="一nginx-的常见使用场景">一、Nginx 的常见使用场景&lt;/h2>
+&lt;h3 id="1-静态资源服务器">1. 静态资源服务器&lt;/h3>
+&lt;p>将 HTML、CSS、JS、图片等静态文件直接交给 Nginx 处理，效率极高。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-nginx" data-lang="nginx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">server&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">listen&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">server_name&lt;/span> &lt;span style="color:#e6db74">example.com&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">root&lt;/span> &lt;span style="color:#e6db74">/var/www/html&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">index&lt;/span> &lt;span style="color:#e6db74">index.html&lt;/span> &lt;span style="color:#e6db74">index.htm&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-反向代理">2. 反向代理&lt;/h3>
+&lt;p>通过 Nginx 将请求转发给后端应用（如 Python Flask、Node.js、Java 服务）。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-nginx" data-lang="nginx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">server&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">listen&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">server_name&lt;/span> &lt;span style="color:#e6db74">api.example.com&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">location&lt;/span> &lt;span style="color:#e6db74">/&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_pass&lt;/span> &lt;span style="color:#e6db74">http://127.0.0.1:5000&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_set_header&lt;/span> &lt;span style="color:#e6db74">Host&lt;/span> $host;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_set_header&lt;/span> &lt;span style="color:#e6db74">X-Real-IP&lt;/span> $remote_addr;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_set_header&lt;/span> &lt;span style="color:#e6db74">X-Forwarded-For&lt;/span> $proxy_add_x_forwarded_for;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="3-负载均衡">3. 负载均衡&lt;/h3>
+&lt;p>多个后端实例时，可以利用 Nginx 实现轮询或加权分配。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-nginx" data-lang="nginx">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">upstream&lt;/span> &lt;span style="color:#e6db74">backend&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">server&lt;/span> 127.0.0.1:&lt;span style="color:#ae81ff">8080&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">server&lt;/span> 127.0.0.1:&lt;span style="color:#ae81ff">8081&lt;/span> &lt;span style="color:#e6db74">weight=2&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">server&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">listen&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">location&lt;/span> &lt;span style="color:#e6db74">/&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">proxy_pass&lt;/span> &lt;span style="color:#e6db74">http://backend&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-https-支持">4. HTTPS 支持&lt;/h3>
+&lt;p>结合 &lt;strong>Let&amp;rsquo;s Encrypt&lt;/strong> 或商业 SSL 证书，配置 HTTPS 访问。&lt;/p></description></item></channel></rss>
